@@ -85,6 +85,7 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
+  .track { position: relative; min-height: 32px; overflow: hidden; }
   .track.off { opacity: 0.28; }
   .track.tall { height: 72px; }
   .track.empty { color: var(--muted); font-size: 12px; display: flex; align-items: center; padding-left: 8px; background: repeating-linear-gradient(90deg, var(--paper), var(--paper) 8px, var(--line) 8px, var(--line) 9px); }
@@ -550,6 +551,9 @@ const VIDEOS = [
   { id: "idle-long", name: "Idle long", kind: "loop", length: "long", src: "/clean-room/videos/idle-long.mp4" },
   { id: "walk", name: "Walk", kind: "loop", length: "long", src: "/clean-room/videos/walk.mp4" },
   { id: "talk", name: "Talk", kind: "talk", length: "short", src: "/clean-room/videos/talk.mp4" },
+  { id: "talk-speak", name: "Speak", kind: "talk", length: "short", src: "/clean-room/videos/talk-speak.mp4" },
+  { id: "talk-ask", name: "Ask", kind: "talk", length: "short", src: "/clean-room/videos/talk-ask.mp4" },
+  { id: "talk-laugh", name: "Laugh", kind: "talk", length: "short", src: "/clean-room/videos/talk-laugh.mp4" },
   { id: "wave", name: "Wave", kind: "action", length: "short", src: "/clean-room/videos/wave.mp4" },
   { id: "point", name: "Point", kind: "action", length: "short", src: "/clean-room/videos/point.mp4?v=1" },
   { id: "kick", name: "Kick", kind: "action", length: "short", src: "/clean-room/videos/kick.mp4?v=2" },
@@ -615,7 +619,7 @@ const LAYER_GROUPS = [
 function applyLayerVisibility() {
   const eyes = document.getElementById("eyes-rig");
   if (eyes) eyes.hidden = layerOn.eyes === false;
-  stage.style.visibility = layerOn.plate === false ? "hidden" : "visible";
+  if (typeof keyFrame === "function") keyFrame();
   if (typeof drawRig === "function") drawRig();
 }
 
@@ -709,29 +713,224 @@ function paintTime() {
   for (const head of layersEl.querySelectorAll(".playhead")) head.style.left = (scrub.value / 10) + "%";
 }
 
+let heldFrame = null;
+
+function applyPartMask(p, w, h, y0, y1) {
+  const span = y1 - y0 + 1;
+  const width = new Int16Array(h);
+  for (let y = y0; y <= y1; y++) {
+    let xL = -1;
+    let xR = -1;
+    const row = y * w * 4;
+    for (let x = 0; x < w; x++) {
+      if (p[row + x * 4 + 3] > 16) {
+        if (xL < 0) xL = x;
+        xR = x;
+      }
+    }
+    if (xR > xL) width[y] = xR - xL;
+  }
+  const lo = y0 + (span * 0.08) | 0;
+  const hi = Math.min(h - 1, y0 + (span * 0.34) | 0);
+  let neck = -1;
+  for (let y = hi; y > lo; y--) {
+    let above = 0;
+    for (let k = Math.max(y0, y - 36); k < y; k++) if (width[k] > above) above = width[k];
+    let below = 0;
+    for (let k = y + 1; k <= Math.min(h - 1, y + 48); k++) if (width[k] > below) below = width[k];
+    if (above > 40 && width[y] > 8 && width[y] < above * 0.62 && below > width[y] * 1.7) {
+      neck = y;
+      break;
+    }
+  }
+  if (neck < 0) return;
+  let nsum = 0;
+  let nn = 0;
+  const nrow = neck * w * 4;
+  for (let x = 0; x < w; x++) {
+    if (p[nrow + x * 4 + 3] > 16) { nsum += x; nn++; }
+  }
+  if (!nn) return;
+  const cx = nsum / nn | 0;
+  const samples = [];
+  for (let y = Math.max(y0, neck - 50); y < neck - 8; y++) if (width[y] > 0) samples.push(width[y]);
+  samples.sort((a, b) => a - b);
+  let faceW = samples.length ? samples[(samples.length * 0.8) | 0] : 80;
+  if (faceW < 70) faceW = 70;
+  const showHair = layerOn.hair !== false;
+  const showFace = layerOn.face !== false;
+  const showEyes = layerOn.eyes !== false;
+  const showBody = layerOn.body !== false;
+  const dark = new Uint8Array(w * h);
+  const skin = new Uint8Array(w * h);
+  for (let y = y0; y <= y1; y++) {
+    for (let x = 0; x < w; x++) {
+      const i = (y * w + x) * 4;
+      if (p[i + 3] < 16) continue;
+      const r = p[i], g = p[i + 1], b = p[i + 2];
+      const luma = (r + g + b) / 3;
+      const id = y * w + x;
+      if (r > 95 && g > 50 && r > b + 12 && g + 10 > b && r - g < 100 && luma > 80 && luma < 200) skin[id] = 1;
+      else if (luma < 52) dark[id] = 1;
+    }
+  }
+  const hair = new Uint8Array(w * h);
+  const seen = new Uint8Array(w * h);
+  const q = [];
+  const seedHi = y0 + ((neck - y0) * 0.55) | 0;
+  for (let y = y0; y < seedHi; y++) {
+    const xA = Math.max(0, cx - faceW);
+    const xB = Math.min(w - 1, cx + faceW);
+    for (let x = xA; x <= xB; x++) {
+      const id = y * w + x;
+      if (dark[id]) { seen[id] = 1; q.push(id); }
+    }
+  }
+  const limit = neck + (faceW * 0.25) | 0;
+  const xReach = faceW * 1.15 | 0;
+  for (let qi = 0; qi < q.length; qi++) {
+    const id = q[qi];
+    const y = (id / w) | 0;
+    const x = id - y * w;
+    if (y > limit || Math.abs(x - cx) > xReach) continue;
+    hair[id] = 1;
+    if (x + 1 < w) {
+      const n = id + 1;
+      if (!seen[n] && dark[n]) { seen[n] = 1; q.push(n); }
+    }
+    if (x > 0) {
+      const n = id - 1;
+      if (!seen[n] && dark[n]) { seen[n] = 1; q.push(n); }
+    }
+    if (y + 1 < h) {
+      const n = id + w;
+      if (!seen[n] && dark[n]) { seen[n] = 1; q.push(n); }
+    }
+    if (y > 0) {
+      const n = id - w;
+      if (!seen[n] && dark[n]) { seen[n] = 1; q.push(n); }
+    }
+  }
+  const crown = neck - (faceW * 1.35) | 0;
+  const chin = neck - 2;
+  const cy = (crown + chin) >> 1;
+  const rx = faceW * 0.62 | 0;
+  const ry = Math.max(8, (chin - crown) >> 1);
+  let sr = 0, sg = 0, sb = 0, sn = 0;
+  for (let y = Math.max(0, cy); y < Math.max(cy, chin - 2); y++) {
+    for (let x = Math.max(0, cx - (rx >> 1)); x <= Math.min(w - 1, cx + (rx >> 1)); x++) {
+      const id = y * w + x;
+      if (!skin[id]) continue;
+      const i = id * 4;
+      sr += p[i]; sg += p[i + 1]; sb += p[i + 2]; sn++;
+    }
+  }
+  const cr = sn ? sr / sn | 0 : 176;
+  const cg = sn ? sg / sn | 0 : 116;
+  const cb = sn ? sb / sn | 0 : 74;
+  const eye = new Uint8Array(w * h);
+  const rad = 2;
+  for (let y = Math.max(0, crown); y <= Math.min(h - 1, chin); y++) {
+    for (let x = Math.max(0, cx - rx - 6); x <= Math.min(w - 1, cx + rx + 6); x++) {
+      const i = (y * w + x) * 4;
+      if (p[i + 3] < 16) continue;
+      const r = p[i], g = p[i + 1], b = p[i + 2];
+      const maxc = r > g ? r : g;
+      const minc = r < g ? (r < b ? r : b) : (g < b ? g : b);
+      const luma = (r + g + b) / 3;
+      if (!(r > 198 && g > 180 && b > 155 && maxc - minc < 58 && luma > 170)) continue;
+      for (let yy = Math.max(0, y - rad); yy <= Math.min(h - 1, y + rad); yy++) {
+        for (let xx = Math.max(0, x - rad); xx <= Math.min(w - 1, x + rad); xx++) {
+          const j = (yy * w + xx) * 4;
+          if (p[j + 3] < 16) continue;
+          const rr = p[j], gg = p[j + 1], bb = p[j + 2];
+          const lum = (rr + gg + bb) / 3;
+          if (lum < 70) continue;
+          const mx = rr > gg ? rr : gg;
+          const mn = rr < gg ? (rr < bb ? rr : bb) : (gg < bb ? gg : bb);
+          const mx2 = mx > bb ? mx : bb;
+          const scl = rr > 198 && gg > 180 && bb > 155 && mx2 - mn < 58;
+          const amber = rr > 155 && rr > gg + 8 && bb < 145 && gg - bb > 20 && mx2 - mn > 30;
+          const green = gg > rr + 8 && gg > bb + 4 && gg > 75 && mx2 - mn > 25;
+          if (scl || amber || green) eye[yy * w + xx] = 1;
+        }
+      }
+    }
+  }
+  const rx2 = rx * rx || 1;
+  const ry2 = ry * ry || 1;
+  for (let y = y0; y <= y1; y++) {
+    for (let x = 0; x < w; x++) {
+      const id = y * w + x;
+      const i = id * 4;
+      if (p[i + 3] < 16) continue;
+      const inSkull = ((y - cy) * (y - cy)) / ry2 + ((x - cx) * (x - cx)) / rx2 <= 1;
+      const isHair = hair[id] === 1;
+      const isEye = eye[id] === 1;
+      const isFace = skin[id] === 1 && y <= chin && y >= crown - 8 && Math.abs(x - cx) < rx + 10;
+      if (!showEyes && isEye) { p[i + 3] = 0; continue; }
+      if (!showHair && isHair) {
+        if (inSkull) { p[i] = cr; p[i + 1] = cg; p[i + 2] = cb; }
+        else p[i + 3] = 0;
+        continue;
+      }
+      if (!showFace && isFace && !isHair && !isEye) { p[i + 3] = 0; continue; }
+      if (!showBody && !isHair && !isFace && !isEye) p[i + 3] = 0;
+    }
+  }
+}
+
 function keyFrame() {
   if (video.readyState < 2 || !video.videoWidth) return;
   if (stage.width !== video.videoWidth || stage.height !== video.videoHeight) {
     stage.width = video.videoWidth;
     stage.height = video.videoHeight;
   }
+  if (layerOn.plate === false) {
+    ctx.clearRect(0, 0, stage.width, stage.height);
+    return;
+  }
   ctx.drawImage(video, 0, 0, stage.width, stage.height);
-  const frame = ctx.getImageData(0, 0, stage.width, stage.height);
+  const w = stage.width;
+  const h = stage.height;
+  const frame = ctx.getImageData(0, 0, w, h);
   const p = frame.data;
-  for (let i = 0; i < p.length; i += 4) {
-    const r = p[i], g = p[i + 1], b = p[i + 2];
-    const maxc = r > g ? r : g;
-    const d = b - maxc;
-    // Dark line art and hair strands stay, even where the edge picked up blue.
-    if (maxc < 80 && b < 160) continue;
-    if (b > 200 && r < 70 && g < 90 && d > 80) {
-      p[i + 3] = 0;
-    } else if (b > 175 && d > 60 && maxc > 50) {
-      const keep = 255 - (d - 40) * 5;
-      if (keep < p[i + 3]) p[i + 3] = keep < 0 ? 0 : keep;
+  let y0 = h;
+  let y1 = 0;
+  let whiteN = 0;
+  for (let y = 0, i = 0; y < h; y++) {
+    for (let x = 0; x < w; x++, i += 4) {
+      const r = p[i], g = p[i + 1], b = p[i + 2];
+      if ((i & 63) === 0 && r > 245 && g > 245 && b > 245) whiteN++;
+      const maxc = r > g ? r : g;
+      const d = b - maxc;
+      if (maxc < 80 && b < 160) {
+        if (y < y0) y0 = y;
+        if (y > y1) y1 = y;
+        continue;
+      }
+      if (b > 200 && r < 70 && g < 90 && d > 80) {
+        p[i + 3] = 0;
+        continue;
+      }
+      if (b > 175 && d > 60 && maxc > 50) {
+        const keep = 255 - (d - 40) * 5;
+        if (keep < p[i + 3]) p[i + 3] = keep < 0 ? 0 : keep;
+      }
+      if (p[i + 3] > 16) {
+        if (y < y0) y0 = y;
+        if (y > y1) y1 = y;
+      }
     }
   }
+  if (whiteN > 40 && heldFrame && heldFrame.width === w && heldFrame.height === h) {
+    ctx.putImageData(heldFrame, 0, 0);
+    return;
+  }
+  const allOn = layerOn.hair !== false && layerOn.face !== false && layerOn.eyes !== false && layerOn.body !== false;
+  if (!allOn && y1 > y0) applyPartMask(p, w, h, y0, y1);
   ctx.putImageData(frame, 0, 0);
+  heldFrame = frame;
 }
 
 function tick() {
@@ -941,7 +1140,11 @@ function drawRig() {
   rigCtx.clearRect(0, 0, rigCanvas.width, rigCanvas.height);
   rigCtx.imageSmoothingEnabled = false;
   const ordered = rigParts.slice().sort((a, b) => a.z - b.z);
+  const bodyPart = new Set(["pelvis", "chest", "l-upper", "r-upper", "l-fore", "r-fore", "l-hand", "r-hand", "l-thigh", "r-thigh", "l-calf", "r-calf", "l-foot", "r-foot"]);
   for (const part of ordered) {
+    if (part.id === "hair" && layerOn.hair === false) continue;
+    if (part.id === "head" && layerOn.face === false) continue;
+    if (bodyPart.has(part.id) && layerOn.body === false) continue;
     const img = rigImages[part.id];
     if (!img || !img.complete || !img.naturalWidth) continue;
     rigCtx.save();
