@@ -1,0 +1,423 @@
+{
+  "bind": "apose",
+  "src": "/clean-room/apose.png",
+  "size": [
+    1365,
+    1739
+  ],
+  "note": "Bind rig for every pose and sheet. Parts are A-pose pixels, overlapped at the joints. Action drawings are not recut.",
+  "drawOrder": [
+    "l-foot",
+    "r-foot",
+    "l-calf",
+    "r-calf",
+    "l-thigh",
+    "r-thigh",
+    "pelvis",
+    "chest",
+    "l-upper",
+    "r-upper",
+    "l-fore",
+    "r-fore",
+    "l-hand",
+    "r-hand",
+    "head",
+    "hair",
+    "l-eye",
+    "r-eye"
+  ],
+  "parts": [
+    {
+      "id": "l-foot",
+      "parent": "l-calf",
+      "src": "/clean-room/rig/l-foot.png",
+      "x": 539,
+      "y": 1545,
+      "w": 88,
+      "h": 140,
+      "pivot": [
+        582,
+        1565
+      ],
+      "pivotLocal": [
+        43,
+        20
+      ],
+      "tip": [
+        540,
+        1680
+      ],
+      "z": 0
+    },
+    {
+      "id": "r-foot",
+      "parent": "r-calf",
+      "src": "/clean-room/rig/r-foot.png",
+      "x": 737,
+      "y": 1545,
+      "w": 88,
+      "h": 140,
+      "pivot": [
+        780,
+        1565
+      ],
+      "pivotLocal": [
+        43,
+        20
+      ],
+      "tip": [
+        825,
+        1680
+      ],
+      "z": 1
+    },
+    {
+      "id": "l-calf",
+      "parent": "l-thigh",
+      "src": "/clean-room/rig/l-calf.png",
+      "x": 550,
+      "y": 1240,
+      "w": 86,
+      "h": 346,
+      "pivot": [
+        598,
+        1260
+      ],
+      "pivotLocal": [
+        48,
+        20
+      ],
+      "tip": [
+        582,
+        1565
+      ],
+      "z": 2
+    },
+    {
+      "id": "r-calf",
+      "parent": "r-thigh",
+      "src": "/clean-room/rig/r-calf.png",
+      "x": 728,
+      "y": 1240,
+      "w": 86,
+      "h": 346,
+      "pivot": [
+        764,
+        1260
+      ],
+      "pivotLocal": [
+        36,
+        20
+      ],
+      "tip": [
+        780,
+        1565
+      ],
+      "z": 3
+    },
+    {
+      "id": "l-thigh",
+      "parent": "pelvis",
+      "src": "/clean-room/rig/l-thigh.png",
+      "x": 550,
+      "y": 985,
+      "w": 104,
+      "h": 296,
+      "pivot": [
+        615,
+        1005
+      ],
+      "pivotLocal": [
+        65,
+        20
+      ],
+      "tip": [
+        598,
+        1260
+      ],
+      "z": 4
+    },
+    {
+      "id": "r-thigh",
+      "parent": "pelvis",
+      "src": "/clean-room/rig/r-thigh.png",
+      "x": 709,
+      "y": 985,
+      "w": 105,
+      "h": 296,
+      "pivot": [
+        747,
+        1005
+      ],
+      "pivotLocal": [
+        38,
+        20
+      ],
+      "tip": [
+        764,
+        1260
+      ],
+      "z": 5
+    },
+    {
+      "id": "pelvis",
+      "parent": null,
+      "src": "/clean-room/rig/pelvis.png",
+      "x": 537,
+      "y": 388,
+      "w": 290,
+      "h": 642,
+      "pivot": [
+        681,
+        835
+      ],
+      "pivotLocal": [
+        144,
+        447
+      ],
+      "tip": [
+        681,
+        1005
+      ],
+      "z": 6
+    },
+    {
+      "id": "chest",
+      "parent": "pelvis",
+      "src": "/clean-room/rig/chest.png",
+      "x": 510,
+      "y": 150,
+      "w": 343,
+      "h": 662,
+      "pivot": [
+        681,
+        390
+      ],
+      "pivotLocal": [
+        171,
+        240
+      ],
+      "tip": [
+        681,
+        835
+      ],
+      "z": 7
+    },
+    {
+      "id": "l-upper",
+      "parent": "chest",
+      "src": "/clean-room/rig/l-upper.png",
+      "x": 346,
+      "y": 372,
+      "w": 233,
+      "h": 293,
+      "pivot": [
+        530,
+        490
+      ],
+      "pivotLocal": [
+        184,
+        118
+      ],
+      "tip": [
+        375,
+        645
+      ],
+      "z": 8
+    },
+    {
+      "id": "r-upper",
+      "parent": "chest",
+      "src": "/clean-room/rig/r-upper.png",
+      "x": 784,
+      "y": 372,
+      "w": 234,
+      "h": 293,
+      "pivot": [
+        832,
+        490
+      ],
+      "pivotLocal": [
+        48,
+        118
+      ],
+      "tip": [
+        987,
+        645
+      ],
+      "z": 9
+    },
+    {
+      "id": "l-fore",
+      "parent": "l-upper",
+      "src": "/clean-room/rig/l-fore.png",
+      "x": 211,
+      "y": 616,
+      "w": 185,
+      "h": 165,
+      "pivot": [
+        375,
+        645
+      ],
+      "pivotLocal": [
+        164,
+        29
+      ],
+      "tip": [
+        255,
+        760
+      ],
+      "z": 10
+    },
+    {
+      "id": "r-fore",
+      "parent": "r-upper",
+      "src": "/clean-room/rig/r-fore.png",
+      "x": 968,
+      "y": 615,
+      "w": 186,
+      "h": 167,
+      "pivot": [
+        987,
+        645
+      ],
+      "pivotLocal": [
+        19,
+        30
+      ],
+      "tip": [
+        1110,
+        760
+      ],
+      "z": 11
+    },
+    {
+      "id": "l-hand",
+      "parent": "l-fore",
+      "src": "/clean-room/rig/l-hand.png",
+      "x": 177,
+      "y": 718,
+      "w": 100,
+      "h": 114,
+      "pivot": [
+        255,
+        760
+      ],
+      "pivotLocal": [
+        78,
+        42
+      ],
+      "tip": [
+        190,
+        830
+      ],
+      "z": 12
+    },
+    {
+      "id": "r-hand",
+      "parent": "r-fore",
+      "src": "/clean-room/rig/r-hand.png",
+      "x": 1089,
+      "y": 718,
+      "w": 99,
+      "h": 114,
+      "pivot": [
+        1110,
+        760
+      ],
+      "pivotLocal": [
+        21,
+        42
+      ],
+      "tip": [
+        1180,
+        830
+      ],
+      "z": 13
+    },
+    {
+      "id": "head",
+      "parent": "chest",
+      "src": "/clean-room/rig/head.png",
+      "x": 559,
+      "y": 38,
+      "w": 245,
+      "h": 364,
+      "pivot": [
+        681,
+        150
+      ],
+      "pivotLocal": [
+        122,
+        112
+      ],
+      "tip": [
+        681,
+        390
+      ],
+      "z": 14
+    },
+    {
+      "id": "hair",
+      "parent": "head",
+      "src": "/clean-room/rig/hair.png",
+      "x": 522,
+      "y": 38,
+      "w": 319,
+      "h": 462,
+      "pivot": [
+        681,
+        110
+      ],
+      "pivotLocal": [
+        159,
+        72
+      ],
+      "tip": [
+        681,
+        340
+      ],
+      "z": 15
+    },
+    {
+      "id": "l-eye",
+      "parent": "head",
+      "socket": "/clean-room/eyes/left-socket.png",
+      "sclera": "/clean-room/eyes/left-sclera.png",
+      "iris": "/clean-room/eyes/left-iris.png",
+      "pupil": "/clean-room/eyes/left-pupil.png",
+      "lash": "/clean-room/eyes/left-lash.png",
+      "pivot": [
+        644,
+        231
+      ],
+      "irisColor": "amber",
+      "maxGaze": [
+        3,
+        2
+      ],
+      "z": 20,
+      "role": "Child of the head. Iris and pupil move for gaze. Lash stays for the blink."
+    },
+    {
+      "id": "r-eye",
+      "parent": "head",
+      "socket": "/clean-room/eyes/right-socket.png",
+      "sclera": "/clean-room/eyes/right-sclera.png",
+      "iris": "/clean-room/eyes/right-iris.png",
+      "pupil": "/clean-room/eyes/right-pupil.png",
+      "lash": "/clean-room/eyes/right-lash.png",
+      "pivot": [
+        716,
+        232
+      ],
+      "irisColor": "green",
+      "maxGaze": [
+        3,
+        2
+      ],
+      "z": 21,
+      "role": "Child of the head. Iris and pupil move for gaze. Lash stays for the blink."
+    }
+  ]
+}

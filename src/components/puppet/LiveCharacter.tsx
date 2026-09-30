@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { idleGlance } from "@/lib/puppet/life";
+import { sampleClip } from "@/lib/puppet/clips";
 import { JOINTS, computeWorld } from "@/lib/puppet/mesh";
 import { REPO_CLIPS, repoAt } from "@/lib/puppet/repo";
 import { usePuppet } from "@/lib/puppet/store";
@@ -119,7 +120,12 @@ export function LiveCharacter() {
       last = now;
       playT += dt;
       const st = usePuppet.getState();
-      st.tickTween(dt);
+      const sampled = st.playing && mode !== "joint" ? sampleClip(st.clip, playT) : null;
+      if (sampled) {
+        usePuppet.setState({ bones: sampled.joints, blink: sampled.eyes.open, target: null });
+      } else {
+        st.tickTween(dt);
+      }
       if (mode !== "orbit" && Math.abs(yawVel) > 0.08) {
         st.setYaw(st.yaw + yawVel);
         yawVel *= 0.9;
@@ -128,10 +134,12 @@ export function LiveCharacter() {
       }
 
       let viewYaw = st.yaw;
-      if (st.clip === "live" && mode !== "orbit" && angDist(st.yaw, 0) < 12) {
+      if (sampled?.gaze != null && mode !== "orbit" && angDist(st.yaw, 0) < 12) {
+        viewYaw = sampled.gaze;
+      } else if (st.clip === "live" && mode !== "orbit" && angDist(st.yaw, 0) < 12) {
         viewYaw = idleGlance(playT) ?? 0;
       }
-      const film = REPO_CLIPS.find((c) => c.id === st.clip);
+      const film = sampled ? undefined : REPO_CLIPS.find((c) => c.id === st.clip);
       const next = nearestFrom(keysForClip(st.clip === "live" ? "idle" : st.clip), viewYaw);
       if (film) {
         const src = repoAt(film.dir, playT);

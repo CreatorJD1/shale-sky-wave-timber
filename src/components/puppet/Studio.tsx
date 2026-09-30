@@ -5,7 +5,8 @@ import { ART_MANIFEST, artCounts } from "@/lib/puppet/art-manifest";
 import { CANON, LOCK_RULES, SIM_BUDGET } from "@/lib/puppet/style-lock";
 import { REPO_CLIPS } from "@/lib/puppet/repo";
 import { usePuppet } from "@/lib/puppet/store";
-import { EMOTIONS } from "@/lib/puppet/types";
+import type { EmotionId } from "@/lib/puppet/types";
+import { FACE_OK } from "@/lib/puppet/views";
 import { VIEW_KEYS } from "@/lib/puppet/views";
 import { cn } from "@/lib/utils";
 
@@ -84,16 +85,16 @@ function Dock() {
         </button>
       </div>
       <div className="mt-2 flex gap-2 overflow-x-auto">
-        {EMOTIONS.map((e) => (
+        {FACE_OK.map((e) => (
           <button
             key={e.id}
             type="button"
-            onClick={() => setEmotion(e.id)}
+            onClick={() => setEmotion(e.id as EmotionId)}
             className={cn(
               "size-11 shrink-0 overflow-hidden rounded-full shadow-border",
               emotion === e.id && "ring-2 ring-amber",
             )}
-            aria-label={e.label}
+            aria-label={e.id}
           >
             <img src={e.src} alt="" className="size-full object-cover object-top" />
           </button>

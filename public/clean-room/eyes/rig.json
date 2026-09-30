@@ -1,0 +1,37 @@
+{
+  "source": "still/apose eyes, original pixels",
+  "eyes": [
+    {
+      "id": "left",
+      "box": [
+        6,
+        6,
+        45,
+        27
+      ],
+      "w": 39,
+      "h": 21,
+      "iris": "amber",
+      "maxGaze": [
+        3,
+        2
+      ]
+    },
+    {
+      "id": "right",
+      "box": [
+        80,
+        8,
+        120,
+        32
+      ],
+      "w": 40,
+      "h": 24,
+      "iris": "green",
+      "maxGaze": [
+        3,
+        2
+      ]
+    }
+  ]
+}

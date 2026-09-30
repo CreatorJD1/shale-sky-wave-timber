@@ -1,4 +1,5 @@
 import { IDLE_BONES, type Bones, type ClipId } from "./types";
+import { idleGlance } from "./life";
 
 export const POSES: Record<string, Bones> = {
   idle: { ...IDLE_BONES },
@@ -122,10 +123,83 @@ export function sampleWave(u: number): Bones {
   return sampleKeys(WAVE_KEYS, u);
 }
 
+/** Held pose of a clip. The hinge hold is the authored hinge pose, not the collapse it passes through. */
 export function poseForClip(id: ClipId): Bones | null {
   if (id === "reach") return POSES.reach;
   if (id === "collapse") return POSES.collapse;
   if (id === "twist") return POSES.twist;
   if (id === "hinge") return POSES.hinge;
   return null;
+}
+
+export type TrackKey = { t: number; pose: Bones };
+
+function held(pose: Bones): TrackKey[] {
+  return [
+    { t: 0, pose: POSES.idle },
+    { t: 0.35, pose },
+    { t: 0.65, pose },
+    { t: 1, pose: POSES.idle },
+  ];
+}
+
+/** Rest pose for the whole loop. No joint was invented. */
+export const IDLE_KEYS: TrackKey[] = [
+  { t: 0, pose: POSES.idle },
+  { t: 1, pose: POSES.idle },
+];
+
+export const REACH_KEYS = held(POSES.reach);
+export const COLLAPSE_KEYS = held(POSES.collapse);
+export const TWIST_KEYS = held(POSES.twist);
+
+export const CLIP_KEYS: Partial<Record<ClipId, TrackKey[]>> = {
+  idle: IDLE_KEYS,
+  look: IDLE_KEYS,
+  hinge: HINGE_KEYS,
+  wave: WAVE_KEYS,
+  reach: REACH_KEYS,
+  collapse: COLLAPSE_KEYS,
+  twist: TWIST_KEYS,
+};
+
+/**
+ * Only the two blink drawings whose lids match the name.
+ * half.png is still open. half2.png is a wink, not a half blink.
+ */
+export function eyeFor(clip: string, u: number): { open: number; src: string } {
+  const t = ((u % 1) + 1) % 1;
+  const shut = clip === "idle" && t >= 0.4 && t < 0.58;
+  return shut
+    ? { open: 0, src: "/puppet/blink/closed.png" }
+    : { open: 1, src: "/puppet/blink/open.png" };
+}
+
+/** View yaw from the existing glance. Not an iris direction. */
+export function gazeFor(clip: string, seconds: number): number | null {
+  if (clip === "idle" || clip === "look" || clip === "live") return idleGlance(seconds) ?? 0;
+  return null;
+}
+
+export type SampledFrame = {
+  joints: Bones;
+  eyes: { open: number; src: string };
+  gaze: number | null;
+  mouth: null;
+  fingers: null;
+  hair: null;
+};
+
+export function sampleClip(id: string, seconds: number): SampledFrame | null {
+  const keys = CLIP_KEYS[id as ClipId];
+  if (!keys) return null;
+  const u = ((seconds % 1) + 1) % 1;
+  return {
+    joints: sampleKeys(keys, u),
+    eyes: eyeFor(id, u),
+    gaze: gazeFor(id, seconds),
+    mouth: null,
+    fingers: null,
+    hair: null,
+  };
 }

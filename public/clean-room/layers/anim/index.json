@@ -1,0 +1,326 @@
+{
+  "source": "decoded from /clean-room/videos at 1.2s",
+  "not": "These are not puppet layers, joint tracks, or cut parts.",
+  "clips": [
+    {
+      "id": "angry",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/angry.png",
+      "video": "/clean-room/videos/angry.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "apose-turn",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/apose-turn.png",
+      "video": "/clean-room/videos/apose-turn.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "back",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/back.png",
+      "video": "/clean-room/videos/back.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "brace",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/brace.png",
+      "video": "/clean-room/videos/brace.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "cheeks",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/cheeks.png",
+      "video": "/clean-room/videos/cheeks.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "clasp",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/clasp.png",
+      "video": "/clean-room/videos/clasp.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "dodge",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/dodge.png",
+      "video": "/clean-room/videos/dodge.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "gasp",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/gasp.png",
+      "video": "/clean-room/videos/gasp.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "getup",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/getup.png",
+      "video": "/clean-room/videos/getup.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "glare",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/glare.png",
+      "video": "/clean-room/videos/glare.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "hem",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/hem.png",
+      "video": "/clean-room/videos/hem.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "hip",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/hip.png",
+      "video": "/clean-room/videos/hip.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "idle-long",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/idle-long.png",
+      "video": "/clean-room/videos/idle-long.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "idle",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/idle.png",
+      "video": "/clean-room/videos/idle.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "inspect",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/inspect.png",
+      "video": "/clean-room/videos/inspect.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "jump",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/jump.png",
+      "video": "/clean-room/videos/jump.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "kick",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/kick.png",
+      "video": "/clean-room/videos/kick.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "kneel",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/kneel.png",
+      "video": "/clean-room/videos/kneel.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "look",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/look.png",
+      "video": "/clean-room/videos/look.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "nod",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/nod.png",
+      "video": "/clean-room/videos/nod.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "point",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/point.png",
+      "video": "/clean-room/videos/point.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "ready",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/ready.png",
+      "video": "/clean-room/videos/ready.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "run",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/run.png",
+      "video": "/clean-room/videos/run.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "sad",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/sad.png",
+      "video": "/clean-room/videos/sad.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "shrug",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/shrug.png",
+      "video": "/clean-room/videos/shrug.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "side",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/side.png",
+      "video": "/clean-room/videos/side.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "sit",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/sit.png",
+      "video": "/clean-room/videos/sit.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "smirk",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/smirk.png",
+      "video": "/clean-room/videos/smirk.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "squat",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/squat.png",
+      "video": "/clean-room/videos/squat.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "startle",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/startle.png",
+      "video": "/clean-room/videos/startle.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "stop",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/stop.png",
+      "video": "/clean-room/videos/stop.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "strap",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/strap.png",
+      "video": "/clean-room/videos/strap.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "stumble",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/stumble.png",
+      "video": "/clean-room/videos/stumble.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "sway",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/sway.png",
+      "video": "/clean-room/videos/sway.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "talk",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/talk.png",
+      "video": "/clean-room/videos/talk.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "tongue",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/tongue.png",
+      "video": "/clean-room/videos/tongue.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "walk",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/walk.png",
+      "video": "/clean-room/videos/walk.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "wave",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/wave.png",
+      "video": "/clean-room/videos/wave.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "worry",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/worry.png",
+      "video": "/clean-room/videos/worry.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    },
+    {
+      "id": "yawn",
+      "kind": "decoded-frame",
+      "time": 1.2,
+      "file": "/clean-room/layers/anim/yawn.png",
+      "video": "/clean-room/videos/yawn.mp4",
+      "note": "One real frame from the finished video. Not a rig layer. No separated hair, face, or body track exists for this clip."
+    }
+  ]
+}

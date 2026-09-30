@@ -43,6 +43,16 @@
     height: auto;
     margin: 0;
   }
+  img.eye-layer { width: auto; height: 48px; margin: 6px 12px 0; background: #0000ff; }
+  .layer-row { display: flex; gap: 8px; padding: 6px 12px 0; }
+  img.layer-thumb { width: auto; height: 84px; margin: 0; background: #0000ff; }
+  #eyes-rig { display: flex; align-items: center; gap: 12px; padding: 8px 12px 0; }
+  #bind-rig { display: flex; align-items: center; gap: 12px; padding: 8px 12px 4px; }
+  #rigcvs { background: #0000ff; width: 140px; height: auto; image-rendering: pixelated; }
+  #rig-note { margin: 0 0 6px; color: var(--muted); font-size: 12px; max-width: 36ch; }
+  #bind-rig label { font-size: 12px; color: var(--muted); }
+  #eyecvs { background: #0000ff; width: min(100%, 520px); height: auto; image-rendering: pixelated; cursor: pointer; }
+  #eyes-note { margin: 0; color: var(--muted); font-size: 12px; max-width: 28ch; }
   canvas.loop { background: #00f; }
   #modes { margin-top: 8px; }
   #stage-wrap { padding-bottom: 12px; }
@@ -62,6 +72,25 @@
   }
   .transport { display: flex; gap: 8px; align-items: center; padding: 8px 12px 0; }
   #clipmeta { color: var(--muted); font-size: 13px; }
+  #timeline { padding: 8px 12px 0; }
+  #scrub { width: 100%; accent-color: var(--ink); }
+  #timecode { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+  #layers { display: flex; flex-direction: column; gap: 6px; padding: 8px 12px 12px; }
+  .lane { display: grid; grid-template-columns: 92px 1fr; gap: 8px; align-items: center; }
+  .lane button {
+    min-height: 32px;
+    padding: 0 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .track.off { opacity: 0.28; }
+  .track.tall { height: 72px; }
+  .track.empty { color: var(--muted); font-size: 12px; display: flex; align-items: center; padding-left: 8px; background: repeating-linear-gradient(90deg, var(--paper), var(--paper) 8px, var(--line) 8px, var(--line) 9px); }
+  .track .thumbs { display: flex; gap: 4px; height: 100%; align-items: center; padding: 0 4px; overflow-x: auto; }
+  .track .thumbs img { height: 26px; width: auto; background: #0000ff; }
+  .playhead { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); pointer-events: none; }
   #clips { padding: 8px 12px 0; }
 </style>
 </head>
@@ -82,6 +111,22 @@
       <button type="button" id="replaybtn">Replay</button>
       <span id="clipmeta"></span>
     </div>
+    <div id="timeline">
+      <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline">
+      <span id="timecode">0.00 / 0.00</span>
+    </div>
+    <div id="eyes-rig">
+      <canvas id="eyecvs" width="520" height="160"></canvas>
+      <p id="eyes-note">Eyes are children of the head. They follow the pointer and blink. Click to blink.</p>
+    </div>
+    <div id="bind-rig">
+      <canvas id="rigcvs" width="280" height="360"></canvas>
+      <div>
+        <p id="rig-note">Bind pose. The left arm is one chain: shoulder, then elbow, then wrist.</p>
+        <label>Shoulder <input id="rig-shoulder" type="range" min="-35" max="35" value="0"></label>
+      </div>
+    </div>
+    <div id="layers"></div>
     <div class="row" id="clips"></div>
 </div>
 <main id="gallery"></main>
@@ -93,6 +138,48 @@ const GROUPS = [
     ["left", "Left", "/clean-room/left.png?v=3"],
     ["right", "Right", "/clean-room/right.png?v=3"],
     ["back", "Back", "/clean-room/back.png?v=3"],
+  ]],
+  ["Plates", [
+    ["angry", "Angry", "/clean-room/layers/anim/angry.png?v=1"],
+    ["apose-turn", "Apose Turn", "/clean-room/layers/anim/apose-turn.png?v=1"],
+    ["back", "Back", "/clean-room/layers/anim/back.png?v=1"],
+    ["brace", "Brace", "/clean-room/layers/anim/brace.png?v=1"],
+    ["cheeks", "Cheeks", "/clean-room/layers/anim/cheeks.png?v=1"],
+    ["clasp", "Clasp", "/clean-room/layers/anim/clasp.png?v=1"],
+    ["dodge", "Dodge", "/clean-room/layers/anim/dodge.png?v=1"],
+    ["gasp", "Gasp", "/clean-room/layers/anim/gasp.png?v=1"],
+    ["getup", "Getup", "/clean-room/layers/anim/getup.png?v=1"],
+    ["glare", "Glare", "/clean-room/layers/anim/glare.png?v=1"],
+    ["hem", "Hem", "/clean-room/layers/anim/hem.png?v=1"],
+    ["hip", "Hip", "/clean-room/layers/anim/hip.png?v=1"],
+    ["idle-long", "Idle Long", "/clean-room/layers/anim/idle-long.png?v=1"],
+    ["idle", "Idle", "/clean-room/layers/anim/idle.png?v=1"],
+    ["inspect", "Inspect", "/clean-room/layers/anim/inspect.png?v=1"],
+    ["jump", "Jump", "/clean-room/layers/anim/jump.png?v=1"],
+    ["kick", "Kick", "/clean-room/layers/anim/kick.png?v=1"],
+    ["kneel", "Kneel", "/clean-room/layers/anim/kneel.png?v=1"],
+    ["look", "Look", "/clean-room/layers/anim/look.png?v=1"],
+    ["nod", "Nod", "/clean-room/layers/anim/nod.png?v=1"],
+    ["point", "Point", "/clean-room/layers/anim/point.png?v=1"],
+    ["ready", "Ready", "/clean-room/layers/anim/ready.png?v=1"],
+    ["run", "Run", "/clean-room/layers/anim/run.png?v=1"],
+    ["sad", "Sad", "/clean-room/layers/anim/sad.png?v=1"],
+    ["shrug", "Shrug", "/clean-room/layers/anim/shrug.png?v=1"],
+    ["side", "Side", "/clean-room/layers/anim/side.png?v=1"],
+    ["sit", "Sit", "/clean-room/layers/anim/sit.png?v=1"],
+    ["smirk", "Smirk", "/clean-room/layers/anim/smirk.png?v=1"],
+    ["squat", "Squat", "/clean-room/layers/anim/squat.png?v=1"],
+    ["startle", "Startle", "/clean-room/layers/anim/startle.png?v=1"],
+    ["stop", "Stop", "/clean-room/layers/anim/stop.png?v=1"],
+    ["strap", "Strap", "/clean-room/layers/anim/strap.png?v=1"],
+    ["stumble", "Stumble", "/clean-room/layers/anim/stumble.png?v=1"],
+    ["sway", "Sway", "/clean-room/layers/anim/sway.png?v=1"],
+    ["talk", "Talk", "/clean-room/layers/anim/talk.png?v=1"],
+    ["tongue", "Tongue", "/clean-room/layers/anim/tongue.png?v=1"],
+    ["walk", "Walk", "/clean-room/layers/anim/walk.png?v=1"],
+    ["wave", "Wave", "/clean-room/layers/anim/wave.png?v=1"],
+    ["worry", "Worry", "/clean-room/layers/anim/worry.png?v=1"],
+    ["yawn", "Yawn", "/clean-room/layers/anim/yawn.png?v=1"],
   ]],
   ["Hair", [
     ["hair-000", "Hair 0°", "/clean-room/layers/hair/hair-000.png?v=4"],
@@ -379,6 +466,17 @@ for (const [group, items] of GROUPS) {
       scroller.append(img);
     }
     fig.append(scroller);
+    const row = document.createElement("div");
+    row.className = "layer-row";
+    for (const part of ["hair", "body"]) {
+      const layer = document.createElement("img");
+      layer.alt = label + " " + part;
+      layer.className = "layer-thumb";
+      layer.dataset.src = "/clean-room/layers/hierarchy/still/" + id + "/" + part + ".png";
+      layer.addEventListener("error", () => layer.remove());
+      row.append(layer);
+    }
+    fig.append(row);
     section.append(fig);
   }
   gallery.append(section);
@@ -433,6 +531,7 @@ function show(name) {
 }
 
 const VIDEOS = [
+  { id: "apose-turn", name: "A-pose turn", kind: "loop", length: "long", src: "/clean-room/videos/apose-turn.mp4?v=1" },
   { id: "idle", name: "Idle", kind: "loop", length: "short", src: "/clean-room/videos/idle.mp4" },
   { id: "sway", name: "Sway", kind: "loop", length: "short", src: "/clean-room/videos/sway.mp4" },
   { id: "nod", name: "Nod", kind: "loop", length: "short", src: "/clean-room/videos/nod.mp4" },
@@ -461,7 +560,7 @@ const VIDEOS = [
   { id: "stumble", name: "Stumble", kind: "action", length: "short", src: "/clean-room/videos/stumble.mp4?v=1" },
   { id: "worry", name: "Worry", kind: "action", length: "short", src: "/clean-room/videos/worry.mp4?v=1" },
   { id: "stop", name: "Stop", kind: "action", length: "short", src: "/clean-room/videos/stop.mp4?v=1" },
-  { id: "kneel", name: "Kneel", kind: "action", length: "short", src: "/clean-room/videos/kneel.mp4?v=1" },
+  { id: "kneel", name: "Kneel", kind: "action", length: "short", src: "/clean-room/videos/kneel.mp4?v=2" },
   { id: "yawn", name: "Yawn", kind: "action", length: "short", src: "/clean-room/videos/yawn.mp4?v=1" },
   { id: "gasp", name: "Gasp", kind: "action", length: "short", src: "/clean-room/videos/gasp.mp4?v=2" },
   { id: "strap", name: "Strap", kind: "action", length: "short", src: "/clean-room/videos/strap.mp4?v=1" },
@@ -470,7 +569,7 @@ const VIDEOS = [
   { id: "hem", name: "Hem", kind: "action", length: "short", src: "/clean-room/videos/hem.mp4?v=1" },
   { id: "sad", name: "Sad", kind: "action", length: "short", src: "/clean-room/videos/sad.mp4?v=1" },
   { id: "tongue", name: "Tongue", kind: "action", length: "short", src: "/clean-room/videos/tongue.mp4?v=1" },
-  { id: "jump", name: "Jump", kind: "action", length: "short", src: "/clean-room/videos/jump.mp4?v=2" },
+  { id: "jump", name: "Jump", kind: "action", length: "short", src: "/clean-room/videos/jump.mp4?v=3" },
   { id: "getup", name: "Get up", kind: "action", length: "short", src: "/clean-room/videos/getup.mp4" },
 ];
 
@@ -486,9 +585,129 @@ const clipRow = document.getElementById("clips");
 const meta = document.getElementById("clipmeta");
 const playbtn = document.getElementById("playbtn");
 const replaybtn = document.getElementById("replaybtn");
+const scrub = document.getElementById("scrub");
+const timecode = document.getElementById("timecode");
+const layersEl = document.getElementById("layers");
 let kind = "loop";
 let current = VIDEOS[0];
 let playing = true;
+let scrubbing = false;
+const layerOn = {
+  plate: true,
+  held: true,
+  hair: true,
+  face: true,
+  eyes: true,
+  body: true,
+};
+
+const LAYER_GROUPS = [
+  { id: "plate", name: "Plate", kind: "video" },
+  { id: "held", name: "Held frame", kind: "still" },
+  { id: "hair", name: "Hair", kind: "part", file: "hair.png" },
+  { id: "face", name: "Face", kind: "face" },
+  { id: "eyes", name: "Eyes", kind: "eyes" },
+  { id: "body", name: "Body", kind: "part", file: "body.png" },
+  { id: "fingers", name: "Fingers", kind: "none" },
+  { id: "mouth", name: "Mouth", kind: "none" },
+];
+
+function applyLayerVisibility() {
+  const eyes = document.getElementById("eyes-rig");
+  if (eyes) eyes.hidden = layerOn.eyes === false;
+  stage.style.visibility = layerOn.plate === false ? "hidden" : "visible";
+  if (typeof drawRig === "function") drawRig();
+}
+
+function paintLayers() {
+  const headPos = (scrub.value / 1000) * 100;
+  layersEl.replaceChildren();
+  for (const group of LAYER_GROUPS) {
+    const lane = document.createElement("div");
+    lane.className = "lane";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = group.name;
+    const has = group.kind !== "none";
+    const shown = layerOn[group.id] !== false;
+    btn.classList.toggle("on", has && shown);
+    btn.disabled = !has;
+    btn.setAttribute("aria-pressed", shown ? "true" : "false");
+    if (has) {
+      btn.addEventListener("click", () => {
+        layerOn[group.id] = !shown;
+        applyLayerVisibility();
+        paintLayers();
+      });
+    }
+    const track = document.createElement("div");
+    track.className = "track";
+    if (!shown) track.classList.add("off");
+    if (!has) {
+      track.classList.add("empty");
+      track.textContent = "No separate layer";
+    } else if (group.kind === "part") {
+      const thumbs = document.createElement("div");
+      thumbs.className = "thumbs";
+      const img = document.createElement("img");
+      img.alt = group.name;
+      img.src = "/clean-room/layers/hierarchy/anim/" + current.id + "/" + group.file;
+      img.onerror = () => {
+        thumbs.remove();
+        track.classList.add("empty");
+        track.textContent = "Cutting this layer";
+      };
+      thumbs.append(img);
+      track.append(thumbs);
+    } else if (group.kind === "face") {
+      track.classList.add("tall");
+      const thumbs = document.createElement("div");
+      thumbs.className = "thumbs";
+      const img = document.createElement("img");
+      img.alt = "Face";
+      img.src = "/clean-room/rig/head.png";
+      thumbs.append(img);
+      track.append(thumbs);
+    } else if (group.kind === "eyes") {
+      track.classList.add("tall");
+      const thumbs = document.createElement("div");
+      thumbs.className = "thumbs";
+      for (const side of ["left", "right"]) {
+        const img = document.createElement("img");
+        img.alt = side + " eye";
+        img.src = "/clean-room/eyes/" + side + "-socket.png";
+        thumbs.append(img);
+      }
+      track.append(thumbs);
+    } else if (group.kind === "still") {
+      const thumbs = document.createElement("div");
+      thumbs.className = "thumbs";
+      const img = document.createElement("img");
+      img.src = "/clean-room/layers/anim/" + current.id + ".png?v=1";
+      img.alt = current.name;
+      thumbs.append(img);
+      track.append(thumbs);
+    }
+    const playhead = document.createElement("div");
+    playhead.className = "playhead";
+    playhead.style.left = headPos + "%";
+    track.append(playhead);
+    lane.append(btn, track);
+    layersEl.append(lane);
+  }
+  applyLayerVisibility();
+}
+
+function paintTime() {
+  const dur = video.duration;
+  if (!dur || !Number.isFinite(dur)) {
+    timecode.textContent = "0.00 / 0.00";
+    return;
+  }
+  if (!scrubbing) scrub.value = String(Math.round((video.currentTime / dur) * 1000));
+  timecode.textContent = video.currentTime.toFixed(2) + " / " + dur.toFixed(2);
+  for (const head of layersEl.querySelectorAll(".playhead")) head.style.left = (scrub.value / 10) + "%";
+}
 
 function keyFrame() {
   if (video.readyState < 2 || !video.videoWidth) return;
@@ -501,14 +720,28 @@ function keyFrame() {
   const p = frame.data;
   for (let i = 0; i < p.length; i += 4) {
     const r = p[i], g = p[i + 1], b = p[i + 2];
-    const d = b - Math.max(r, g);
-    if (b > 130 && d > 18) p[i + 3] = d > 60 ? 0 : Math.max(0, 255 - d * 5);
+    const maxc = r > g ? r : g;
+    const d = b - maxc;
+    // Dark line art and hair strands stay, even where the edge picked up blue.
+    if (maxc < 80 && b < 160) continue;
+    if (b > 200 && r < 70 && g < 90 && d > 80) {
+      p[i + 3] = 0;
+    } else if (b > 175 && d > 60 && maxc > 50) {
+      const keep = 255 - (d - 40) * 5;
+      if (keep < p[i + 3]) p[i + 3] = keep < 0 ? 0 : keep;
+    }
   }
   ctx.putImageData(frame, 0, 0);
 }
 
 function tick() {
-  if (!document.getElementById("stage-wrap").hidden) keyFrame();
+  const wrap = document.getElementById("stage-wrap");
+  if (!wrap.hidden) {
+    if (layerOn.plate !== false) keyFrame();
+    else ctx.clearRect(0, 0, stage.width, stage.height);
+  }
+  paintTime();
+  drawEyes();
   requestAnimationFrame(tick);
 }
 requestAnimationFrame(tick);
@@ -525,6 +758,7 @@ function playClip(clip) {
   meta.textContent = clip.name + " · " + clip.kind + " · " + clip.length + " · silent";
   for (const b of clipRow.children) b.classList.toggle("on", b.dataset.id === clip.id);
   count.textContent = VIDEOS.filter((v) => v.kind === kind).length + " videos";
+  paintLayers();
 }
 
 function showKind(next) {
@@ -585,9 +819,146 @@ replaybtn.addEventListener("click", () => {
   video.play();
   playbtn.textContent = "Pause";
 });
+scrub.addEventListener("pointerdown", () => { scrubbing = true; });
+scrub.addEventListener("input", () => {
+  scrubbing = true;
+  if (video.duration) video.currentTime = (scrub.value / 1000) * video.duration;
+  paintTime();
+});
+scrub.addEventListener("change", () => { scrubbing = false; });
+video.addEventListener("loadedmetadata", paintTime);
 video.addEventListener("ended", () => {
   if (!video.loop) playbtn.textContent = "Play";
 });
+const eyeCanvas = document.getElementById("eyecvs");
+const eyeCtx = eyeCanvas.getContext("2d");
+const EYE_SCALE = 6;
+const eyeGaze = { x: 0, y: 0, tx: 0, ty: 0 };
+let blinkUntil = 0;
+let nextBlink = performance.now() + 1600;
+const eyeParts = {};
+
+function loadEye(name) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = "/clean-room/eyes/" + name + ".png";
+  });
+}
+
+Promise.all(["left", "right"].flatMap((side) =>
+  ["sclera", "iris", "pupil", "lash", "socket"].map(async (part) => {
+    eyeParts[side + "-" + part] = await loadEye(side + "-" + part);
+  })
+)).then(() => { eyeParts.ready = true; });
+
+function blinkNow() {
+  if (blinkUntil > performance.now()) return;
+  blinkUntil = performance.now() + 160;
+}
+
+function drawEyes() {
+  if (!eyeParts.ready) return;
+  const now = performance.now();
+  if (blinkUntil === 0 && now > nextBlink) blinkNow();
+  if (blinkUntil !== 0 && now > blinkUntil) {
+    blinkUntil = 0;
+    nextBlink = now + 2400 + Math.random() * 1800;
+  }
+  const age = blinkUntil > now ? 1 - (blinkUntil - now) / 160 : -1;
+  const blink = age < 0 ? 0 : Math.sin(age * Math.PI);
+  eyeGaze.x += (eyeGaze.tx - eyeGaze.x) * 0.2;
+  eyeGaze.y += (eyeGaze.ty - eyeGaze.y) * 0.2;
+  const open = Math.max(0.07, 1 - blink);
+  eyeCtx.clearRect(0, 0, eyeCanvas.width, eyeCanvas.height);
+  eyeCtx.imageSmoothingEnabled = false;
+  let x = 16;
+  for (const side of ["left", "right"]) {
+    const socket = eyeParts[side + "-socket"];
+    if (!socket) continue;
+    if (!eyeParts[side + "-buf"]) {
+      const buf = document.createElement("canvas");
+      buf.width = socket.width;
+      buf.height = socket.height;
+      eyeParts[side + "-buf"] = buf;
+    }
+    const buf = composeEye(side, Math.round(eyeGaze.x * 3), Math.round(eyeGaze.y * 2));
+    const dw = socket.width * EYE_SCALE;
+    const dh = socket.height * EYE_SCALE * open;
+    const dy = 20 + (socket.height * EYE_SCALE - dh) * 0.42;
+    eyeCtx.drawImage(buf, x, dy, dw, dh);
+    x += dw + 36;
+  }
+}
+
+eyeCanvas.addEventListener("pointerdown", blinkNow);
+stage.addEventListener("pointermove", (e) => {
+  const r = stage.getBoundingClientRect();
+  const nx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+  const ny = (e.clientY - (r.top + r.height * 0.2)) / (r.height * 0.35);
+  eyeGaze.tx = Math.max(-1, Math.min(1, nx));
+  eyeGaze.ty = Math.max(-1, Math.min(1, ny));
+});
+stage.addEventListener("pointerleave", () => { eyeGaze.tx = 0; eyeGaze.ty = 0; });
+
+function composeEye(side, gx, gy) {
+  const socket = eyeParts[side + "-socket"];
+  const buf = eyeParts[side + "-buf"];
+  const bctx = buf.getContext("2d");
+  bctx.clearRect(0, 0, buf.width, buf.height);
+  bctx.drawImage(eyeParts[side + "-sclera"], 0, 0);
+  bctx.drawImage(eyeParts[side + "-iris"], gx, gy);
+  bctx.drawImage(eyeParts[side + "-pupil"], gx, gy);
+  bctx.globalCompositeOperation = "destination-in";
+  bctx.drawImage(socket, 0, 0);
+  bctx.globalCompositeOperation = "source-over";
+  bctx.drawImage(eyeParts[side + "-lash"], 0, 0);
+  return buf;
+}
+
+const rigCanvas = document.getElementById("rigcvs");
+const rigCtx = rigCanvas.getContext("2d");
+const rigSlider = document.getElementById("rig-shoulder");
+let rigParts = [];
+const rigImages = {};
+fetch("/clean-room/rig/apose.json").then((r) => r.json()).then((rig) => {
+  rigParts = rig.parts.filter((p) => p.src);
+  for (const part of rigParts) {
+    const img = new Image();
+    img.src = part.src;
+    rigImages[part.id] = img;
+  }
+});
+if (rigSlider) rigSlider.addEventListener("input", drawRig);
+
+function drawRig() {
+  if (!rigParts.length) return;
+  const s = rigCanvas.height / 1739;
+  const ang = Number(rigSlider.value) * Math.PI / 180;
+  const arm = new Set(["l-upper", "l-fore", "l-hand"]);
+  const shoulder = rigParts.find((p) => p.id === "l-upper");
+  rigCtx.clearRect(0, 0, rigCanvas.width, rigCanvas.height);
+  rigCtx.imageSmoothingEnabled = false;
+  const ordered = rigParts.slice().sort((a, b) => a.z - b.z);
+  for (const part of ordered) {
+    const img = rigImages[part.id];
+    if (!img || !img.complete || !img.naturalWidth) continue;
+    rigCtx.save();
+    if (arm.has(part.id) && shoulder) {
+      rigCtx.translate(shoulder.pivot[0] * s, shoulder.pivot[1] * s);
+      rigCtx.rotate(ang);
+      rigCtx.translate(-shoulder.pivot[0] * s, -shoulder.pivot[1] * s);
+    }
+    rigCtx.drawImage(img, part.x * s, part.y * s, part.w * s, part.h * s);
+    rigCtx.restore();
+  }
+}
+const rigWait = setInterval(() => {
+  const ready = rigParts.length && rigParts.every((p) => rigImages[p.id] && rigImages[p.id].complete);
+  if (ready) { clearInterval(rigWait); drawRig(); }
+}, 80);
+
 document.getElementById("mode-play").addEventListener("click", () => setMode("play"));
 document.getElementById("mode-stills").addEventListener("click", () => setMode("stills"));
 setMode("play");

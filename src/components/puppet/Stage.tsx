@@ -1,51 +1,13 @@
-import { useEffect, useRef, useState } from "react";
 import { LiveCharacter } from "@/components/puppet/LiveCharacter";
 import { usePuppet } from "@/lib/puppet/store";
-import { EMOTIONS } from "@/lib/puppet/types";
+import { expressionSrc } from "@/lib/puppet/views";
 import { cn } from "@/lib/utils";
-
-function useRaf(cb: (dt: number) => void) {
-  const cbRef = useRef(cb);
-  cbRef.current = cb;
-  useEffect(() => {
-    let raf = 0;
-    let last = performance.now();
-    const loop = (now: number) => {
-      const dt = Math.min(0.1, (now - last) / 1000);
-      last = now;
-      cbRef.current(dt);
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
-  }, []);
-}
 
 export function Stage() {
   const emotion = usePuppet((s) => s.emotion);
+  const blink = usePuppet((s) => s.blink);
   const meshGlow = usePuppet((s) => s.meshGlow);
-  const [blinkClosed, setBlinkClosed] = useState(false);
-  const blinkT = useRef(2.8);
-  const blinkPhase = useRef(0);
-
-  useRaf((dt) => {
-    blinkT.current -= dt;
-    if (blinkPhase.current > 0) {
-      blinkPhase.current += dt * 12;
-      if (blinkPhase.current >= 1) {
-        blinkPhase.current = 0;
-        setBlinkClosed(false);
-      } else {
-        setBlinkClosed(blinkPhase.current > 0.18 && blinkPhase.current < 0.62);
-      }
-    } else if (blinkT.current <= 0) {
-      blinkPhase.current = 0.01;
-      blinkT.current = 2.8 + Math.random() * 3.6;
-    }
-  });
-
-  const emotionSrc = EMOTIONS.find((e) => e.id === emotion)?.src ?? "/puppet/emotions/neutral.png";
-  const faceSrc = blinkClosed ? "/puppet/blink/closed.png" : emotionSrc;
+  const faceSrc = expressionSrc(emotion, false, blink);
 
   return (
     <div className="stage-vignette relative flex h-full min-h-0 w-full flex-col overflow-hidden">

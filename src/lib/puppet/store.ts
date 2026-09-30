@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { BONE_DEFS, IDLE_BONES, type Bones, type BoneId, type ClipId, type EmotionId } from "./types";
-import { lerpBones, POSES } from "./clips";
+import { CLIP_KEYS, lerpBones, POSES } from "./clips";
 
 const SAVE_KEY = "shadowveil.poses.v1";
 
@@ -92,11 +92,10 @@ export const usePuppet = create<PuppetState>((set, get) => ({
     })),
   setEmotion: (id) => set({ emotion: id }),
   playClip: (id) => {
-    const pose = POSES[id];
     set({
       clip: id,
       playing: true,
-      target: pose ? { ...pose } : null,
+      target: CLIP_KEYS[id] ? null : POSES[id] ? { ...POSES[id] } : null,
     });
   },
   stop: () => set({ playing: false, clip: "live", target: null }),

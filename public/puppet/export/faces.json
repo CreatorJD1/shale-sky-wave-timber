@@ -1,0 +1,76 @@
+{
+  "kept": [
+    {
+      "id": "neutral",
+      "src": "/puppet/emotions/neutral.png",
+      "mouth": "closed",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "anger",
+      "src": "/puppet/emotions/anger.png",
+      "mouth": "closed",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "sorrow",
+      "src": "/puppet/emotions/sorrow.png",
+      "mouth": "closed",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "shock",
+      "src": "/puppet/emotions/shock.png",
+      "mouth": "open",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "smirk",
+      "src": "/puppet/emotions/smirk.png",
+      "mouth": "closed",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "focus",
+      "src": "/puppet/emotions/focus.png",
+      "mouth": "closed",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "soft",
+      "src": "/puppet/emotions/soft.png",
+      "mouth": "closed",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "blink-open",
+      "src": "/puppet/blink/open.png",
+      "mouth": "closed",
+      "eyes": "amber left, green right"
+    },
+    {
+      "id": "blink-closed",
+      "src": "/puppet/blink/closed.png",
+      "mouth": "closed",
+      "eyes": "shut"
+    },
+    {
+      "id": "wink",
+      "src": "/puppet/blink/half2.png",
+      "mouth": "closed",
+      "eyes": "green eye shut, amber eye open. Not a half blink."
+    }
+  ],
+  "rejected": [
+    {
+      "id": "joy",
+      "src": "/puppet/emotions/joy.png",
+      "reason": "amber and green are swapped"
+    },
+    {
+      "id": "blink-half",
+      "src": "/puppet/blink/half.png",
+      "reason": "named half, but both eyes are open"
+    }
+  ]
+}

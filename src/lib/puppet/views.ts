@@ -91,6 +91,19 @@ export function viewLabel(yaw: number, hinge = false) {
   return hinge ? nearestHinge(yaw).label : nearestView(yaw).label;
 }
 
-export function expressionSrc(_emotion: string, _blink = false) {
-  return "/puppet/rig/front.png";
+/** Faces whose eyes are amber on the viewer's left and green on the right. Joy is omitted: those eyes are swapped. */
+export const FACE_OK: { id: string; src: string; mouth: "closed" | "open" }[] = [
+  { id: "neutral", src: "/puppet/emotions/neutral.png", mouth: "closed" },
+  { id: "anger", src: "/puppet/emotions/anger.png", mouth: "closed" },
+  { id: "sorrow", src: "/puppet/emotions/sorrow.png", mouth: "closed" },
+  { id: "shock", src: "/puppet/emotions/shock.png", mouth: "open" },
+  { id: "smirk", src: "/puppet/emotions/smirk.png", mouth: "closed" },
+  { id: "focus", src: "/puppet/emotions/focus.png", mouth: "closed" },
+  { id: "soft", src: "/puppet/emotions/soft.png", mouth: "closed" },
+];
+
+/** Open or closed only. A rejected emotion falls back to neutral. */
+export function expressionSrc(emotion: string, blink = false, open = 1) {
+  if (blink || open < 0.5) return "/puppet/blink/closed.png";
+  return FACE_OK.find((f) => f.id === emotion)?.src ?? "/puppet/emotions/neutral.png";
 }
