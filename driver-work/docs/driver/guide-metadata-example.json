@@ -1,0 +1,6 @@
+{
+  "schema": "character-driver-guide/1",
+  "characterId": "shadowveil",
+  "revision": "replace-with-your-guide-revision",
+  "notes": "Optional metadata. Do not invent missing measurements. No calibration is automatically applied."
+}

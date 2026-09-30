@@ -1,0 +1,37 @@
+{
+  "scope": "Only handoff helper checks; no app/rig or browser testing.",
+  "checks": [
+    {
+      "check": "tools/verify_bundle.py parses",
+      "pass": true
+    },
+    {
+      "check": "tools/extract_art.py parses",
+      "pass": true
+    },
+    {
+      "check": "Three selected originals extracted unchanged",
+      "pass": true
+    },
+    {
+      "check": "Identical existing extraction is safe to repeat",
+      "pass": true
+    },
+    {
+      "check": "Extractor refuses to replace different existing image",
+      "pass": true
+    },
+    {
+      "check": "Unknown asset ID rejected",
+      "pass": true
+    },
+    {
+      "check": "Protected input output path rejected",
+      "pass": true
+    },
+    {
+      "check": "User-selected mounted driver remains unchanged",
+      "pass": true
+    }
+  ]
+}

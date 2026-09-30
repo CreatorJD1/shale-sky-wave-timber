@@ -1,0 +1,73 @@
+{
+  "canvas": [
+    512,
+    1100
+  ],
+  "total": 100,
+  "fps": 12,
+  "clips": [
+    {
+      "id": "stand",
+      "label": "Stand turn",
+      "fps": 12,
+      "frames": 12,
+      "kind": "angles"
+    },
+    {
+      "id": "look",
+      "label": "Look around",
+      "fps": 12,
+      "frames": 12,
+      "kind": "angles"
+    },
+    {
+      "id": "idle",
+      "label": "Idle",
+      "fps": 12,
+      "frames": 12,
+      "kind": "cycle"
+    },
+    {
+      "id": "hinge",
+      "label": "Hinge",
+      "fps": 12,
+      "frames": 12,
+      "kind": "cycle"
+    },
+    {
+      "id": "wave",
+      "label": "Wave",
+      "fps": 12,
+      "frames": 12,
+      "kind": "cycle"
+    },
+    {
+      "id": "walk",
+      "label": "Walk",
+      "fps": 12,
+      "frames": 12,
+      "kind": "cycle"
+    },
+    {
+      "id": "crouch",
+      "label": "Crouch",
+      "fps": 12,
+      "frames": 12,
+      "kind": "cycle"
+    },
+    {
+      "id": "reach",
+      "label": "Reach",
+      "fps": 12,
+      "frames": 12,
+      "kind": "cycle"
+    }
+  ],
+  "extras": [
+    "blink",
+    "breath",
+    "shift",
+    "joy"
+  ],
+  "note": "8 actions \u00d7 12 frames + 4 extras = 100. Sheet proxies until on-model gens land."
+}

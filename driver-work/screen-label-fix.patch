@@ -1,0 +1,246 @@
+--- a/src/lib/puppet/driver/app.ts
++++ b/src/lib/puppet/driver/app.ts
+@@ -5,8 +5,9 @@
+ import { type Vec3, type View3, toXYZ, project3, v3, minus } from './math3.js';
+ import { type ProjectDoc, type GuideRecord, type Diagnostic, createProject, revise, inspectGuideHTML, stageGuide, approveGuide, validateProject, shaText, firstBatch } from './document.js';
+ import { ProjectStore } from './storage.js';
+-import { beginNodeGrab, solveNodeGrab, projectScreen, nodeLabel, screenSide, pickNode,
++import { beginNodeGrab, solveNodeGrab, projectScreen, screenSide, pickNode,
+     rotateInView, shortestDegrees, RING_RADIUS, type NodeGrab } from './controls.js';
++import { jointPresentation, validLabelBasis, type LabelBasis } from './labels.js';
+ export interface MountOptions {
+     assets: Record<string, string>;
+     assetSetId: string;
+@@ -17,6 +18,7 @@
+     setAngle(id: string, axis: Axis, value: number): void;
+     setCamera(v: Partial<View3>): void;
+     setOverlay(show: boolean): void;
++    setLabelBasis(basis: LabelBasis): void;
+     setDiagnostic(v: Diagnostic): void;
+     setPose(p: DriverPose): void;
+     importGuide(text: string, name: string): Promise<void>;
+@@ -67,9 +69,9 @@
+         throw new DOMException('Mount cancelled', 'AbortError');
+     }
+     host.innerHTML = `<div class="cd-shell">
+- <header class="cd-head"><div><p class="cd-kicker">CHARACTER DRIVER · FOUNDATION 0.1.1 · DIRECTION FIX</p><h1>Shadowveil</h1><p class="cd-sub">Invisible 3D driver. Illustrated 2D output.</p></div><div class="cd-actions"><button data-action="export">Export project</button><button data-action="open">Open project</button><button data-action="guide" class="cd-accent">Import guide HTML</button></div></header>
++ <header class="cd-head"><div><p class="cd-kicker">CHARACTER DRIVER · FOUNDATION 0.1.2 · SCREEN LABELS</p><h1>Shadowveil</h1><p class="cd-sub">Invisible 3D driver. Illustrated 2D output.</p></div><div class="cd-actions"><button data-action="export">Export project</button><button data-action="open">Open project</button><button data-action="guide" class="cd-accent">Import guide HTML</button></div></header>
+  <div class="cd-banner"><span class="cd-dot"></span><strong data-guide-status>Awaiting definitive guide</strong><span>Existing artwork is provisional. No new art has been generated.</span></div>
+- <main class="cd-main"><section class="cd-stage" aria-label="Single character viewport"><div class="cd-toolbar"><label>Display <select aria-label="Display" data-display><option value="art">2D artwork</option><option value="weights">Actual weights</option><option value="seams">Shared seams</option></select></label><label class="cd-check"><input type="checkbox" data-overlay>Driver overlay</label><label>Input <select aria-label="Input mode" data-interaction><option value="pose">Place nodes / rotate ring</option><option value="orbit">Orbit camera</option></select></label></div><div class="cd-canvas-wrap"><canvas aria-label="Shadowveil driver and 2D artwork" tabindex="0"></canvas><div class="cd-unsupported" hidden><strong>Registered artwork unavailable</strong><p data-unavailable></p><button data-action="front">Return to front</button></div><div class="cd-input-hint" data-input-hint>Drag nodes in screen directions. Ring rotates the selected bone. R / L are her anatomical sides.</div><div class="cd-view-label" data-view-label></div></div><div class="cd-camera"><div class="cd-bookmarks"><button data-view="0">Front</button><button data-view="45">¾</button><button data-view="90">Side</button><button data-view="180">Back</button><label><select data-background aria-label="Background"><option value="dark">Dark</option><option value="light">Light</option><option value="checker">Checkerboard</option></select></label></div><label>Camera yaw <output data-yaw-read></output><input data-yaw aria-label="Camera yaw" type="range" min="-180" max="180" step="1"></label><label>Camera pitch <output data-pitch-read></output><input data-pitch aria-label="Camera pitch" type="range" min="-60" max="60" step="1"></label></div></section>
++ <main class="cd-main"><section class="cd-stage" aria-label="Single character viewport"><div class="cd-toolbar"><label>Display <select aria-label="Display" data-display><option value="art">2D artwork</option><option value="weights">Actual weights</option><option value="seams">Shared seams</option></select></label><label class="cd-check"><input type="checkbox" data-overlay>Driver overlay</label><label>Input <select aria-label="Input mode" data-interaction><option value="pose">Place nodes / rotate ring</option><option value="orbit">Orbit camera</option></select></label><label>Labels <select aria-label="Joint label convention" data-label-basis><option value="screen">Screen left / right</option><option value="anatomical">Character anatomy</option></select></label></div><div class="cd-canvas-wrap"><canvas aria-label="Shadowveil driver and 2D artwork" tabindex="0"></canvas><div class="cd-unsupported" hidden><strong>Registered artwork unavailable</strong><p data-unavailable></p><button data-action="front">Return to front</button></div><div class="cd-input-hint" data-input-hint>Screen labels match this view. Round node = position; ring = rotate. Anatomy IDs stay fixed.</div><div class="cd-view-label" data-view-label></div></div><div class="cd-camera"><div class="cd-bookmarks"><button data-view="0">Front</button><button data-view="45">¾</button><button data-view="90">Side</button><button data-view="180">Back</button><label><select data-background aria-label="Background"><option value="dark">Dark</option><option value="light">Light</option><option value="checker">Checkerboard</option></select></label></div><label>Camera yaw <output data-yaw-read></output><input data-yaw aria-label="Camera yaw" type="range" min="-180" max="180" step="1"></label><label>Camera pitch <output data-pitch-read></output><input data-pitch aria-label="Camera pitch" type="range" min="-60" max="60" step="1"></label></div></section>
+  <aside class="cd-inspector"><div class="cd-section"><p class="cd-kicker">ONE PERSISTENT PROJECT</p><div class="cd-status" data-project></div><p class="cd-small" data-storage></p></div><div class="cd-section"><div class="cd-section-title"><h2>Driver control</h2><span class="cd-badge">PROVISIONAL</span></div><label>Selected joint<select aria-label="Selected joint" data-bone></select></label><p class="cd-small" data-bone-hint></p><div class="cd-row cd-nudge" aria-label="Screen-space node movement"><button data-nudge="-5,0" aria-label="Move selected node screen-left">← Left</button><button data-nudge="5,0" aria-label="Move selected node screen-right">Right →</button><button data-nudge="0,-5" aria-label="Move selected node screen-up">↑ Up</button><button data-nudge="0,5" aria-label="Move selected node screen-down">↓ Down</button></div><p class="cd-small">Node = position via its parent chain. Ring = rotate this bone. Limits stop unreachable targets; they do not reverse your drag.</p><div data-sliders></div><p class="cd-small">Advanced local XYZ angles (not screen left/right); stored as quaternions. Envelopes are temporary art constraints, not anatomical approval.</p><div class="cd-row"><button data-action="neutral">Neutral</button><button data-action="gesture">Gentle lift</button><button data-action="depth">Depth test</button><button data-action="undo">Undo</button></div></div>
+  <details class="cd-section" data-guide-panel><summary>Definitive guide & revision review</summary><p class="cd-small">Ordinary HTML is accepted as an inert reference. Optional structured data is staged, never executed or applied automatically.</p><div data-guide-info></div><button data-action="approve" disabled>Approve selected reference</button><p class="cd-small">Approval invalidates old artwork registration. The current skeleton is retained for comparison; measurements are not auto-fitted.</p></details>
+  <details class="cd-section"><summary>First art batch · 12 planned assets</summary><p class="cd-small">Anatomical right arm across front, right three-quarter and right profile. Waiting for the guide and registration proof.</p><div data-queue></div><button data-action="queue">Export batch specification</button></details>
+@@ -88,7 +90,7 @@
+     for (const b of doc.driver.bones) {
+         const o = document.createElement('option');
+         o.value = b.id;
+-        o.textContent = nodeLabel(b.id);
++        o.textContent = jointPresentation(b.id, evaluateDriver(doc.driver, doc.pose), doc.workspace.camera, doc.workspace.labelBasis ?? 'screen').primary;
+         bones.append(o);
+     }
+     const sliderElements: Record<string, HTMLInputElement> = {};
+@@ -208,8 +210,20 @@
+             input.value = String(a[axis]);
+             el(`[data-axis-read="${axis}"]`).textContent = a[axis].toFixed(1) + '°';
+         }
+-        const world = evaluateDriver(doc.driver,doc.pose);
+-        el('[data-bone-hint]').textContent = nodeLabel(def.id) + ' · ' + screenSide(def.id,world,w.camera)
++        const world = evaluateDriver(doc.driver,doc.pose), basis = w.labelBasis ?? 'screen';
++        // Refresh text in place: values and selected bone remain stable as labels change.
++        for (const option of bones.options) {
++            const label = jointPresentation(option.value, world, w.camera, basis);
++            const text = label.primary + ' [' + option.value + ']';
++            if (option.textContent !== text) option.textContent = text;
++            option.title = label.detail;
++        }
++        const label = jointPresentation(def.id, world, w.camera, basis);
++        el<HTMLSelectElement>('[data-label-basis]').value = basis;
++        el('[data-input-hint]').textContent = basis === 'screen'
++            ? 'SCREEN LABELS · Left/right follow the visible node relative to the pelvis. Drag in screen directions.'
++            : 'ANATOMY LABELS · Left/right belong to the character. Drag still follows screen directions.';
++        el('[data-bone-hint]').textContent = label.primary + ' · ' + label.detail + ' · ' + screenSide(def.id,world,w.camera)
+             + ' · parent: ' + (def.parent ?? 'world') + (def.id.startsWith('upper-')||def.id.startsWith('clavicle-')
+             ? '. Shoulder socket position follows the torso; use the ring to swing the arm.' : '');
+         el<HTMLInputElement>('[data-yaw]').value = String(w.camera.yaw);
+@@ -351,8 +365,13 @@
+                 ctx.font = '12px system-ui';
+                 ctx.strokeStyle = '#10212d';
+                 ctx.lineWidth = 4;
+-                ctx.strokeText(nodeLabel(b.id), p.x + 10, p.y - 10);
+-                ctx.fillText(nodeLabel(b.id), p.x + 10, p.y - 10);
++                const text = jointPresentation(b.id, world, doc.workspace.camera, doc.workspace.labelBasis ?? 'screen').primary;
++                const tw = ctx.measureText(text).width;
++                // Keep the complete label inside a phone viewport, including screen-right nodes.
++                const tx = Math.max(8, Math.min(width - tw - 8, p.x + 10));
++                const ty = Math.max(65, Math.min(height - 25, p.y - 15));
++                ctx.strokeText(text, tx, ty);
++                ctx.fillText(text, tx, ty);
+             }
+         }
+         const center=screen(world[doc.workspace.selectedBone].position);
+@@ -363,11 +382,22 @@
+             ctx.beginPath();ctx.moveTo(t.x-6,t.y);ctx.lineTo(t.x+6,t.y);ctx.moveTo(t.x,t.y-6);ctx.lineTo(t.x,t.y+6);ctx.stroke();
+             ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(center.x,center.y);ctx.lineTo(t.x,t.y);ctx.stroke();ctx.setLineDash([]);
+         }
+-        // Side markers describe anatomical identity at its projected location, not a mirror switch.
+-        ctx.font='bold 11px system-ui';
++        // Markers use the same presentation function as picking labels and the inspector.
++        // Never turn screen convention into an ID remap or an artwork mirror operation.
++        ctx.font='bold 10px system-ui';
++        let overlapDrawn = false;
+         for (const side of ['R','L']) {
+-            const p=screen(world['upper-'+side].position);
+-            ctx.fillStyle='#83dbd0';ctx.fillText(side,p.x+(side==='R'?-16:8),p.y-10);
++            const id = 'upper-' + side, p = screen(world[id].position);
++            const label = jointPresentation(id, world, doc.workspace.camera, doc.workspace.labelBasis ?? 'screen');
++            if (label.location === 'overlap' && (doc.workspace.labelBasis ?? 'screen') === 'screen') {
++                if (overlapDrawn) continue;
++                overlapDrawn = true;
++            }
++            const tw = ctx.measureText(label.marker).width;
++            const left = label.location === 'left' || (label.location === 'overlap' && side === 'R' && doc.workspace.labelBasis === 'anatomical');
++            const tx = Math.max(6, Math.min(width - tw - 6, left ? p.x - tw - 8 : p.x + 8));
++            ctx.fillStyle='#83dbd0';ctx.strokeStyle='#10212d';ctx.lineWidth=3;
++            ctx.strokeText(label.marker,tx,p.y-10);ctx.fillText(label.marker,tx,p.y-10);
+         }
+         // A simple depth axis confirms 3D orientation; it is never part of the illustration.
+         const o = { x: 45, y: height - 36 };
+@@ -403,6 +433,14 @@
+     for (const button of host.querySelectorAll<HTMLButtonElement>('[data-action]'))
+         button.addEventListener('click', () => { Promise.resolve().then(() => actions[button.dataset.action!]()).catch(e => status(String(e), true)); });
+     bones.addEventListener('change', () => commit(n => n.workspace.selectedBone = bones.value));
++    function setLabelBasis(basis: LabelBasis) {
++        if (!validLabelBasis(basis)) throw Error('Invalid label basis');
++        if (drag) cancelDrag();
++        commit(n => n.workspace.labelBasis = basis);
++        status(basis === 'screen' ? 'Screen labels enabled. Bone IDs, artwork and input directions are unchanged.'
++            : 'Character-anatomy labels enabled. Drag directions still follow the screen.');
++    }
++    el<HTMLSelectElement>('[data-label-basis]').addEventListener('change', e => setLabelBasis((e.target as HTMLSelectElement).value as LabelBasis));
+     el<HTMLInputElement>('[data-overlay]').addEventListener('change', e => commit(n => n.workspace.showDriver = (e.target as HTMLInputElement).checked));
+     el<HTMLSelectElement>('[data-display]').addEventListener('change', e => commit(n => n.workspace.diagnostic = (e.target as HTMLSelectElement).value as Diagnostic));
+     el<HTMLSelectElement>('[data-background]').addEventListener('change', e => commit(n => n.workspace.background = (e.target as HTMLSelectElement).value as ProjectDoc['workspace']['background']));
+@@ -534,9 +572,9 @@
+         store.save(doc).catch(() => { }).finally(() => store.close());
+     else
+         store.close(); host.replaceChildren(); }
+-    const api: DriverAPI = { getProject: () => structuredClone(doc), setAngle: (id, a, v) => setPose(withAngle(doc.pose, id, a, v)), setCamera, setOverlay: (show) => commit(n => n.workspace.showDriver = show), setDiagnostic: v => commit(n => n.workspace.diagnostic = v), setPose, importGuide, approveGuide: approve, exportProject, importProject, save, undo, metrics: () => ({ version: 'foundation-0.1.1', projectId: doc.id, revision: doc.revision, rigBones: doc.driver.bones.length, driverRevision: doc.driver.revision, pose: structuredClone(doc.pose), camera: { ...doc.workspace.camera }, coverage: artCoverage(doc.pose, doc.workspace.camera, doc.registration.status), shape: { minScale: shape.minScale, maxScale: shape.maxScale, seamGap: shape.seamGap, accepted: shape.accepted }, weights: surface.auditWeights(), guides: doc.guides.length, storageAvailable, drawMs, drawCount, lastManipulation, fit: {...fit},
++    const api: DriverAPI = { getProject: () => structuredClone(doc), setAngle: (id, a, v) => setPose(withAngle(doc.pose, id, a, v)), setCamera, setOverlay: (show) => commit(n => n.workspace.showDriver = show), setLabelBasis, setDiagnostic: v => commit(n => n.workspace.diagnostic = v), setPose, importGuide, approveGuide: approve, exportProject, importProject, save, undo, metrics: () => ({ version: 'foundation-0.1.2', labelBasis: doc.workspace.labelBasis ?? 'screen', projectId: doc.id, revision: doc.revision, rigBones: doc.driver.bones.length, driverRevision: doc.driver.revision, pose: structuredClone(doc.pose), camera: { ...doc.workspace.camera }, coverage: artCoverage(doc.pose, doc.workspace.camera, doc.registration.status), shape: { minScale: shape.minScale, maxScale: shape.maxScale, seamGap: shape.seamGap, accepted: shape.accepted }, weights: surface.auditWeights(), guides: doc.guides.length, storageAvailable, drawMs, drawCount, lastManipulation, fit: {...fit},
+         handles:doc.driver.bones.map(b=>{const world=evaluateDriver(doc.driver,doc.pose);return {
+-            id:b.id,label:nodeLabel(b.id),...screen(world[b.id].position),
++            ...jointPresentation(b.id,world,doc.workspace.camera,doc.workspace.labelBasis ?? 'screen'),label:jointPresentation(b.id,world,doc.workspace.camera,doc.workspace.labelBasis ?? 'screen').primary,...screen(world[b.id].position),
+             screenSide:screenSide(b.id,world,doc.workspace.camera)}}),
+         world: evaluateDriver(doc.driver, doc.pose) }), destroy, canvas };
+     opts.signal?.addEventListener('abort', destroy, { once: true });
+--- a/src/lib/puppet/driver/document.ts
++++ b/src/lib/puppet/driver/document.ts
+@@ -1,3 +1,4 @@
++import { validLabelBasis, type LabelBasis } from './labels.js';
+ import { sha256Text } from "./sha256.js";
+ import { provisionalRig, neutralDriver, constrainPose, validateRig, type DriverRig, type DriverPose } from './driver.js';
+ import type { View3 } from './math3.js';
+@@ -64,6 +65,8 @@
+         diagnostic: Diagnostic;
+         background: 'dark' | 'light' | 'checker';
+         interaction: 'pose' | 'orbit';
++        /** UI preference only; absent in legacy 0.1/0.1.1 exports. */
++        labelBasis?: LabelBasis;
+     };
+     guides: GuideRecord[];
+     activeGuideId: string | null;
+@@ -88,7 +91,7 @@
+         ];
+     });
+ }
+-export function createProject(assetSetId: string, sourceHash: string): ProjectDoc { const driver = provisionalRig(), stamp = now(); return { schema: PROJECT_SCHEMA, id: uuid(), characterId: 'shadowveil', name: 'Shadowveil · driver project', revision: 0, createdAt: stamp, updatedAt: stamp, assetSetId, driver, pose: neutralDriver(driver), registration: { id: 'legacy-front-pilot', driverRevision: driver.revision, sourceHash, status: 'provisional', approvedGuideHash: null }, workspace: { camera: { yaw: 0, pitch: 0, zoom: 1 }, selectedBone: 'forearm-R', showDriver: false, diagnostic: 'art', background: 'dark', interaction: 'pose' }, guides: [], activeGuideId: null, queue: firstBatch(), savedPoses: [] }; }
++export function createProject(assetSetId: string, sourceHash: string): ProjectDoc { const driver = provisionalRig(), stamp = now(); return { schema: PROJECT_SCHEMA, id: uuid(), characterId: 'shadowveil', name: 'Shadowveil · driver project', revision: 0, createdAt: stamp, updatedAt: stamp, assetSetId, driver, pose: neutralDriver(driver), registration: { id: 'legacy-front-pilot', driverRevision: driver.revision, sourceHash, status: 'provisional', approvedGuideHash: null }, workspace: { camera: { yaw: 0, pitch: 0, zoom: 1 }, selectedBone: 'forearm-R', showDriver: false, diagnostic: 'art', background: 'dark', interaction: 'pose', labelBasis: 'screen' }, guides: [], activeGuideId: null, queue: firstBatch(), savedPoses: [] }; }
+ export function revise(d: ProjectDoc, edit: (next: ProjectDoc) => void): ProjectDoc { const n = structuredClone(d); edit(n); n.revision = d.revision + 1; n.updatedAt = now(); return n; }
+ export async function shaText(text: string): Promise<string> { if (!globalThis.crypto?.subtle)
+     return sha256Text(text); const h = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)); return [...new Uint8Array(h)].map(n => n.toString(16).padStart(2, '0')).join(''); }
+@@ -173,6 +176,8 @@
+     const w = d.workspace;
+     if (!w || !d.driver.bones.some(b => b.id === w.selectedBone) || !['art', 'weights', 'seams'].includes(w.diagnostic) || !['dark', 'light', 'checker'].includes(w.background) || !['pose', 'orbit'].includes(w.interaction) || typeof w.showDriver !== 'boolean')
+         throw new Error('Invalid workspace');
++    if (w.labelBasis !== undefined && !validLabelBasis(w.labelBasis))
++        throw new Error('Invalid label basis');
+     for (const [key, range] of Object.entries({ yaw: [-180, 180], pitch: [-60, 60], zoom: [.5, 1.5] })) {
+         const n = w.camera[key as keyof View3];
+         if (!Number.isFinite(n) || n < range[0] || n > range[1])
+@@ -206,5 +211,6 @@
+         throw new Error('Saved pose calibration/limit mismatch'); return structuredClone(p); });
+     const out = createProject(assetSetId, sourceHash);
+     Object.assign(out, { id: d.id, name: d.name, revision: d.revision, createdAt: d.createdAt, updatedAt: d.updatedAt, pose: structuredClone(d.pose), registration: structuredClone(d.registration), workspace: structuredClone(w), guides: verified, activeGuideId: d.activeGuideId, savedPoses: saved });
++    out.workspace.labelBasis = w.labelBasis ?? 'screen';
+     return out;
+ }
+--- a/src/lib/puppet/driver/labels.ts
++++ b/src/lib/puppet/driver/labels.ts
+@@ -0,0 +1,43 @@
++/** Presentation-only labels. Never write to bone IDs, transforms, weights or input axes. */
++import { anatomicalSide, nodeLabel, screenSide } from './controls.js';
++import { type WorldRig } from './driver.js';
++import { project3, type View3 } from './math3.js';
++
++export type LabelBasis = 'screen' | 'anatomical';
++export interface JointPresentation {
++    id: string;
++    primary: string;
++    anatomical: string;
++    detail: string;
++    marker: string;
++    location: 'left' | 'right' | 'centre' | 'overlap' | 'midline';
++}
++export function validLabelBasis(value: unknown): value is LabelBasis {
++    return value === 'screen' || value === 'anatomical';
++}
++/** Screen side is relative to the projected pelvis, not the window midpoint.
++ * A crossed hand can change screen side without changing its anatomical identity.
++ * Coincident left/right joints (e.g. a profile view) have no meaningful screen-side label.
++ */
++export function jointPresentation(id: string, world: WorldRig, camera: View3,
++    basis: LabelBasis = 'screen'): JointPresentation {
++    if (!world[id] || !world.pelvis) throw Error('Unknown label node: ' + id);
++    if (!validLabelBasis(basis)) throw Error('Invalid label basis');
++    const side = anatomicalSide(id);
++    const name = nodeLabel(id).replace(/^Her (left|right) · /, '');
++    const anatomical = side === 'midline' ? `Midline · ${name}` : `Character ${side} · ${name}`;
++    let location: JointPresentation['location'] = 'midline';
++    if (side !== 'midline') {
++        const other = id.replace(/-[RL]$/, side === 'left' ? '-R' : '-L');
++        const p = project3(world[id].position, camera);
++        const q = world[other] ? project3(world[other].position, camera) : null;
++        const loc = screenSide(id, world, camera);
++        location = q && Math.hypot(p.x - q.x, p.y - q.y) < 2 ? 'overlap'
++            : loc === 'screen-left' ? 'left' : loc === 'screen-right' ? 'right' : 'centre';
++    }
++    const primary = basis === 'anatomical' ? (side === 'midline' ? name : anatomical)
++        : location === 'midline' ? name : `Screen ${location} · ${name}`;
++    const marker = basis === 'anatomical' ? (side === 'left' ? 'Char L' : side === 'right' ? 'Char R' : '')
++        : ({left:'Screen L',right:'Screen R',centre:'Centre',overlap:'Overlap',midline:''})[location];
++    return { id, primary, anatomical, detail: `${anatomical} · ID: ${id}`, marker, location };
++}
+--- a/scripts/build-driver.mjs
++++ b/scripts/build-driver.mjs
+@@ -13,6 +13,6 @@
+ const factories=walk(modules).filter(p=>p.endsWith('.js')).map(p=>{const id=path.relative(modules,p).replaceAll('\\','/');const code=ts.transpileModule(fs.readFileSync(p,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;return JSON.stringify(id)+':function(require,module,exports){\n'+code+'\n}';}).join(',\n');
+ const runtime=`const factories={${factories}},cache={};function get(id){if(cache[id])return cache[id].exports;if(!factories[id])throw Error('Missing module '+id);const m={exports:{}};cache[id]=m;const req=(p)=>{const parts=(id.split('/').slice(0,-1).join('/')+'/'+p).split('/'),out=[];for(const v of parts){if(v==='.'||!v)continue;if(v==='..')out.pop();else out.push(v);}return get(out.join('/'));};factories[id](req,m,m.exports);return m.exports;}`;
+ const css=fs.readFileSync(path.join(dir,'style.css'),'utf8');
+-const html=`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'"><title>Shadowveil · Direction Fix 0.1.1</title><style>${css}</style></head><body><div id="app">Loading the character project…</div><script>(()=>{'use strict';${runtime}\nconst assets=${JSON.stringify(assets).replaceAll('<','\\u003c')};get('driver/app.js').mount(document.getElementById('app'),{assets,assetSetId:${JSON.stringify(assetSetId)}}).then(api=>{window.characterDriver=api;window.driverReady=true;}).catch(e=>{document.getElementById('app').textContent='Unable to load: '+e.message;console.error(e);});})();</script></body></html>`;
+-const out=path.join(root,'Shadowveil_Character_Driver_Foundation.html');fs.writeFileSync(out,html);fs.writeFileSync(path.join(dir,'index.html'),html);fs.writeFileSync(path.join(root,'build-manifest.json'),JSON.stringify({version:'foundation-0.1.1',assetSetId,htmlSha256:crypto.createHash('sha256').update(html).digest('hex'),legacySourceHash:atlas.source_sha256,standaloneBytes:Buffer.byteLength(html)},null,2));
++const html=`<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'none'"><title>Shadowveil · Screen Labels 0.1.2</title><style>${css}</style></head><body><div id="app">Loading the character project…</div><script>(()=>{'use strict';${runtime}\nconst assets=${JSON.stringify(assets).replaceAll('<','\\u003c')};get('driver/app.js').mount(document.getElementById('app'),{assets,assetSetId:${JSON.stringify(assetSetId)}}).then(api=>{window.characterDriver=api;window.driverReady=true;}).catch(e=>{document.getElementById('app').textContent='Unable to load: '+e.message;console.error(e);});})();</script></body></html>`;
++const out=path.join(root,'Shadowveil_Character_Driver_Foundation.html');fs.writeFileSync(out,html);fs.writeFileSync(path.join(dir,'index.html'),html);fs.writeFileSync(path.join(root,'build-manifest.json'),JSON.stringify({version:'foundation-0.1.2',assetSetId,htmlSha256:crypto.createHash('sha256').update(html).digest('hex'),legacySourceHash:atlas.source_sha256,standaloneBytes:Buffer.byteLength(html)},null,2));
+ console.log('Built',out,Buffer.byteLength(html),'bytes');
+--- a/scripts/activate-driver.mjs
++++ b/scripts/activate-driver.mjs
+@@ -7,8 +7,8 @@
+ if(!fs.existsSync(studio)||!fs.existsSync(pkg))throw new Error('Extract into the existing project root first. The standalone HTML does not require this step.');
+ const original=fs.readFileSync(studio,'utf8'),p=JSON.parse(fs.readFileSync(pkg,'utf8'));
+ const active=original.includes('DriverFoundation as Studio');
+-const build='node scripts/build-driver.mjs',test='node --test tests/driver/core.test.mjs tests/driver/direction.test.mjs';
+-if(active&&p.scripts?.['driver:build']===build&&p.scripts?.['driver:test']===test){console.log('Direction-fixed foundation already active; no files changed.');process.exit(0);}
++const build='node scripts/build-driver.mjs',test='node --test tests/driver/core.test.mjs tests/driver/direction.test.mjs tests/driver/labels.test.mjs';
++if(active&&p.scripts?.['driver:build']===build&&p.scripts?.['driver:test']===test){console.log('Screen-label-fixed foundation already active; no files changed.');process.exit(0);}
+ const backup=path.join(root,'driver-backup',new Date().toISOString().replaceAll(':','-'));
+ fs.mkdirSync(backup,{recursive:true});fs.copyFileSync(studio,path.join(backup,'Studio.tsx'));fs.copyFileSync(pkg,path.join(backup,'package.json'));
+ p.scripts={...p.scripts,'driver:build':build,'driver:test':test};

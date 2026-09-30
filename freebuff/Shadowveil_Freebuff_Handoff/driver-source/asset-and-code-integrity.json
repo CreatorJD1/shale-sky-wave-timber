@@ -1,0 +1,130 @@
+{
+  "allUnchanged": true,
+  "files": [
+    {
+      "file": "public/driver-foundation/assets.json",
+      "unchanged": true,
+      "sha256": "5f563b20e6cd70ae1147a765cbdf2d0964211604ba5d6d2a6202301abedacd9b"
+    },
+    {
+      "file": "public/pose-v5/arm-L.png",
+      "unchanged": true,
+      "sha256": "40d4f3992c8d686524d774a68fa05e8dd33852f4e44529a9853b6cb588672c8f"
+    },
+    {
+      "file": "public/pose-v5/arm-R.png",
+      "unchanged": true,
+      "sha256": "445347fb705a10245a2d5ca79cb702f19b0e1a9f01bbfbdfe9068cdb8356e056"
+    },
+    {
+      "file": "public/pose-v5/atlas.json",
+      "unchanged": true,
+      "sha256": "cb0240dd28568a76bc79ee6323d3c705e1978805a9051fec9178e40e36bd797a"
+    },
+    {
+      "file": "public/pose-v5/canon-1",
+      "unchanged": true,
+      "sha256": "51349e30b82b1ee156a62c0ff39d0e8e6a88a3547ef0d0d76fef86b7ee682a26"
+    },
+    {
+      "file": "public/pose-v5/canon-2",
+      "unchanged": true,
+      "sha256": "06b219d280cd2abea3b0b61f1e0a1a088c054fe35475d5fb7dfa151eff0348bc"
+    },
+    {
+      "file": "public/pose-v5/canon-3",
+      "unchanged": true,
+      "sha256": "85de53949d7860238833428b49bfe81fda21918cf3bb10ea9c7719734bd0ac2c"
+    },
+    {
+      "file": "public/pose-v5/canon-4",
+      "unchanged": true,
+      "sha256": "0684f9ccb3016243409a3e756a0c1fa87244ec5a8d979bff6a2dcf53e3648820"
+    },
+    {
+      "file": "public/pose-v5/foot-L.png",
+      "unchanged": true,
+      "sha256": "ebe368acb3dfac55c9b0fdc0dee89d4ff61905018933c6d84bc55fdc67b4488a"
+    },
+    {
+      "file": "public/pose-v5/foot-R.png",
+      "unchanged": true,
+      "sha256": "2a0734efd891c1d4124f0dde62de799711edfc2c78e8c11731092b676b9bdc71"
+    },
+    {
+      "file": "public/pose-v5/front-clean.png",
+      "unchanged": true,
+      "sha256": "91f1c231a593334bdc34ee8ead835ad23f853955e66eeb5465cf58f0e6a6f512"
+    },
+    {
+      "file": "public/pose-v5/hand-L.png",
+      "unchanged": true,
+      "sha256": "3f233730eb6020031fdfa784a355810406eeeb856f7a0c5dcee5bb2d882b40ac"
+    },
+    {
+      "file": "public/pose-v5/hand-R.png",
+      "unchanged": true,
+      "sha256": "5b2f6d032a8c5c5b2c93c1b837fa742805a7baf2efc6bf3a0fef65de40082532"
+    },
+    {
+      "file": "public/pose-v5/head.png",
+      "unchanged": true,
+      "sha256": "452b09de00ef6914367511f62cd64602ab2b0f1910315a5ee1b45d55f0c73328"
+    },
+    {
+      "file": "public/pose-v5/leg-L.png",
+      "unchanged": true,
+      "sha256": "e448d04a8b67a31deb0e8940d52e386b78e7b74125f985a550207f0c7f228dde"
+    },
+    {
+      "file": "public/pose-v5/leg-R.png",
+      "unchanged": true,
+      "sha256": "3df548c9eb91d241b03dce67c4a74389e4efe055136bc352ca3049cdc03df791"
+    },
+    {
+      "file": "public/pose-v5/reference-back.png",
+      "unchanged": true,
+      "sha256": "89029f6f9c1c684faafef761cdc97844f4a7e710dabea4ce448b8ce436df82f6"
+    },
+    {
+      "file": "public/pose-v5/reference-qtr.png",
+      "unchanged": true,
+      "sha256": "5330365e22454ccde3975149381017ef2fba4a5746ae88d2c1b06dabe5e4f5c8"
+    },
+    {
+      "file": "public/pose-v5/reference-side.png",
+      "unchanged": true,
+      "sha256": "2a736e578ee1cca8273ee7a106a00e331f9b82b88bc87862b812b82da0ce10c7"
+    },
+    {
+      "file": "public/pose-v5/skin-weights.json",
+      "unchanged": true,
+      "sha256": "a3f3b649f0bf5a356836384b1fc37d6539ea25e041285279c75c889491a3da66"
+    },
+    {
+      "file": "public/pose-v5/torso.png",
+      "unchanged": true,
+      "sha256": "5b8f590cd7bcad0fc34cbbeb4608fc67fa09efe5b9ee3f0ed2026bf2bcfa3e0c"
+    },
+    {
+      "file": "src/lib/puppet/driver/controls.ts",
+      "unchanged": true,
+      "sha256": "e55a076f1fc61199e20d4ac12fc2059d7f2941992fc3ea335c65d66c977e4d34"
+    },
+    {
+      "file": "src/lib/puppet/driver/driver.ts",
+      "unchanged": true,
+      "sha256": "43d6fa7474c9736927bb969594f4fc4c237f7b431563feea9af885f81f267336"
+    },
+    {
+      "file": "src/lib/puppet/driver/math3.ts",
+      "unchanged": true,
+      "sha256": "75b64aaca2c9198ed7644efdd9589506030eae9c89031b80647b55e43f2b2b27"
+    },
+    {
+      "file": "src/lib/puppet/pose-v5/surface.ts",
+      "unchanged": true,
+      "sha256": "bb4a9061ecadad37552e81bbc00cedbe4bad6b0c64d883b5b2c8b7c67c7ceb6a"
+    }
+  ]
+}

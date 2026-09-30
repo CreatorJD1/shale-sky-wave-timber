@@ -1,0 +1,1 @@
+import{t as e}from"./index-CTPadbbc.js";var t=e();function n(){return(0,t.jsx)(`iframe`,{title:`Shadowveil`,src:`/shadowveil-driver.html`,className:`fixed inset-0 h-[100dvh] w-full border-0 bg-[#0c121a]`})}export{n as component};

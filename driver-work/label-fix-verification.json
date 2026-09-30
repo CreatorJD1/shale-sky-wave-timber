@@ -1,0 +1,27 @@
+{
+  "version": "foundation-0.1.2",
+  "htmlSha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863",
+  "unitTests": {
+    "passed": 60,
+    "total": 60,
+    "newLabelTests": 13
+  },
+  "browser": {
+    "labelBrowser": {
+      "passed": 24,
+      "total": 24,
+      "htmlSha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863"
+    },
+    "retainedBrowser": {
+      "passed": 29,
+      "total": 29,
+      "htmlSha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863"
+    },
+    "directionBrowser": {
+      "passed": 49,
+      "total": 49,
+      "htmlSha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863"
+    }
+  },
+  "allCheckedAssetsAndCoreFilesUnchanged": true
+}

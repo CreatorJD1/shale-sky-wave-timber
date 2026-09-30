@@ -1,0 +1,141 @@
+{
+  "status": "planning-only",
+  "definitiveGuideReceived": false,
+  "tasks": [
+    {
+      "id": "sv.neutral.front",
+      "kind": "neutral",
+      "view": "front",
+      "side": "whole",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "approved-guide"
+      ],
+      "specification": "Same approved neutral registration, full body; no redesign, no automatic mirroring."
+    },
+    {
+      "id": "sv.arm.R.raised.front",
+      "kind": "arm-correction",
+      "view": "front",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.front"
+      ],
+      "specification": "Anatomical right shoulder/elbow correction against a saved hidden-driver pose; preserve attachment landmarks."
+    },
+    {
+      "id": "sv.hand.R.open.front",
+      "kind": "hand",
+      "view": "front",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.front"
+      ],
+      "specification": "Open palm with the approved wrist alignment, scale and finger anatomy; separate drawable layer."
+    },
+    {
+      "id": "sv.underarm.R.front",
+      "kind": "concealed",
+      "view": "front",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.front",
+        "sv.arm.R.raised.front"
+      ],
+      "specification": "Completed concealed shoulder/underarm and sleeve overlap. Not a crop of visible pixels only."
+    },
+    {
+      "id": "sv.neutral.three-quarter-R",
+      "kind": "neutral",
+      "view": "three-quarter-R",
+      "side": "whole",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "approved-guide"
+      ],
+      "specification": "Same approved neutral registration, full body; no redesign, no automatic mirroring."
+    },
+    {
+      "id": "sv.arm.R.raised.three-quarter-R",
+      "kind": "arm-correction",
+      "view": "three-quarter-R",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.three-quarter-R"
+      ],
+      "specification": "Anatomical right shoulder/elbow correction against a saved hidden-driver pose; preserve attachment landmarks."
+    },
+    {
+      "id": "sv.hand.R.open.three-quarter-R",
+      "kind": "hand",
+      "view": "three-quarter-R",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.three-quarter-R"
+      ],
+      "specification": "Open palm with the approved wrist alignment, scale and finger anatomy; separate drawable layer."
+    },
+    {
+      "id": "sv.underarm.R.three-quarter-R",
+      "kind": "concealed",
+      "view": "three-quarter-R",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.three-quarter-R",
+        "sv.arm.R.raised.three-quarter-R"
+      ],
+      "specification": "Completed concealed shoulder/underarm and sleeve overlap. Not a crop of visible pixels only."
+    },
+    {
+      "id": "sv.neutral.profile-R",
+      "kind": "neutral",
+      "view": "profile-R",
+      "side": "whole",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "approved-guide"
+      ],
+      "specification": "Same approved neutral registration, full body; no redesign, no automatic mirroring."
+    },
+    {
+      "id": "sv.arm.R.raised.profile-R",
+      "kind": "arm-correction",
+      "view": "profile-R",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.profile-R"
+      ],
+      "specification": "Anatomical right shoulder/elbow correction against a saved hidden-driver pose; preserve attachment landmarks."
+    },
+    {
+      "id": "sv.hand.R.open.profile-R",
+      "kind": "hand",
+      "view": "profile-R",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.profile-R"
+      ],
+      "specification": "Open palm with the approved wrist alignment, scale and finger anatomy; separate drawable layer."
+    },
+    {
+      "id": "sv.underarm.R.profile-R",
+      "kind": "concealed",
+      "view": "profile-R",
+      "side": "R",
+      "status": "awaiting-guide",
+      "dependsOn": [
+        "sv.neutral.profile-R",
+        "sv.arm.R.raised.profile-R"
+      ],
+      "specification": "Completed concealed shoulder/underarm and sleeve overlap. Not a crop of visible pixels only."
+    }
+  ]
+}

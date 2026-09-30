@@ -1,0 +1,575 @@
+{
+  "schema": "shadowveil.freebuff-handoff/1",
+  "prepared_date": "2026-09-26",
+  "recipient": "Freebuff",
+  "kind": "Development handoff; no updated driver release",
+  "authority": {
+    "base": "baseline/Shadowveil_Driver_Screen_Labels.html",
+    "base_version": "foundation-0.1.2",
+    "base_sha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863",
+    "catalog": "references/Shadowveil_Interactive_Master_Sheet.html",
+    "catalog_sha256": "2820a063a7a58a9b945063bdd664d2854e7581057b389c7410e7645ee45e2d2e",
+    "excluded_base": "Shadowveil_Character_Driver_Workbench.html"
+  },
+  "new_driver_build_or_browser_test": false,
+  "artwork_modified": false,
+  "artwork_generated": false,
+  "manifest_note": "Lists all delivered files except this manifest itself. Hashes detect changes; they are not a signed trust assertion.",
+  "files": [
+    {
+      "path": "ACCEPTANCE_TESTS.md",
+      "bytes": 8264,
+      "sha256": "c5c00a570e1fc16b8b3388c42ef7436b7ac874905c3d36a988512407c790085c"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 2402,
+      "sha256": "81734dac3b765c15be7a6e80d92decee20ae00d13a6165d33cc668697ae3377e"
+    },
+    {
+      "path": "FREEBUFF_HANDOFF.md",
+      "bytes": 21556,
+      "sha256": "fcb897b239b8f773f5295f2dd728af7c1ba91b6db581c49678a9205e80956a0c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2291,
+      "sha256": "5b911372c5b93f4259825b8c1b22aad51431b1f17aa22ac5f19e69135b857a59"
+    },
+    {
+      "path": "START_HERE_FREEBUFF.txt",
+      "bytes": 3845,
+      "sha256": "5227650bf0c3354d05143f017cd3af1d1875bd3a0872cbc542c33cb11fdf16ec"
+    },
+    {
+      "path": "baseline/Shadowveil_Driver_Screen_Labels.html",
+      "bytes": 4105708,
+      "sha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863"
+    },
+    {
+      "path": "driver-source/DELIVERY_MANIFEST.json",
+      "bytes": 15660,
+      "sha256": "a36e341e0b954bba88537a683a6d974cd56e9aeb9b79c2ddc9a0f91bc6d127d0"
+    },
+    {
+      "path": "driver-source/README_DRIVER_FOUNDATION.md",
+      "bytes": 383,
+      "sha256": "6c1c8ef9011d8b8ef038d6c33a8344fb3e48fd5e9b2142391d1b6e86c45fa2b3"
+    },
+    {
+      "path": "driver-source/Shadowveil_Character_Driver_Foundation.html",
+      "bytes": 4105708,
+      "sha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863"
+    },
+    {
+      "path": "driver-source/asset-and-code-integrity.json",
+      "bytes": 4197,
+      "sha256": "c3b2b78a47546ccde031bf82767b24407ae68a09df4b52bb0e90d39e98a30523"
+    },
+    {
+      "path": "driver-source/build-manifest.json",
+      "bytes": 331,
+      "sha256": "e27279e87452565d22701f1a5fd4683c0f12f393cc42e5e773fdad0da46c3ebc"
+    },
+    {
+      "path": "driver-source/docs/driver/DIRECTION_FIX.md",
+      "bytes": 9141,
+      "sha256": "f776b891afb877a37a392e6dc18c764c42ba6e1fb2694d55f4108be8a03bedbc"
+    },
+    {
+      "path": "driver-source/docs/driver/Meta_AI_Guide_Handoff.html",
+      "bytes": 7056,
+      "sha256": "0446e3084091125447b23aedee31e98068f5aea80df957943c8269b042711671"
+    },
+    {
+      "path": "driver-source/docs/driver/README.md",
+      "bytes": 11908,
+      "sha256": "20e35156eb3a9db944888b79f012c3230dd3cf959b1d45fd757b4d55792d8892"
+    },
+    {
+      "path": "driver-source/docs/driver/SCREEN_LABEL_FIX.md",
+      "bytes": 6452,
+      "sha256": "862d4c37c7ea5e60dcf100443faef2d202cb6cfcf1652e12e2581ccc46f36b19"
+    },
+    {
+      "path": "driver-source/docs/driver/first-12-assets.json",
+      "bytes": 4296,
+      "sha256": "309fe27ffe14e373ca0038395b1964abd1fd63bf11cb5dfd5b05efba6170a7f5"
+    },
+    {
+      "path": "driver-source/docs/driver/guide-metadata-example.json",
+      "bytes": 233,
+      "sha256": "22c820cb1e9992cf9bb1fe231d878506e3b06c8fa3c0388b45454e16a3f4a5a2"
+    },
+    {
+      "path": "driver-source/docs/driver/provisional-driver.json",
+      "bytes": 7904,
+      "sha256": "104f1f7356f2b9cbb8a2f3b8e4e7073d0ee3c848f8a085bd65c92bc480480135"
+    },
+    {
+      "path": "driver-source/label-fix-verification.json",
+      "bytes": 740,
+      "sha256": "b0b2e5f168b6fd1967bf41028cac0a7e3598c5c6f848c2ecbe2557809bd955e2"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/assets.json",
+      "bytes": 3924827,
+      "sha256": "5f563b20e6cd70ae1147a765cbdf2d0964211604ba5d6d2a6202301abedacd9b"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/index.html",
+      "bytes": 4105708,
+      "sha256": "76b07f24a87b51a95bf9f8016102a4df7182be8be3a2757c1d3cc9632476d863"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/app.d.ts",
+      "bytes": 1040,
+      "sha256": "c906d1dbef9f2b17dcd53df4b843277e554701270bc63d3d734a0bca304b873c"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/app.js",
+      "bytes": 43982,
+      "sha256": "4cc3092afe1f790b614bc6935115b151e33baaa6b546d6c22d10946e273bac00"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/controls.d.ts",
+      "bytes": 2946,
+      "sha256": "d0366e3e5cfff908d2aeeddfa75f704d6c1d45c861e0cc188d28cac26a12bfee"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/controls.js",
+      "bytes": 9618,
+      "sha256": "d5f3439e7aa06e9f3e9d3838ed4e66d74e497af35d4910083c6fe643d4dd4beb"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/document.d.ts",
+      "bytes": 3323,
+      "sha256": "7e6cfde22d69b27ccc069144a27d8f557b07fb9ab35c1ba7b798da92bcc8b8eb"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/document.js",
+      "bytes": 11407,
+      "sha256": "01acdc7d58881052860b4adae6a3770639e58e59d3cceb5a264223f917492bc0"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/driver.d.ts",
+      "bytes": 2147,
+      "sha256": "5adfb6774f1347883519109774c634be142bc58e4fc5317d681b01811fedb9d8"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/driver.js",
+      "bytes": 8429,
+      "sha256": "cadc17c6259c1f0fac187ac52f40d0efbcd623ea5d872f0d25bbfa6a5a36464a"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/labels.d.ts",
+      "bytes": 804,
+      "sha256": "9c0700d91a29271edcb24308ea62b5676b839a824234f4579374b08176b6a1d0"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/labels.js",
+      "bytes": 1977,
+      "sha256": "366674a9d9f65adf8485894b58bce44103b7f14400b7e7b261033a063d1862a1"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/math3.d.ts",
+      "bytes": 2265,
+      "sha256": "6d5922cd56661270ba9bce7501a02a7bb8fe23317da2645f8bf9b767536937e1"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/math3.js",
+      "bytes": 4840,
+      "sha256": "8f0410d411678e182b3639168434d370c04dc0e2b16095e25ccd708ba41a98d4"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/sha256.d.ts",
+      "bytes": 242,
+      "sha256": "86284d4127a5d2dec308033e262888d4586c20a6b8d8114d105eb435fe50defd"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/sha256.js",
+      "bytes": 2629,
+      "sha256": "000617df8d4149091c352955bda763690c3391f821a94740f8587651df0352c1"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/storage.d.ts",
+      "bytes": 390,
+      "sha256": "8daf3cd029bf240305b33730344ae8321cc4d04cdeb7085d6abe8a3e163c4e9d"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/driver/storage.js",
+      "bytes": 1974,
+      "sha256": "658cc26f0f881b361ad2a7b442ce8f37e2c262c11bb08eaa83322260e54b4fec"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/package.json",
+      "bytes": 18,
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/calibration.d.ts",
+      "bytes": 1587,
+      "sha256": "3d1e8a9b744793ca9b99a99e55fefc19710fb7e6675934fb3f07d777fab18417"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/calibration.js",
+      "bytes": 689,
+      "sha256": "4acc2ba8b46747bd416bc3b09b73b2996cb854709f9b8bca18a1cc0a6ee321d7"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/core.d.ts",
+      "bytes": 5960,
+      "sha256": "435b51f196c4d32206b23a5cbca8d45d5d53181a230ee08db8fd13c1d400d4ea"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/core.js",
+      "bytes": 24678,
+      "sha256": "a1a57526cba1f4700713a4066ca4381f672ff4a22aac44f8b65b0300f4cc36bd"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/guard.d.ts",
+      "bytes": 2970,
+      "sha256": "5a90156f619cb0a9aa803ffe676881643e0fcb7ef643bc10db9668c5339c9ff0"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/guard.js",
+      "bytes": 15436,
+      "sha256": "acd5784a3731456611c2a779171eaadc1bca5e278ee45a515aa27264217db54d"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/render.d.ts",
+      "bytes": 1467,
+      "sha256": "cb9cff8ae88ed868dcc8ba9d10191400ab7d832fb3be79d1eb83508617de581a"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/render.js",
+      "bytes": 6755,
+      "sha256": "4f5629be01d0cbb97ea50a12226bc71a467d1d27ca1f5a765091225dc6dca82b"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/skinning.d.ts",
+      "bytes": 1391,
+      "sha256": "ff948cd5839b19cf0b93e0899953a53c585ecc6a28282b816214430bc7d29217"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/skinning.js",
+      "bytes": 8382,
+      "sha256": "f09ee097a6bb97fb00cc98700b3307862130ca0cf9fb77f5ea9fe0ce59eb5bf3"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/surface.d.ts",
+      "bytes": 3019,
+      "sha256": "62c912807bcc326b0b411954e0a49e1375341dad145d0f6a4b7d8eefecad2c5f"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/modules/pose-v5/surface.js",
+      "bytes": 19499,
+      "sha256": "73697cd15832d32403626cf678475068993db24e4f21f48d88b2b9eeac0379b9"
+    },
+    {
+      "path": "driver-source/public/driver-foundation/style.css",
+      "bytes": 6316,
+      "sha256": "37b2f9ad8124156e77bcf3975862eac1b51d328ace8450c35d26feb59d769bf9"
+    },
+    {
+      "path": "driver-source/public/pose-v5/arm-L.png",
+      "bytes": 25190,
+      "sha256": "40d4f3992c8d686524d774a68fa05e8dd33852f4e44529a9853b6cb588672c8f"
+    },
+    {
+      "path": "driver-source/public/pose-v5/arm-R.png",
+      "bytes": 24620,
+      "sha256": "445347fb705a10245a2d5ca79cb702f19b0e1a9f01bbfbdfe9068cdb8356e056"
+    },
+    {
+      "path": "driver-source/public/pose-v5/atlas.json",
+      "bytes": 1723,
+      "sha256": "cb0240dd28568a76bc79ee6323d3c705e1978805a9051fec9178e40e36bd797a"
+    },
+    {
+      "path": "driver-source/public/pose-v5/canon-1",
+      "bytes": 139656,
+      "sha256": "51349e30b82b1ee156a62c0ff39d0e8e6a88a3547ef0d0d76fef86b7ee682a26"
+    },
+    {
+      "path": "driver-source/public/pose-v5/canon-2",
+      "bytes": 140233,
+      "sha256": "06b219d280cd2abea3b0b61f1e0a1a088c054fe35475d5fb7dfa151eff0348bc"
+    },
+    {
+      "path": "driver-source/public/pose-v5/canon-3",
+      "bytes": 169843,
+      "sha256": "85de53949d7860238833428b49bfe81fda21918cf3bb10ea9c7719734bd0ac2c"
+    },
+    {
+      "path": "driver-source/public/pose-v5/canon-4",
+      "bytes": 191379,
+      "sha256": "0684f9ccb3016243409a3e756a0c1fa87244ec5a8d979bff6a2dcf53e3648820"
+    },
+    {
+      "path": "driver-source/public/pose-v5/foot-L.png",
+      "bytes": 9095,
+      "sha256": "ebe368acb3dfac55c9b0fdc0dee89d4ff61905018933c6d84bc55fdc67b4488a"
+    },
+    {
+      "path": "driver-source/public/pose-v5/foot-R.png",
+      "bytes": 9222,
+      "sha256": "2a0734efd891c1d4124f0dde62de799711edfc2c78e8c11731092b676b9bdc71"
+    },
+    {
+      "path": "driver-source/public/pose-v5/front-clean.png",
+      "bytes": 317753,
+      "sha256": "91f1c231a593334bdc34ee8ead835ad23f853955e66eeb5465cf58f0e6a6f512"
+    },
+    {
+      "path": "driver-source/public/pose-v5/hand-L.png",
+      "bytes": 7047,
+      "sha256": "3f233730eb6020031fdfa784a355810406eeeb856f7a0c5dcee5bb2d882b40ac"
+    },
+    {
+      "path": "driver-source/public/pose-v5/hand-R.png",
+      "bytes": 7127,
+      "sha256": "5b2f6d032a8c5c5b2c93c1b837fa742805a7baf2efc6bf3a0fef65de40082532"
+    },
+    {
+      "path": "driver-source/public/pose-v5/head.png",
+      "bytes": 41072,
+      "sha256": "452b09de00ef6914367511f62cd64602ab2b0f1910315a5ee1b45d55f0c73328"
+    },
+    {
+      "path": "driver-source/public/pose-v5/leg-L.png",
+      "bytes": 51319,
+      "sha256": "e448d04a8b67a31deb0e8940d52e386b78e7b74125f985a550207f0c7f228dde"
+    },
+    {
+      "path": "driver-source/public/pose-v5/leg-R.png",
+      "bytes": 51611,
+      "sha256": "3df548c9eb91d241b03dce67c4a74389e4efe055136bc352ca3049cdc03df791"
+    },
+    {
+      "path": "driver-source/public/pose-v5/reference-back.png",
+      "bytes": 276953,
+      "sha256": "89029f6f9c1c684faafef761cdc97844f4a7e710dabea4ce448b8ce436df82f6"
+    },
+    {
+      "path": "driver-source/public/pose-v5/reference-qtr.png",
+      "bytes": 285620,
+      "sha256": "5330365e22454ccde3975149381017ef2fba4a5746ae88d2c1b06dabe5e4f5c8"
+    },
+    {
+      "path": "driver-source/public/pose-v5/reference-side.png",
+      "bytes": 214797,
+      "sha256": "2a736e578ee1cca8273ee7a106a00e331f9b82b88bc87862b812b82da0ce10c7"
+    },
+    {
+      "path": "driver-source/public/pose-v5/skin-weights.json",
+      "bytes": 2300666,
+      "sha256": "a3f3b649f0bf5a356836384b1fc37d6539ea25e041285279c75c889491a3da66"
+    },
+    {
+      "path": "driver-source/public/pose-v5/torso.png",
+      "bytes": 108359,
+      "sha256": "5b8f590cd7bcad0fc34cbbeb4608fc67fa09efe5b9ee3f0ed2026bf2bcfa3e0c"
+    },
+    {
+      "path": "driver-source/screen-label-fix.patch",
+      "bytes": 28775,
+      "sha256": "16f65376d5f0771b04a9d59b3c59079d32e3045d4167956bc6e4372bc8b54153"
+    },
+    {
+      "path": "driver-source/scripts/activate-driver.mjs",
+      "bytes": 1651,
+      "sha256": "2bcbe143b19b0b3e240f219b8e15339ee6618e77a01b05c20a63b56d6d04de93"
+    },
+    {
+      "path": "driver-source/scripts/build-driver.mjs",
+      "bytes": 4396,
+      "sha256": "8cc1c4f328282d961c800d2b29dddbf504d9b671a027d734dc12afef4775a981"
+    },
+    {
+      "path": "driver-source/scripts/serve-driver.py",
+      "bytes": 611,
+      "sha256": "e0d49f5f9dd02480ba1a51f005a5b84abc2911686b3b33e4df96b85dc013a95d"
+    },
+    {
+      "path": "driver-source/src/components/puppet/DriverFoundation.tsx",
+      "bytes": 1575,
+      "sha256": "9fad067f46493656e4c799d55bdb98e213f3993d5755400b2583791bdf4a7a89"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/app.ts",
+      "bytes": 44172,
+      "sha256": "d27e74570593914bdc166d9d9eea07bd67fa35eaef26eaa10399ba3a332b50df"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/controls.ts",
+      "bytes": 9841,
+      "sha256": "e55a076f1fc61199e20d4ac12fc2059d7f2941992fc3ea335c65d66c977e4d34"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/document.ts",
+      "bytes": 13806,
+      "sha256": "7388114e21d1f7066158b9f31801dcc1ac9ae0b3d322ad3dc33022bde366bc1c"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/driver.ts",
+      "bytes": 9895,
+      "sha256": "43d6fa7474c9736927bb969594f4fc4c237f7b431563feea9af885f81f267336"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/labels.ts",
+      "bytes": 2386,
+      "sha256": "044e2a45124b716d91e21034793315a14034dcf0d23ac8f654e65b6fb673839b"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/math3.ts",
+      "bytes": 5605,
+      "sha256": "75b64aaca2c9198ed7644efdd9589506030eae9c89031b80647b55e43f2b2b27"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/sha256.ts",
+      "bytes": 2661,
+      "sha256": "9513d4bfdfc8ea73cfd30daa58d217b5836c85457349f5934bd3dedcc7be46b4"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/driver/storage.ts",
+      "bytes": 1816,
+      "sha256": "496ab783207d3449d266bf6b56b64ada41d9bc2c8f767737a75a5a3d6406181d"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/pose-v5/calibration.ts",
+      "bytes": 662,
+      "sha256": "c54c3a94c8648105abb5815c275af1b21de3d7b0042098110694c9b667dc64c1"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/pose-v5/core.ts",
+      "bytes": 21063,
+      "sha256": "2e14dd6e8fbe6d3625521130250218b7680ea843166c64a09488ab4f38147a5c"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/pose-v5/guard.ts",
+      "bytes": 12805,
+      "sha256": "316bdef5b4373c80f9830e85d00f1568e417026338ffcbfa846c0cb0345deef1"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/pose-v5/render.ts",
+      "bytes": 5222,
+      "sha256": "7f474107c73f0ca0b53c41d722cad77ec1ff8928dab389a987bb3d0e7ce226db"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/pose-v5/skinning.ts",
+      "bytes": 7331,
+      "sha256": "7385de2f2c4b9806585e5e7b514c377ad3b74c3cd61ba09c1c22ce021096b3b5"
+    },
+    {
+      "path": "driver-source/src/lib/puppet/pose-v5/surface.ts",
+      "bytes": 14478,
+      "sha256": "bb4a9061ecadad37552e81bbc00cedbe4bad6b0c64d883b5b2c8b7c67c7ceb6a"
+    },
+    {
+      "path": "driver-source/tests/driver/browser-check.py",
+      "bytes": 11391,
+      "sha256": "2c5d264c9f7454ab0a4c5b8bd962ab6f1a75c00fb79b0ad6744a0f4a4947d016"
+    },
+    {
+      "path": "driver-source/tests/driver/core.test.mjs",
+      "bytes": 8229,
+      "sha256": "f1159eb5f5a4e73e9927918c1fd58af669701150def8de70e632c89c53685fb4"
+    },
+    {
+      "path": "driver-source/tests/driver/direction-browser.py",
+      "bytes": 11998,
+      "sha256": "3ac0c6ee56a1552ef7aec5cd32b75788c292643ae206292251257152c60b0168"
+    },
+    {
+      "path": "driver-source/tests/driver/direction.test.mjs",
+      "bytes": 9273,
+      "sha256": "ff3992ece29310f183175ff4977923bb618a259f119ce55ad9c341bf52c38c56"
+    },
+    {
+      "path": "driver-source/tests/driver/labels-browser.py",
+      "bytes": 10387,
+      "sha256": "41e0a2ec7dc865b8aafe06870079f6cb55378e3e115400eb102c30cc68331cba"
+    },
+    {
+      "path": "driver-source/tests/driver/labels.test.mjs",
+      "bytes": 4706,
+      "sha256": "f6db3e7fd85f57ea39265d37147c2bad4bba05f9a31f9ec3dba5c06566dc6d99"
+    },
+    {
+      "path": "driver-source/tests/driver/requirements.txt",
+      "bytes": 11,
+      "sha256": "a188b3e7e65be32db700d668b768b794cb0af81022c17a93950e21cad2c962e1"
+    },
+    {
+      "path": "driver-source/tsconfig.driver.json",
+      "bytes": 392,
+      "sha256": "53ec14389fb840158570ac48ac636b7202aba2c02583ee777ac0aba479cffd7d"
+    },
+    {
+      "path": "evidence/handoff-input-audit.json",
+      "bytes": 51563,
+      "sha256": "b875e39b66f7f1e815d35d30642be0c6c97df15b35efcfbf322325f73b04248f"
+    },
+    {
+      "path": "evidence/packaging-tool-checks.json",
+      "bytes": 809,
+      "sha256": "03a2e3c464f53b910ef157e6400204eb874c25e6427acf7df3d3ab8a93ebca6f"
+    },
+    {
+      "path": "prior-reports/Shadowveil_Character_Driver_Direction_Fix.html",
+      "bytes": 4099882,
+      "sha256": "a59042c3b6923c1ca6826aae1b838d2dc2c79ee7d4ceb8ee8e55e9215eccb1a4"
+    },
+    {
+      "path": "prior-reports/Shadowveil_Corrected_Catalog_Crop_Evidence.jpg",
+      "bytes": 281787,
+      "sha256": "40aa4687b8f9a39a16ff5aaf4e7273aa6e51e751d267465fd976243354ffa381"
+    },
+    {
+      "path": "prior-reports/Shadowveil_Corrected_Catalog_Review.md",
+      "bytes": 7946,
+      "sha256": "510d18fd10a9927f431c38530493441284d3a3d2b156edcdc2a9192f76b08d8e"
+    },
+    {
+      "path": "prior-reports/Shadowveil_Screen_Labels_Notes.md",
+      "bytes": 6452,
+      "sha256": "862d4c37c7ea5e60dcf100443faef2d202cb6cfcf1652e12e2581ccc46f36b19"
+    },
+    {
+      "path": "prior-reports/Shadowveil_Screen_Labels_Verification.zip",
+      "bytes": 1012952,
+      "sha256": "0cd2ae54b1d7b3bdd9eaa1813ead4f329a212bdf038f1f1aeb2ee4755f533f0e"
+    },
+    {
+      "path": "references/Shadowveil_Corrected_Catalog_QC_Manifest.json",
+      "bytes": 473895,
+      "sha256": "f2a75fda426a438c3f8d4741c8613b8fd1140845448937d5c3ac6c7419d0c568"
+    },
+    {
+      "path": "references/Shadowveil_Corrected_Registration_Shortlist.json",
+      "bytes": 8842,
+      "sha256": "60c7916d8215fc282828746c376a9f0d195240dfeefdd7f5ba4fbaa80e36fe03"
+    },
+    {
+      "path": "references/Shadowveil_Interactive_Master_Sheet.html",
+      "bytes": 61096318,
+      "sha256": "2820a063a7a58a9b945063bdd664d2854e7581057b389c7410e7645ee45e2d2e"
+    },
+    {
+      "path": "references/catalog-index.json",
+      "bytes": 187173,
+      "sha256": "c7c5ff78752cd3ced2b9a85174feb470101838ce3ec0a89e41a8b6fa3a610bf4"
+    },
+    {
+      "path": "tools/extract_art.py",
+      "bytes": 4003,
+      "sha256": "2eb0e81bc9cdf23a6053f117315a6c7be6da4dcca099484e691a8480b44109b7"
+    },
+    {
+      "path": "tools/verify_bundle.py",
+      "bytes": 2556,
+      "sha256": "77aaedc526e117a9b0b66e67e2be69b32f270b5849d638fccf8634ad8aa2e0f1"
+    }
+  ]
+}

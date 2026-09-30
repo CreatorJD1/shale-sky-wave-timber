@@ -1,0 +1,29 @@
+FREEBUFF — SHADOWVEIL CHARACTER DRIVER HANDOFF
+
+Start with FREEBUFF_HANDOFF.md and ACCEPTANCE_TESTS.md. This is an implementation handoff, not a request to generate another plan or redesign the app.
+
+CRITICAL BASELINE
+Continue the user-selected Shadowveil_Driver_Screen_Labels.html (FOUNDATION 0.1.2 · SCREEN LABELS). Do not replace it with Shadowveil_Character_Driver_Workbench.html, DEVELOPMENT 0.2.0, a new editor, or a rendered 3D character. An old Workbench preview being open is not permission to use that branch.
+
+The exact selected HTML is baseline/Shadowveil_Driver_Screen_Labels.html. The matching editable source is already unpacked under driver-source/. Its two compiled standalone HTML files match the selected baseline byte-for-byte. Keep baseline/ and references/ unchanged; do development in a copy of driver-source/ or a backed-up branch of the existing project.
+
+GOAL
+Preserve the existing interface, screen-relative joint labels, input-direction fixes, pose limits and hidden 3D driver. Add persistent, view-aware bindings for the user's 2D artwork. The final output stays illustrated 2D. The skeleton and lightweight guides are debugging overlays only.
+
+AUTHORITATIVE ART
+Use references/Shadowveil_Interactive_Master_Sheet.html, not the old MHT recovery. It contains 230 entries, 190 unique original images and 20 groups. Read references/catalog-index.json first: it contains the same IDs and labels without the large embedded image strings. The adjacent QC registry and registration shortlist are source review/planning data, not completed bindings. Preserve aliases, original bytes and Source-approved/Reference labels. No bulk regeneration.
+
+FIRST IMPLEMENTATION SLICE
+1. Verify inputs with: python tools/verify_bundle.py
+2. Inspect the actual source and reproduce the selected baseline. Record real browser behavior before editing. Preserve the existing stable anatomical IDs and screen-direction controls.
+3. Add a separate inert catalog import and QC-aware source selection within the existing viewport/inspector. Do not pass the 61 MB catalog through the 12 MiB guide importer. Catalog import must not automatically approve a guide, hide the current art, or reset a pose.
+4. Author and save a real registration for one consistent arm across front, three-quarter and profile source drawings. Source labels are not camera calibration. Use suitable full source regions, correct ownership, completed attachments where available, meshes, normalized numerical weights and declared coverage. Each view shares the same persistent driver pose, not an independent skeleton or a static replacement pose.
+5. Run the acceptance matrix. Demonstrate actual arm artwork deformation, view switching without pose reset, and project export/reopen restoring registrations. Expand to back/opposite-side views only after this vertical slice is visually acceptable.
+
+PRESERVE
+No inverted dragging or unexplained left/right swaps. Do not mirror eyes/art to fill missing directions. Retain joint/surface safeguards. Mark clipping, internal panel cuts, wrong crops and neighbouring fragments; don't bind them as complete masters. Tight margins and intentional detail crops are not automatically clipping. Recover from larger original sheets before commissioning replacement art.
+
+DELIVER
+A patch against the selected 0.1.2 source, a runnable HTML preview, actual browser screenshots with overlays off and on, fresh numerical/browser logs, hashes, a change list and an honest coverage/limitation table. Do not label old reports as new tests. Do not deploy, publish, buy services or generate artwork without separate authorization.
+
+Historical browser tests, an old comparison HTML and source notes are included. They are evidence of previous reports, not proof of the new result. The handoff itself did not modify, compile or run the driver.

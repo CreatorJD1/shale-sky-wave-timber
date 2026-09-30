@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shadowveil — 2D Puppet Rig</title>
+<style>
+  :root {
+    --bg: #0e1014;
+    --panel: #171a21;
+    --line: #2a3140;
+    --text: #e8e4dc;
+    --muted: #8b93a3;
+    --amber: #d4a017;
+    --green: #3d9b55;
+    --accent: #c9a36a;
+    --skin: #c48a5a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font: 13px/1.4 "Segoe UI", system-ui, sans-serif; }
+  .app { display: grid; grid-template-columns: 280px 1fr 300px; height: 100%; }
+  header.brand { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: #12151b; }
+  header.brand h1 { font-size: 14px; letter-spacing: .12em; text-transform: uppercase; margin: 0; font-weight: 600; }
+  header.brand span { color: var(--muted); }
+  .eyes { display: flex; gap: 8px; margin-left: auto; align-items: center; color: var(--muted); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.a { background: var(--amber); }
+  .dot.g { background: var(--green); }
+
+  aside, .stage-wrap, .right { height: calc(100vh - 46px); overflow: auto; }
+  aside, .right { background: var(--panel); border-right: 1px solid var(--line); padding: 14px; }
+  .right { border-right: 0; border-left: 1px solid var(--line); }
+
+  h2 { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; }
+  h2:first-child { margin-top: 0; }
+
+  .stage-wrap { display: flex; align-items: center; justify-content: center; background:
+    radial-gradient(ellipse at center, #1b2029 0%, #0e1014 70%);
+    position: relative; }
+  svg#rig { width: min(720px, 92%); height: min(92vh, 860px); }
+
+  label.row { display: grid; grid-template-columns: 92px 1fr 36px; gap: 8px; align-items: center; margin: 6px 0; color: var(--muted); }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  .val { font-variant-numeric: tabular-nums; text-align: right; }
+
+  button {
+    background: #222733; color: var(--text); border: 1px solid var(--line);
+    padding: 7px 10px; border-radius: 4px; cursor: pointer; width: 100%; margin: 4px 0;
+  }
+  button:hover { border-color: var(--accent); }
+  button.play { background: #2a2418; border-color: var(--amber); color: var(--amber); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+  .hint { color: var(--muted); font-size: 12px; }
+  .legend { display: flex; gap: 12px; font-size: 11px; color: var(--muted); }
+  .legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+  .j { background: #ff4d4d; }
+  .h { background: var(--amber); }
+
+  @media (max-width: 1100px) {
+    .app { grid-template-columns: 1fr; }
+    aside, .right { height: auto; }
+    .stage-wrap { min-height: 70vh; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="brand">
+    <h1>Shadowveil Puppet</h1>
+    <span>FK rig · midriff hinge · shapeshifter</span>
+    <div class="eyes"><i class="dot a"></i> L amber &nbsp; <i class="dot g"></i> R green</div>
+  </header>
+
+  <aside>
+    <h2>Presets</h2>
+    <div class="grid2">
+      <button data-pose="idle">Idle</button>
+      <button data-pose="hinge">Hinge</button>
+      <button data-pose="reach">Reach</button>
+      <button data-pose="collapse">Collapse</button>
+      <button data-pose="twist">Twist</button>
+      <button data-pose="reset">Reset</button>
+    </div>
+    <button class="play" id="playHinge">Play hinge cycle</button>
+    <button id="stopAnim">Stop</button>
+
+    <h2>Spine / Hinge</h2>
+    <label class="row">Hinge <input type="range" min="-15" max="95" value="0" data-bone="hinge"><b class="val">0</b></label>
+    <label class="row">Torso <input type="range" min="-40" max="40" value="0" data-bone="torso"><b class="val">0</b></label>
+    <label class="row">Neck <input type="range" min="-50" max="50" value="0" data-bone="neck"><b class="val">0</b></label>
+    <label class="row">Head <input type="range" min="-40" max="40" value="0" data-bone="head"><b class="val">0</b></label>
+
+    <h2>Arms</h2>
+    <label class="row">L shldr <input type="range" min="-120" max="80" value="-12" data-bone="lShoulder"><b class="val">-12</b></label>
+    <label class="row">L elbow <input type="range" min="0" max="140" value="8" data-bone="lElbow"><b class="val">8</b></label>
+    <label class="row">R shldr <input type="range" min="-80" max="120" value="12" data-bone="rShoulder"><b class="val">12</b></label>
+    <label class="row">R elbow <input type="range" min="-140" max="0" value="-8" data-bone="rElbow"><b class="val">-8</b></label>
+
+    <h2>Legs</h2>
+    <label class="row">L hip <input type="range" min="-40" max="80" value="4" data-bone="lHip"><b class="val">4</b></label>
+    <label class="row">L knee <input type="range" min="-140" max="0" value="-6" data-bone="lKnee"><b class="val">-6</b></label>
+    <label class="row">R hip <input type="range" min="-80" max="40" value="-4" data-bone="rHip"><b class="val">-4</b></label>
+    <label class="row">R knee <input type="range" min="0" max="140" value="6" data-bone="rKnee"><b class="val">6</b></label>
+  </aside>
+
+  <div class="stage-wrap">
+    <svg id="rig" viewBox="0 0 400 720" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="meshA" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <path d="M0 0h8v8h-8z" fill="#3a2414"/>
+          <path d="M0 0l8 8M8 0l-8 8" stroke="#d4a017" stroke-width=".6" opacity=".7"/>
+        </pattern>
+        <pattern id="meshG" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <path d="M0 0h8v8h-8z" fill="#1a2a1c"/>
+          <path d="M0 0l8 8M8 0l-8 8" stroke="#3d9b55" stroke-width=".6" opacity=".7"/>
+        </pattern>
+        <filter id="soft"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity=".35"/></filter>
+      </defs>
+
+      <ellipse cx="200" cy="690" rx="70" ry="10" fill="#000" opacity=".28"/>
+
+      <!-- ROOT -->
+      <g id="root" transform="translate(200,200)">
+        <!-- TORSO -->
+        <g id="torso">
+          <!-- HINGE child: lower body folds here -->
+          <g id="upper">
+            <path d="M-28,-8 C-34,20 -32,70 -22,88 L22,88 C32,70 34,20 28,-8 Z" fill="#2b2e33"/>
+            <path d="M-14,-6 C-16,24 -14,78 0,88 C14,78 16,24 14,-6 Z" fill="url(#meshA)"/>
+            <path d="M-26,10 l-18,70 10,4 16,-62" fill="#2b2e33"/>
+            <path d="M26,10 l18,70 -10,4 -16,-62" fill="#2b2e33"/>
+            <!-- collar -->
+            <path d="M-16,-18 C-18,-2 -12,6 0,8 C12,6 18,-2 16,-18 C8,-22 -8,-22 -16,-18Z" fill="#23262b"/>
+            <path d="M-8,-16 C-6,-6 6,-6 8,-16" fill="none" stroke="#d4a017" stroke-width="1"/>
+            <path d="M-22,20 L-18,86" fill="none" stroke="#d4a017" stroke-width="1.2"/>
+            <path d="M22,20 L18,86" fill="none" stroke="#3d9b55" stroke-width="1.2"/>
+
+            <!-- NECK + HEAD -->
+            <g id="neck" transform="translate(0,-18)">
+              <rect x="-6" y="-16" width="12" height="18" rx="3" fill="#c48a5a"/>
+              <g id="head" transform="translate(0,-16)">
+                <!-- bun -->
+                <ellipse cx="0" cy="-52" rx="16" ry="18" fill="#111"/>
+                <path d="M-10,-40 q10,-8 20,0" fill="#0c0c0c"/>
+                <!-- head -->
+                <ellipse cx="0" cy="-22" rx="20" ry="24" fill="#c48a5a"/>
+                <!-- peak -->
+                <path d="M-16,-38 C-10,-36 0,-18 0,-18 C0,-18 10,-36 16,-38 C8,-48 -8,-48 -16,-38Z" fill="#111"/>
+                <path d="M0,-38 L0,-16" stroke="#0a0a0a" stroke-width="2"/>
+                <!-- tendrils -->
+                <path d="M-14,-30 C-20,-10 -16,2 -10,6" fill="none" stroke="#111" stroke-width="2.2"/>
+                <path d="M14,-30 C20,-10 16,2 10,6" fill="none" stroke="#111" stroke-width="2.2"/>
+                <!-- brows -->
+                <path d="M-12,-26 l8,1" stroke="#1a1a1a" stroke-width="1.6"/>
+                <path d="M4,-26 l8,1" stroke="#1a1a1a" stroke-width="1.6"/>
+                <!-- eyes -->
+                <ellipse cx="-7" cy="-20" rx="3.2" ry="3.6" fill="#d4a017"/>
+                <ellipse cx="7" cy="-20" rx="3.2" ry="3.6" fill="#3d9b55"/>
+                <circle cx="-6.2" cy="-20" r="1.1" fill="#111"/>
+                <circle cx="7.8" cy="-20" r="1.1" fill="#111"/>
+                <!-- lips -->
+                <path d="M-6,-8 Q0,-5 6,-8 Q0,-2 -6,-8Z" fill="#6b2a32"/>
+                <!-- mark -->
+                <circle cx="10" cy="-10" r="1" fill="#4a2a22"/>
+              </g>
+            </g>
+
+            <!-- LEFT ARM -->
+            <g id="lShoulder" transform="translate(-30,8)">
+              <g>
+                <rect x="-8" y="0" width="16" height="62" rx="7" fill="#2b2e33"/>
+                <line x1="0" y1="4" x2="0" y2="58" stroke="#d4a017" stroke-width="1"/>
+                <g id="lElbow" transform="translate(0,60)">
+                  <rect x="-7" y="0" width="14" height="56" rx="6" fill="#2b2e33"/>
+                  <ellipse cx="0" cy="62" rx="7" ry="9" fill="#c48a5a"/>
+                </g>
+              </g>
+            </g>
+
+            <!-- RIGHT ARM -->
+            <g id="rShoulder" transform="translate(30,8)">
+              <g>
+                <rect x="-8" y="0" width="16" height="62" rx="7" fill="#2b2e33"/>
+                <line x1="0" y1="4" x2="0" y2="58" stroke="#3d9b55" stroke-width="1"/>
+                <g id="rElbow" transform="translate(0,60)">
+                  <rect x="-7" y="0" width="14" height="56" rx="6" fill="#2b2e33"/>
+                  <ellipse cx="0" cy="62" rx="7" ry="9" fill="#c48a5a"/>
+                </g>
+              </g>
+            </g>
+          </g>
+
+          <!-- HINGE / LOWER -->
+          <g id="hinge" transform="translate(0,88)">
+            <path d="M-22,0 C-30,20 -28,44 -20,52 L20,52 C28,44 30,20 22,0 Z" fill="#2b2e33"/>
+            <path d="M-10,0 C-12,22 -8,48 0,52 C8,48 12,22 10,0 Z" fill="url(#meshA)" opacity=".85"/>
+
+            <g id="lHip" transform="translate(-12,48)">
+              <rect x="-9" y="0" width="18" height="78" rx="8" fill="#2b2e33"/>
+              <line x1="0" y1="6" x2="0" y2="72" stroke="#d4a017" stroke-width="1"/>
+              <g id="lKnee" transform="translate(0,76)">
+                <rect x="-8" y="0" width="16" height="74" rx="7" fill="#2b2e33"/>
+                <path d="M-8,72 L-10,86 L10,86 L8,72Z" fill="#c48a5a"/>
+                <path d="M-10,86 Q0,90 10,86" fill="#1a1c20"/>
+              </g>
+            </g>
+
+            <g id="rHip" transform="translate(12,48)">
+              <rect x="-9" y="0" width="18" height="78" rx="8" fill="#2b2e33"/>
+              <line x1="0" y1="6" x2="0" y2="72" stroke="#3d9b55" stroke-width="1"/>
+              <g id="rKnee" transform="translate(0,76)">
+                <rect x="-8" y="0" width="16" height="74" rx="7" fill="#2b2e33"/>
+                <path d="M-8,72 L-10,86 L10,86 L8,72Z" fill="#c48a5a"/>
+                <path d="M-10,86 Q0,90 10,86" fill="#1a1c20"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+
+      <!-- JOINT HANDLES -->
+      <g id="handles" fill="#ff4d4d" stroke="#fff" stroke-width=".8"></g>
+    </svg>
+  </div>
+
+  <div class="right">
+    <h2>System</h2>
+    <p class="hint">Drag the red joint dots on the figure, or use sliders. The amber hinge is the species pivot — spine seats between chest and navel. She is not meant to stand straight after a full hinge.</p>
+    <div class="legend"><span><i class="j"></i>FK joint</span><span><i class="h"></i>shapeshift hinge</span></div>
+
+    <h2>Display</h2>
+    <label class="row" style="grid-template-columns:1fr auto">Show joints <input type="checkbox" id="showJoints" checked></label>
+    <label class="row" style="grid-template-columns:1fr auto">Mesh glow <input type="checkbox" id="meshGlow" checked></label>
+
+    <h2>Timeline</h2>
+    <label class="row">Speed <input type="range" id="speed" min="4" max="40" value="16"><b class="val" id="speedVal">16</b></label>
+    <p class="hint">Hinge cycle: idle → midriff lock → forced fold → hold → return.</p>
+
+    <h2>Lock</h2>
+    <p class="hint">Widow’s peak V · tall bun · L amber / R green · expandable graphite mesh · no shoulder plates · second-skin soles.</p>
+  </div>
+</div>
+
+<script>
+const bones = {
+  torso: 0, hinge: 0, neck: 0, head: 0,
+  lShoulder: -12, lElbow: 8, rShoulder: 12, rElbow: -8,
+  lHip: 4, lKnee: -6, rHip: -4, rKnee: 6
+};
+
+const origins = {
+  torso: '0px 0px',
+  hinge: '0px 0px',
+  neck: '0px 0px',
+  head: '0px 0px',
+  lShoulder: '0px 0px',
+  lElbow: '0px 0px',
+  rShoulder: '0px 0px',
+  rElbow: '0px 0px',
+  lHip: '0px 0px',
+  lKnee: '0px 0px',
+  rHip: '0px 0px',
+  rKnee: '0px 0px'
+};
+
+const poses = {
+  idle: { torso:0, hinge:0, neck:0, head:0, lShoulder:-12, lElbow:8, rShoulder:12, rElbow:-8, lHip:4, lKnee:-6, rHip:-4, rKnee:6 },
+  reset: { torso:0, hinge:0, neck:0, head:0, lShoulder:-12, lElbow:8, rShoulder:12, rElbow:-8, lHip:4, lKnee:-6, rHip:-4, rKnee:6 },
+  hinge: { torso:8, hinge:72, neck:18, head:-8, lShoulder:20, lElbow:40, rShoulder:-16, rElbow:-36, lHip:18, lKnee:-20, rHip:10, rKnee:16 },
+  reach: { torso:-6, hinge:12, neck:-10, head:6, lShoulder:-80, lElbow:20, rShoulder:70, rElbow:-24, lHip:8, lKnee:-10, rHip:-12, rKnee:8 },
+  collapse: { torso:14, hinge:88, neck:28, head:10, lShoulder:50, lElbow:70, rShoulder:-48, rElbow:-64, lHip:28, lKnee:-40, rHip:22, rKnee:36 },
+  twist: { torso:22, hinge:28, neck:-24, head:-12, lShoulder:40, lElbow:18, rShoulder:50, rElbow:-10, lHip:-8, lKnee:-12, rHip:16, rKnee:10 }
+};
+
+function apply() {
+  for (const [id, ang] of Object.entries(bones)) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    const base = el.getAttribute('data-base') || el.getAttribute('transform') || '';
+    // keep translate from original transform
+    const t = el.getAttribute('data-t');
+    el.setAttribute('transform', `${t} rotate(${ang})`);
+    const slider = document.querySelector(`input[data-bone="${id}"]`);
+    if (slider) {
+      slider.value = ang;
+      slider.parentElement.querySelector('.val').textContent = Math.round(ang);
+    }
+  }
+  placeHandles();
+}
+
+function cacheTranslates() {
+  ['torso','hinge','neck','head','lShoulder','lElbow','rShoulder','rElbow','lHip','lKnee','rHip','rKnee'].forEach(id => {
+    const el = document.getElementById(id);
+    const tr = el.getAttribute('transform') || '';
+    const m = /translate\([^)]+\)/.exec(tr);
+    el.setAttribute('data-t', m ? m[0] : 'translate(0,0)');
+  });
+}
+
+function setPose(name) {
+  Object.assign(bones, poses[name]);
+  apply();
+}
+
+document.querySelectorAll('[data-pose]').forEach(b => {
+  b.onclick = () => { stop(); setPose(b.dataset.pose); };
+});
+
+document.querySelectorAll('input[data-bone]').forEach(sl => {
+  sl.oninput = () => {
+    bones[sl.dataset.bone] = Number(sl.value);
+    apply();
+  };
+});
+
+// handles
+const handleIds = ['neck','head','lShoulder','lElbow','rShoulder','rElbow','hinge','lHip','lKnee','rHip','rKnee'];
+function placeHandles() {
+  const g = document.getElementById('handles');
+  g.innerHTML = '';
+  if (!document.getElementById('showJoints').checked) return;
+  handleIds.forEach(id => {
+    const el = document.getElementById(id);
+    const s = el.getScreenCTM();
+    const svg = document.getElementById('rig');
+    const pt = svg.createSVGPoint();
+    pt.x = 0; pt.y = 0;
+    const c = pt.matrixTransform(s);
+    const svgPt = c.matrixTransform(svg.getScreenCTM().inverse());
+    const c2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    c2.setAttribute('cx', svgPt.x);
+    c2.setAttribute('cy', svgPt.y);
+    c2.setAttribute('r', id === 'hinge' ? 7 : 5);
+    c2.setAttribute('fill', id === 'hinge' ? '#d4a017' : '#ff4d4d');
+    c2.dataset.bone = id;
+    c2.style.cursor = 'grab';
+    g.appendChild(c2);
+  });
+}
+
+let drag = null;
+document.getElementById('rig').addEventListener('pointerdown', e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.bone) {
+    drag = t.dataset.bone;
+    e.target.setPointerCapture(e.pointerId);
+  }
+});
+document.getElementById('rig').addEventListener('pointermove', e => {
+  if (!drag) return;
+  const svg = document.getElementById('rig');
+  const pt = svg.createSVGPoint();
+  pt.x = e.clientX; pt.y = e.clientY;
+  const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+  const el = document.getElementById(drag);
+  const parent = el.parentElement;
+  const s = parent.getScreenCTM();
+  const origin = svg.createSVGPoint();
+  origin.x = 0; origin.y = 0;
+  const o = origin.matrixTransform(s);
+  const op = o.matrixTransform(svg.getScreenCTM().inverse());
+  const ang = Math.atan2(p.y - op.y, p.x - op.x) * 180 / Math.PI - 90;
+  bones[drag] = Math.max(-140, Math.min(140, ang));
+  apply();
+});
+document.getElementById('rig').addEventListener('pointerup', () => drag = null);
+
+document.getElementById('showJoints').onchange = placeHandles;
+
+let anim = null;
+function stop() { if (anim) cancelAnimationFrame(anim); anim = null; }
+document.getElementById('stopAnim').onclick = stop;
+
+document.getElementById('playHinge').onclick = () => {
+  stop();
+  const keys = [
+    { t: 0, pose: poses.idle },
+    { t: 1, pose: { ...poses.idle, hinge: 18, neck: 8 } },
+    { t: 2, pose: { ...poses.hinge, hinge: 40 } },
+    { t: 3, pose: poses.hinge },
+    { t: 4.2, pose: poses.collapse },
+    { t: 5.4, pose: poses.hinge },
+    { t: 7, pose: poses.idle }
+  ];
+  const t0 = performance.now();
+  const dur = 7000;
+  function tick(now) {
+    const u = ((now - t0) % dur) / 1000;
+    let a = keys[0], b = keys[keys.length-1];
+    for (let i = 0; i < keys.length-1; i++) {
+      if (u >= keys[i].t && u <= keys[i+1].t) { a = keys[i]; b = keys[i+1]; break; }
+    }
+    const f = (u - a.t) / Math.max(0.001, b.t - a.t);
+    const s = f*f*(3-2*f);
+    for (const k of Object.keys(bones)) {
+      const av = a.pose[k] ?? 0, bv = b.pose[k] ?? 0;
+      bones[k] = av + (bv - av) * s;
+    }
+    apply();
+    anim = requestAnimationFrame(tick);
+  }
+  anim = requestAnimationFrame(tick);
+};
+
+document.getElementById('speed').oninput = e => {
+  document.getElementById('speedVal').textContent = e.target.value;
+};
+
+window.addEventListener('resize', placeHandles);
+cacheTranslates();
+apply();
+</script>
+</body>
+</html>

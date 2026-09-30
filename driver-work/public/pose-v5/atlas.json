@@ -1,0 +1,97 @@
+{
+  "version": 5,
+  "canvas": [
+    512,
+    1100
+  ],
+  "source": "design-lock-v3/turnaround.webp",
+  "source_sha256": "51349e30b82b1ee156a62c0ff39d0e8e6a88a3547ef0d0d76fef86b7ee682a26",
+  "parts": [
+    {
+      "id": "torso",
+      "src": "torso.png",
+      "x": 155,
+      "y": 211,
+      "w": 207,
+      "h": 364
+    },
+    {
+      "id": "head",
+      "src": "head.png",
+      "x": 194,
+      "y": 63,
+      "w": 131,
+      "h": 184
+    },
+    {
+      "id": "arm-R",
+      "src": "arm-R.png",
+      "x": 118,
+      "y": 248,
+      "w": 91,
+      "h": 318
+    },
+    {
+      "id": "arm-L",
+      "src": "arm-L.png",
+      "x": 309,
+      "y": 248,
+      "w": 86,
+      "h": 318
+    },
+    {
+      "id": "hand-R",
+      "src": "hand-R.png",
+      "x": 115,
+      "y": 538,
+      "w": 46,
+      "h": 97
+    },
+    {
+      "id": "hand-L",
+      "src": "hand-L.png",
+      "x": 353,
+      "y": 538,
+      "w": 45,
+      "h": 97
+    },
+    {
+      "id": "leg-R",
+      "src": "leg-R.png",
+      "x": 155,
+      "y": 505,
+      "w": 111,
+      "h": 486
+    },
+    {
+      "id": "leg-L",
+      "src": "leg-L.png",
+      "x": 251,
+      "y": 505,
+      "w": 111,
+      "h": 486
+    },
+    {
+      "id": "foot-R",
+      "src": "foot-R.png",
+      "x": 159,
+      "y": 957,
+      "w": 65,
+      "h": 95
+    },
+    {
+      "id": "foot-L",
+      "src": "foot-L.png",
+      "x": 288,
+      "y": 957,
+      "w": 65,
+      "h": 95
+    }
+  ],
+  "coverage": {
+    "opaque_source_pixels": 136327,
+    "uncovered_opaque_pixels": 0
+  },
+  "ownership_method": "explicit arm/body separating curves + anatomical seam overlaps; no capsule crops",
+  "registered_plate_sha256": "91f1c231a593334bdc34ee8ead835ad23f853955e66eeb5465cf58f0e6a6f512"
+}

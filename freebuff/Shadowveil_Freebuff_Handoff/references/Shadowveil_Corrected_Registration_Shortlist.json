@@ -1,0 +1,312 @@
+{
+  "schema": "shadowveil.registration-shortlist/1.0",
+  "source_html_sha256": "2820a063a7a58a9b945063bdd664d2854e7581057b389c7410e7645ee45e2d2e",
+  "status": "planning_only_no_bindings",
+  "rules": [
+    "Use the user-supplied corrected list, not the old MHT inventory.",
+    "Keep alternative outfit constructions separate.",
+    "Camera angles, driver landmarks, hidden surfaces and numerical bindings require authoring; none are fabricated here.",
+    "Check full source sheets before regenerating a clipped crop."
+  ],
+  "candidates": [
+    {
+      "assetId": "609b4cd3490ed307cd7a",
+      "source_entries": [
+        "entry-0053"
+      ],
+      "source_labels": [
+        "A-pose front"
+      ],
+      "sections": [
+        "Rig poses"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "64167ffae03790144f46",
+      "source_entries": [
+        "entry-0054",
+        "entry-0055"
+      ],
+      "source_labels": [
+        "Relaxed neutral",
+        "Front"
+      ],
+      "sections": [
+        "Rig poses",
+        "Neutral turnaround"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "d36189adcd77932279b1",
+      "source_entries": [
+        "entry-0056"
+      ],
+      "source_labels": [
+        "Three-quarter front"
+      ],
+      "sections": [
+        "Neutral turnaround"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "a89eff7897a08c55a952",
+      "source_entries": [
+        "entry-0057"
+      ],
+      "source_labels": [
+        "Profile"
+      ],
+      "sections": [
+        "Neutral turnaround"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "e0628ddf8c351b3b9425",
+      "source_entries": [
+        "entry-0090"
+      ],
+      "source_labels": [
+        "F-01 \u00b7 Front"
+      ],
+      "sections": [
+        "Turnaround Views"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "48ba4faf9045baac59c6",
+      "source_entries": [
+        "entry-0091"
+      ],
+      "source_labels": [
+        "F-02 \u00b7 3/4 Front"
+      ],
+      "sections": [
+        "Turnaround Views"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "cff7d8f7da882463c78b",
+      "source_entries": [
+        "entry-0092"
+      ],
+      "source_labels": [
+        "F-03 \u00b7 Side"
+      ],
+      "sections": [
+        "Turnaround Views"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "2295966a7b88e03ed679",
+      "source_entries": [
+        "entry-0093"
+      ],
+      "source_labels": [
+        "F-04 \u00b7 Back"
+      ],
+      "sections": [
+        "Turnaround Views"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "ae0b6188f54eabd9a299",
+      "source_entries": [
+        "entry-0094"
+      ],
+      "source_labels": [
+        "F-05 \u00b7 Side Profile"
+      ],
+      "sections": [
+        "Turnaround Views"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "f0334278aece8e133db1",
+      "source_entries": [
+        "entry-0095"
+      ],
+      "source_labels": [
+        "F-06 \u00b7 Back View"
+      ],
+      "sections": [
+        "Turnaround Views"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "none_observed_in_triage"
+    },
+    {
+      "assetId": "c785b213cc7bbdb864eb",
+      "source_entries": [
+        "entry-0109"
+      ],
+      "source_labels": [
+        "Original anatomy turnaround"
+      ],
+      "sections": [
+        "Base model"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "edge_margin_review"
+    },
+    {
+      "assetId": "222d8c57310dcb82f098",
+      "source_entries": [
+        "entry-0150"
+      ],
+      "source_labels": [
+        "06 anatomy turnaround"
+      ],
+      "sections": [
+        "Additional artwork"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "edge_margin_review"
+    },
+    {
+      "assetId": "0af4e1bf7120a8b5cc9d",
+      "source_entries": [
+        "entry-0112"
+      ],
+      "source_labels": [
+        "Master shoe design sheet (original)"
+      ],
+      "sections": [
+        "Shoe references"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "detail_only"
+    },
+    {
+      "assetId": "fa695c71e199c1570395",
+      "source_entries": [
+        "entry-0162"
+      ],
+      "source_labels": [
+        "clean shoe ref approved"
+      ],
+      "sections": [
+        "Additional artwork"
+      ],
+      "status": "source_available_needs_registration_review",
+      "runtime_ready": false,
+      "driver_landmarks": null,
+      "view_calibration": null,
+      "weights": null,
+      "clipping_state": "detail_only"
+    }
+  ],
+  "recovery_candidates": [
+    {
+      "crop_asset": "6614f303d3bb8c8370f9",
+      "candidate_source_asset": "0fb11ecf48e854541c19",
+      "basis": "visual_correspondence_not_verified_crop_transform",
+      "reason": "Full lunge silhouette visible in the larger action sheet.",
+      "automatically_replaced": false
+    },
+    {
+      "crop_asset": "7250fb618cd50297ce58",
+      "candidate_source_asset": "7ec8f182704e343b3dec",
+      "basis": "visual_correspondence_not_verified_crop_transform",
+      "reason": "Hair/bun visible in larger camera-angle sheet.",
+      "automatically_replaced": false
+    },
+    {
+      "crop_asset": "4be96677daab91251c25",
+      "candidate_source_asset": "7ec8f182704e343b3dec",
+      "basis": "visual_correspondence_not_verified_crop_transform",
+      "reason": "Hair/bun visible in larger camera-angle sheet.",
+      "automatically_replaced": false
+    },
+    {
+      "crop_asset": "b64c997e1b545a9c9cc6",
+      "candidate_source_asset": "fa695c71e199c1570395",
+      "basis": "visual_correspondence_not_verified_crop_transform",
+      "reason": "Whole shoe detail available in larger shoe layout; confirm desired panel.",
+      "automatically_replaced": false
+    },
+    {
+      "crop_asset": "fa10b660276787c2af11",
+      "candidate_source_asset": "fa695c71e199c1570395",
+      "basis": "visual_correspondence_not_verified_crop_transform",
+      "reason": "Whole shoe detail available in larger shoe layout; confirm desired panel.",
+      "automatically_replaced": false
+    },
+    {
+      "crop_asset": "377b6dbcaa0fc09e4694",
+      "candidate_source_asset": "fa695c71e199c1570395",
+      "basis": "visual_correspondence_not_verified_crop_transform",
+      "reason": "Recover the intended back/angled heel panel rather than the existing blank crop.",
+      "automatically_replaced": false
+    }
+  ]
+}

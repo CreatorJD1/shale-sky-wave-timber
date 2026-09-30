@@ -1,0 +1,512 @@
+{
+  "revision": "legacy-front-driver-1",
+  "units": "bind-pixels",
+  "coordinates": "x-image-right_y-up_z-front",
+  "status": "provisional",
+  "bones": [
+    {
+      "id": "pelvis",
+      "label": "Pelvis",
+      "parent": null,
+      "bind": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -12,
+          12
+        ],
+        "y": [
+          -12,
+          12
+        ],
+        "z": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "id": "lumbar",
+      "label": "Lower spine",
+      "parent": "pelvis",
+      "bind": {
+        "x": 0,
+        "y": 84,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -15,
+          15
+        ],
+        "y": [
+          -15,
+          15
+        ],
+        "z": [
+          -12,
+          12
+        ]
+      }
+    },
+    {
+      "id": "thorax",
+      "label": "Upper spine",
+      "parent": "lumbar",
+      "bind": {
+        "x": 0,
+        "y": 185,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -15,
+          15
+        ],
+        "y": [
+          -15,
+          15
+        ],
+        "z": [
+          -12,
+          12
+        ]
+      }
+    },
+    {
+      "id": "cervical",
+      "label": "Neck",
+      "parent": "thorax",
+      "bind": {
+        "x": 0,
+        "y": 285,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -20,
+          20
+        ],
+        "y": [
+          -20,
+          20
+        ],
+        "z": [
+          -12,
+          12
+        ]
+      }
+    },
+    {
+      "id": "head",
+      "label": "Head",
+      "parent": "cervical",
+      "bind": {
+        "x": 0,
+        "y": 315,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -25,
+          25
+        ],
+        "y": [
+          -25,
+          25
+        ],
+        "z": [
+          -18,
+          18
+        ]
+      }
+    },
+    {
+      "id": "clavicle-R",
+      "label": "Right clavicle",
+      "parent": "thorax",
+      "bind": {
+        "x": -75.20000000000002,
+        "y": 248,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -15,
+          15
+        ],
+        "y": [
+          -15,
+          15
+        ],
+        "z": [
+          -10,
+          10
+        ]
+      }
+    },
+    {
+      "id": "upper-R",
+      "label": "Right upper arm",
+      "parent": "clavicle-R",
+      "bind": {
+        "x": -75.20000000000002,
+        "y": 248,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -65,
+          65
+        ],
+        "y": [
+          -65,
+          65
+        ],
+        "z": [
+          -70,
+          6
+        ]
+      }
+    },
+    {
+      "id": "forearm-R",
+      "label": "Right forearm",
+      "parent": "upper-R",
+      "bind": {
+        "x": -95.80000000000001,
+        "y": 119,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -10,
+          10
+        ],
+        "y": [
+          -10,
+          10
+        ],
+        "z": [
+          -95,
+          0
+        ]
+      }
+    },
+    {
+      "id": "hand-R",
+      "label": "Right hand",
+      "parent": "forearm-R",
+      "bind": {
+        "x": -121.80000000000001,
+        "y": -23,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -30,
+          30
+        ],
+        "y": [
+          -30,
+          30
+        ],
+        "z": [
+          -22,
+          22
+        ]
+      }
+    },
+    {
+      "id": "thigh-R",
+      "label": "Right thigh",
+      "parent": "pelvis",
+      "bind": {
+        "x": -49,
+        "y": 1.3999999999999773,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -30,
+          30
+        ],
+        "y": [
+          -30,
+          30
+        ],
+        "z": [
+          -20,
+          20
+        ]
+      }
+    },
+    {
+      "id": "shin-R",
+      "label": "Right shin",
+      "parent": "thigh-R",
+      "bind": {
+        "x": -61.60000000000002,
+        "y": -201.60000000000002,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -8,
+          8
+        ],
+        "y": [
+          -8,
+          8
+        ],
+        "z": [
+          0,
+          30
+        ]
+      }
+    },
+    {
+      "id": "foot-R",
+      "label": "Right foot",
+      "parent": "shin-R",
+      "bind": {
+        "x": -64.4,
+        "y": -445.20000000000005,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -20,
+          20
+        ],
+        "y": [
+          -20,
+          20
+        ],
+        "z": [
+          -16,
+          16
+        ]
+      }
+    },
+    {
+      "id": "toe-R",
+      "label": "Right forefoot",
+      "parent": "foot-R",
+      "bind": {
+        "x": -64.4,
+        "y": -498.20000000000005,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -10,
+          10
+        ],
+        "y": [
+          -10,
+          10
+        ],
+        "z": [
+          -10,
+          10
+        ]
+      }
+    },
+    {
+      "id": "clavicle-L",
+      "label": "Left clavicle",
+      "parent": "thorax",
+      "bind": {
+        "x": 76.59999999999997,
+        "y": 248,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -15,
+          15
+        ],
+        "y": [
+          -15,
+          15
+        ],
+        "z": [
+          -10,
+          10
+        ]
+      }
+    },
+    {
+      "id": "upper-L",
+      "label": "Left upper arm",
+      "parent": "clavicle-L",
+      "bind": {
+        "x": 76.59999999999997,
+        "y": 248,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -65,
+          65
+        ],
+        "y": [
+          -65,
+          65
+        ],
+        "z": [
+          -6,
+          70
+        ]
+      }
+    },
+    {
+      "id": "forearm-L",
+      "label": "Left forearm",
+      "parent": "upper-L",
+      "bind": {
+        "x": 94.19999999999999,
+        "y": 119,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -10,
+          10
+        ],
+        "y": [
+          -10,
+          10
+        ],
+        "z": [
+          0,
+          95
+        ]
+      }
+    },
+    {
+      "id": "hand-L",
+      "label": "Left hand",
+      "parent": "forearm-L",
+      "bind": {
+        "x": 117.19999999999999,
+        "y": -23,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -30,
+          30
+        ],
+        "y": [
+          -30,
+          30
+        ],
+        "z": [
+          -22,
+          22
+        ]
+      }
+    },
+    {
+      "id": "thigh-L",
+      "label": "Left thigh",
+      "parent": "pelvis",
+      "bind": {
+        "x": 46.19999999999999,
+        "y": 1.3999999999999773,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -30,
+          30
+        ],
+        "y": [
+          -30,
+          30
+        ],
+        "z": [
+          -20,
+          20
+        ]
+      }
+    },
+    {
+      "id": "shin-L",
+      "label": "Left shin",
+      "parent": "thigh-L",
+      "bind": {
+        "x": 61.599999999999966,
+        "y": -201.60000000000002,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -8,
+          8
+        ],
+        "y": [
+          -8,
+          8
+        ],
+        "z": [
+          -30,
+          0
+        ]
+      }
+    },
+    {
+      "id": "foot-L",
+      "label": "Left foot",
+      "parent": "shin-L",
+      "bind": {
+        "x": 68.59999999999997,
+        "y": -445.20000000000005,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -20,
+          20
+        ],
+        "y": [
+          -20,
+          20
+        ],
+        "z": [
+          -16,
+          16
+        ]
+      }
+    },
+    {
+      "id": "toe-L",
+      "label": "Left forefoot",
+      "parent": "foot-L",
+      "bind": {
+        "x": 68.59999999999997,
+        "y": -498.20000000000005,
+        "z": 0
+      },
+      "limits": {
+        "x": [
+          -10,
+          10
+        ],
+        "y": [
+          -10,
+          10
+        ],
+        "z": [
+          -10,
+          10
+        ]
+      }
+    }
+  ]
+}

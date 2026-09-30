@@ -1,0 +1,1761 @@
+{
+  "key": "chroma-flood",
+  "clips": [
+    {
+      "id": "walk",
+      "name": "Walk",
+      "kind": "loop",
+      "length": "long",
+      "fps": 8,
+      "mode": "cycle",
+      "frames": [
+        "hires/walk-play-1.jpg",
+        "hires/walk-play-2.jpg",
+        "hires/walk-play-3.jpg",
+        "hires/walk-play-4.jpg"
+      ]
+    },
+    {
+      "id": "run",
+      "name": "Run",
+      "kind": "loop",
+      "length": "long",
+      "fps": 10,
+      "mode": "cycle",
+      "frames": [
+        "sheets/run-1.jpg",
+        "sheets/run-2.jpg",
+        "sheets/run-3.jpg",
+        "sheets/run-4.jpg"
+      ]
+    },
+    {
+      "id": "blink",
+      "name": "Blink",
+      "kind": "loop",
+      "length": "short",
+      "fps": 8,
+      "mode": "cycle",
+      "frames": [
+        "hires/loop-blink-1.jpg",
+        "hires/blink-shut.jpg"
+      ],
+      "holds": [
+        4,
+        1
+      ]
+    },
+    {
+      "id": "blink-set",
+      "name": "Blink set",
+      "kind": "loop",
+      "length": "short",
+      "fps": 8,
+      "mode": "pingpong",
+      "frames": [
+        "hires/loop-blink-1.jpg",
+        "hires/loop-blink-2.jpg",
+        "hires/loop-blink-3.jpg",
+        "hires/loop-blink-4.jpg"
+      ]
+    },
+    {
+      "id": "look",
+      "name": "Look",
+      "kind": "loop",
+      "length": "short",
+      "fps": 8,
+      "mode": "pingpong",
+      "frames": [
+        "hires/loop-look-1.jpg",
+        "hires/loop-look-2.jpg",
+        "hires/loop-look-3.jpg",
+        "hires/loop-look-4.jpg"
+      ]
+    },
+    {
+      "id": "nod",
+      "name": "Nod",
+      "kind": "loop",
+      "length": "short",
+      "fps": 8,
+      "mode": "pingpong",
+      "frames": [
+        "hires/loop-nod-1.jpg",
+        "hires/loop-nod-2.jpg",
+        "hires/loop-nod-3.jpg",
+        "hires/loop-nod-4.jpg"
+      ]
+    },
+    {
+      "id": "sway",
+      "name": "Sway",
+      "kind": "loop",
+      "length": "short",
+      "fps": 7,
+      "mode": "pingpong",
+      "frames": [
+        "hires/idle-sway-1.jpg",
+        "hires/idle-sway-2.jpg",
+        "hires/idle-sway-3.jpg",
+        "hires/idle-sway-4.jpg"
+      ]
+    },
+    {
+      "id": "idle-front",
+      "name": "Idle front",
+      "kind": "loop",
+      "length": "long",
+      "fps": 4,
+      "mode": "pingpong",
+      "frames": [
+        "hires/idle-front-1.jpg",
+        "hires/idle-front-2.jpg",
+        "hires/idle-front-3.jpg",
+        "hires/idle-front-4.jpg",
+        "hires/idle-front-5.jpg",
+        "hires/idle-front-6.jpg",
+        "hires/idle-front-7.jpg",
+        "hires/idle-front-8.jpg"
+      ]
+    },
+    {
+      "id": "idle-side",
+      "name": "Idle side",
+      "kind": "loop",
+      "length": "short",
+      "fps": 8,
+      "mode": "pingpong",
+      "frames": [
+        "hires/idle-side-1.jpg",
+        "hires/idle-side-2.jpg",
+        "hires/idle-side-3.jpg",
+        "hires/idle-side-4.jpg"
+      ]
+    },
+    {
+      "id": "idle-back",
+      "name": "Idle back",
+      "kind": "loop",
+      "length": "short",
+      "fps": 8,
+      "mode": "pingpong",
+      "frames": [
+        "hires/idle-back-1.jpg",
+        "hires/idle-back-2.jpg",
+        "hires/idle-back-3.jpg",
+        "hires/idle-back-4.jpg"
+      ]
+    },
+    {
+      "id": "idle-34",
+      "name": "Idle three-quarter",
+      "kind": "loop",
+      "length": "short",
+      "fps": 8,
+      "mode": "pingpong",
+      "frames": [
+        "hires/idle-34-1.jpg",
+        "hires/idle-34-2.jpg",
+        "hires/idle-34-3.jpg"
+      ]
+    },
+    {
+      "id": "turn",
+      "name": "Turn",
+      "kind": "loop",
+      "length": "long",
+      "fps": 2,
+      "mode": "cycle",
+      "frames": [
+        "hires/turnaround-1.jpg",
+        "hires/turnaround-2.jpg",
+        "hires/turnaround-3.jpg",
+        "hires/turnaround-4.jpg"
+      ]
+    },
+    {
+      "id": "talk",
+      "name": "Talk",
+      "kind": "talk",
+      "length": "short",
+      "fps": 9,
+      "mode": "pingpong",
+      "frames": [
+        "hires/loop-blink-1.jpg",
+        "hires/talk-eh.jpg",
+        "hires/talk-ah.jpg"
+      ]
+    },
+    {
+      "id": "talk-set",
+      "name": "Talk set",
+      "kind": "talk",
+      "length": "short",
+      "fps": 8,
+      "mode": "pingpong",
+      "frames": [
+        "hires/loop-talk-1.jpg",
+        "hires/loop-talk-2.jpg",
+        "hires/loop-talk-3.jpg",
+        "hires/loop-talk-4.jpg"
+      ]
+    },
+    {
+      "id": "jump",
+      "name": "Jump",
+      "kind": "action",
+      "length": "long",
+      "fps": 8,
+      "mode": "once",
+      "frames": [
+        "sheets/jump-1.jpg",
+        "sheets/jump-2.jpg",
+        "sheets/jump-3.jpg",
+        "sheets/jump-4.jpg",
+        "sheets/jump-5.jpg",
+        "sheets/jump-6.jpg"
+      ]
+    },
+    {
+      "id": "getup",
+      "name": "Get up",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "hires/getup-rise-1.jpg",
+        "hires/getup-rise-2.jpg",
+        "hires/getup-rise-3.jpg",
+        "hires/getup-rise-4.jpg"
+      ]
+    },
+    {
+      "id": "acts",
+      "name": "Acts",
+      "kind": "action",
+      "length": "short",
+      "fps": 8,
+      "mode": "once",
+      "frames": [
+        "hires/acts-2-1.jpg",
+        "hires/acts-2-2.jpg",
+        "hires/acts-2-3.jpg",
+        "hires/acts-2-4.jpg"
+      ]
+    },
+    {
+      "id": "set17",
+      "name": "Action run",
+      "kind": "action",
+      "length": "long",
+      "fps": 8,
+      "mode": "once",
+      "frames": [
+        "hires/set-17-1.jpg",
+        "hires/set-17-2.jpg",
+        "hires/set-17-3.jpg",
+        "hires/set-17-4.jpg",
+        "hires/set-17-5.jpg",
+        "hires/set-17-6.jpg",
+        "hires/set-17-7.jpg",
+        "hires/set-17-8.jpg",
+        "hires/set-17-9.jpg"
+      ]
+    },
+    {
+      "id": "move-a",
+      "name": "Move A",
+      "kind": "action",
+      "length": "short",
+      "fps": 8,
+      "mode": "once",
+      "frames": [
+        "hires/set-18-1p1.jpg",
+        "hires/set-18-1p2.jpg"
+      ]
+    },
+    {
+      "id": "move-b",
+      "name": "Move B",
+      "kind": "action",
+      "length": "short",
+      "fps": 8,
+      "mode": "once",
+      "frames": [
+        "hires/set-18-2p1.jpg",
+        "hires/set-18-2p2.jpg"
+      ]
+    },
+    {
+      "id": "move-c",
+      "name": "Move C",
+      "kind": "action",
+      "length": "short",
+      "fps": 8,
+      "mode": "once",
+      "frames": [
+        "hires/set-18-3p1.jpg",
+        "hires/set-18-3p2.jpg"
+      ]
+    },
+    {
+      "id": "move-d",
+      "name": "Move D",
+      "kind": "action",
+      "length": "short",
+      "fps": 8,
+      "mode": "once",
+      "frames": [
+        "hires/set-18-4p1.jpg",
+        "hires/set-18-4p2.jpg"
+      ]
+    },
+    {
+      "id": "sit",
+      "name": "Sit",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "hires/sit-more-1.jpg",
+        "hires/sit-more-2.jpg",
+        "hires/sit-more-3.jpg"
+      ]
+    },
+    {
+      "id": "adjust",
+      "name": "Adjust",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "hires/adjust-1.jpg",
+        "hires/adjust-2.jpg",
+        "hires/adjust-3.jpg",
+        "hires/adjust-4.jpg"
+      ]
+    },
+    {
+      "id": "adjust-back",
+      "name": "Adjust back",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "hires/adjust-back-1.jpg",
+        "hires/adjust-back-2.jpg"
+      ]
+    },
+    {
+      "id": "hygiene",
+      "name": "Hygiene",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "hires/hygiene-1.jpg",
+        "hires/hygiene-2.jpg",
+        "hires/hygiene-3.jpg"
+      ]
+    },
+    {
+      "id": "inspect",
+      "name": "Inspect",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "hires/inspect-1.jpg",
+        "hires/inspect-2.jpg",
+        "hires/inspect-3.jpg"
+      ]
+    },
+    {
+      "id": "interact",
+      "name": "Interact",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "hires/interact-1.jpg",
+        "hires/interact-2.jpg",
+        "hires/interact-3.jpg"
+      ]
+    },
+    {
+      "id": "angles",
+      "name": "Angles",
+      "kind": "action",
+      "length": "short",
+      "fps": 5,
+      "mode": "once",
+      "frames": [
+        "hires/angles-1.jpg",
+        "hires/angles-2.jpg",
+        "hires/angles-3.jpg",
+        "hires/angles-4.jpg"
+      ]
+    },
+    {
+      "id": "wave",
+      "name": "Wave",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "sheets/play-wave.jpg"
+      ]
+    },
+    {
+      "id": "point",
+      "name": "Point",
+      "kind": "action",
+      "length": "short",
+      "fps": 6,
+      "mode": "once",
+      "frames": [
+        "sheets/play-point.jpg"
+      ]
+    },
+    {
+      "id": "play-tongue",
+      "name": "Tongue",
+      "kind": "talk",
+      "length": "short",
+      "fps": 6,
+      "mode": "hold",
+      "frames": [
+        "sheets/play-tongue.jpg"
+      ]
+    },
+    {
+      "id": "play-smirk",
+      "name": "Smirk",
+      "kind": "talk",
+      "length": "short",
+      "fps": 6,
+      "mode": "hold",
+      "frames": [
+        "sheets/play-smirk.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-1",
+      "name": "faces locked 1",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-1.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-2",
+      "name": "faces locked 2",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-2.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-3",
+      "name": "faces locked 3",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-3.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-4",
+      "name": "faces locked 4",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-4.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-5",
+      "name": "faces locked 5",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-5.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-6",
+      "name": "faces locked 6",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-6.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-7",
+      "name": "faces locked 7",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-7.jpg"
+      ]
+    },
+    {
+      "id": "faces-locked-8",
+      "name": "faces locked 8",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/faces-locked-8.jpg"
+      ]
+    },
+    {
+      "id": "life-1",
+      "name": "life 1",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/life-1.jpg"
+      ]
+    },
+    {
+      "id": "life-2",
+      "name": "life 2",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/life-2.jpg"
+      ]
+    },
+    {
+      "id": "life-3",
+      "name": "life 3",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/life-3.jpg"
+      ]
+    },
+    {
+      "id": "motion-1",
+      "name": "motion 1",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/motion-1.jpg"
+      ]
+    },
+    {
+      "id": "motion-2",
+      "name": "motion 2",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/motion-2.jpg"
+      ]
+    },
+    {
+      "id": "motion-3",
+      "name": "motion 3",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/motion-3.jpg"
+      ]
+    },
+    {
+      "id": "motion-4",
+      "name": "motion 4",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/motion-4.jpg"
+      ]
+    },
+    {
+      "id": "emotions-1",
+      "name": "emotions 1",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-1.jpg"
+      ]
+    },
+    {
+      "id": "emotions-2",
+      "name": "emotions 2",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-2.jpg"
+      ]
+    },
+    {
+      "id": "emotions-3",
+      "name": "emotions 3",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-3.jpg"
+      ]
+    },
+    {
+      "id": "emotions-4",
+      "name": "emotions 4",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-4.jpg"
+      ]
+    },
+    {
+      "id": "emotions-5",
+      "name": "emotions 5",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-5.jpg"
+      ]
+    },
+    {
+      "id": "emotions-6",
+      "name": "emotions 6",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-6.jpg"
+      ]
+    },
+    {
+      "id": "emotions-7",
+      "name": "emotions 7",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-7.jpg"
+      ]
+    },
+    {
+      "id": "emotions-8",
+      "name": "emotions 8",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emotions-8.jpg"
+      ]
+    },
+    {
+      "id": "emo-2-1",
+      "name": "emo 2 1",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emo-2-1.jpg"
+      ]
+    },
+    {
+      "id": "emo-2-2",
+      "name": "emo 2 2",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emo-2-2.jpg"
+      ]
+    },
+    {
+      "id": "emo-2-3",
+      "name": "emo 2 3",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/emo-2-3.jpg"
+      ]
+    },
+    {
+      "id": "reactions-1",
+      "name": "reactions 1",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/reactions-1.jpg"
+      ]
+    },
+    {
+      "id": "reactions-2-1",
+      "name": "reactions 2 1",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/reactions-2-1.jpg"
+      ]
+    },
+    {
+      "id": "reactions-2-2",
+      "name": "reactions 2 2",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/reactions-2-2.jpg"
+      ]
+    },
+    {
+      "id": "reactions-2-3",
+      "name": "reactions 2 3",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/reactions-2-3.jpg"
+      ]
+    },
+    {
+      "id": "reactions-2",
+      "name": "reactions 2",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/reactions-2.jpg"
+      ]
+    },
+    {
+      "id": "reactions-3",
+      "name": "reactions 3",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/reactions-3.jpg"
+      ]
+    },
+    {
+      "id": "reactions-4",
+      "name": "reactions 4",
+      "kind": "talk",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/reactions-4.jpg"
+      ]
+    },
+    {
+      "id": "apose",
+      "name": "apose",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "apose.png"
+      ]
+    },
+    {
+      "id": "tpose",
+      "name": "tpose",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "tpose.png"
+      ]
+    },
+    {
+      "id": "left",
+      "name": "left",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "left.png"
+      ]
+    },
+    {
+      "id": "right",
+      "name": "right",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "right.png"
+      ]
+    },
+    {
+      "id": "back",
+      "name": "back",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "back.png"
+      ]
+    },
+    {
+      "id": "loop-blink-1",
+      "name": "loop blink 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/loop-blink-1.jpg"
+      ]
+    },
+    {
+      "id": "extreme-fall",
+      "name": "extreme fall",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-fall.jpg"
+      ]
+    },
+    {
+      "id": "extreme-drive",
+      "name": "extreme drive",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-drive.jpg"
+      ]
+    },
+    {
+      "id": "extreme-sprint",
+      "name": "extreme sprint",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-sprint.jpg"
+      ]
+    },
+    {
+      "id": "extreme-dodge",
+      "name": "extreme dodge",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-dodge.jpg"
+      ]
+    },
+    {
+      "id": "extreme-spin",
+      "name": "extreme spin",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-spin.jpg"
+      ]
+    },
+    {
+      "id": "extreme-lunge",
+      "name": "extreme lunge",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-lunge.jpg"
+      ]
+    },
+    {
+      "id": "extreme-hop",
+      "name": "extreme hop",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-hop.jpg"
+      ]
+    },
+    {
+      "id": "extreme-knee",
+      "name": "extreme knee",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-knee.jpg"
+      ]
+    },
+    {
+      "id": "extreme-back-run",
+      "name": "extreme back run",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-back-run.jpg"
+      ]
+    },
+    {
+      "id": "extreme-back-fall",
+      "name": "extreme back fall",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-back-fall.jpg"
+      ]
+    },
+    {
+      "id": "extreme-twist",
+      "name": "extreme twist",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-twist.jpg"
+      ]
+    },
+    {
+      "id": "extreme-slide",
+      "name": "extreme slide",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-slide.jpg"
+      ]
+    },
+    {
+      "id": "extreme-back-up",
+      "name": "extreme back up",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-back-up.jpg"
+      ]
+    },
+    {
+      "id": "extreme-sprint-2",
+      "name": "extreme sprint 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-sprint-2.jpg"
+      ]
+    },
+    {
+      "id": "extreme-brace",
+      "name": "extreme brace",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-brace.jpg"
+      ]
+    },
+    {
+      "id": "extreme-stumble",
+      "name": "extreme stumble",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-stumble.jpg"
+      ]
+    },
+    {
+      "id": "extreme-turn",
+      "name": "extreme turn",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-turn.jpg"
+      ]
+    },
+    {
+      "id": "extreme-squat",
+      "name": "extreme squat",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-squat.jpg"
+      ]
+    },
+    {
+      "id": "extreme-front-run",
+      "name": "extreme front run",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-front-run.jpg"
+      ]
+    },
+    {
+      "id": "extreme-left-sprint",
+      "name": "extreme left sprint",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-left-sprint.jpg"
+      ]
+    },
+    {
+      "id": "extreme-right-kick",
+      "name": "extreme right kick",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-right-kick.jpg"
+      ]
+    },
+    {
+      "id": "extreme-right-stumble",
+      "name": "extreme right stumble",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-right-stumble.jpg"
+      ]
+    },
+    {
+      "id": "extreme-back-squat",
+      "name": "extreme back squat",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-back-squat.jpg"
+      ]
+    },
+    {
+      "id": "extreme-side-fall",
+      "name": "extreme side fall",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-side-fall.jpg"
+      ]
+    },
+    {
+      "id": "extreme-back-dodge",
+      "name": "extreme back dodge",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-back-dodge.jpg"
+      ]
+    },
+    {
+      "id": "extreme-back-kick-2",
+      "name": "extreme back kick 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-back-kick-2.jpg"
+      ]
+    },
+    {
+      "id": "extreme-front-kick-2",
+      "name": "extreme front kick 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "sheets/extreme-front-kick-2.jpg"
+      ]
+    },
+    {
+      "id": "set-16-1",
+      "name": "set 16 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-1.jpg"
+      ]
+    },
+    {
+      "id": "set-16-10p1",
+      "name": "set 16 10p1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-10p1.jpg"
+      ]
+    },
+    {
+      "id": "set-16-10p2",
+      "name": "set 16 10p2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-10p2.jpg"
+      ]
+    },
+    {
+      "id": "set-16-11p1",
+      "name": "set 16 11p1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-11p1.jpg"
+      ]
+    },
+    {
+      "id": "set-16-11p2",
+      "name": "set 16 11p2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-11p2.jpg"
+      ]
+    },
+    {
+      "id": "set-16-12",
+      "name": "set 16 12",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-12.jpg"
+      ]
+    },
+    {
+      "id": "set-16-2",
+      "name": "set 16 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-2.jpg"
+      ]
+    },
+    {
+      "id": "set-16-3",
+      "name": "set 16 3",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-3.jpg"
+      ]
+    },
+    {
+      "id": "set-16-4",
+      "name": "set 16 4",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-4.jpg"
+      ]
+    },
+    {
+      "id": "set-16-5",
+      "name": "set 16 5",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-5.jpg"
+      ]
+    },
+    {
+      "id": "set-16-6",
+      "name": "set 16 6",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-6.jpg"
+      ]
+    },
+    {
+      "id": "set-16-7",
+      "name": "set 16 7",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-7.jpg"
+      ]
+    },
+    {
+      "id": "set-16-8",
+      "name": "set 16 8",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-8.jpg"
+      ]
+    },
+    {
+      "id": "set-16-9p1",
+      "name": "set 16 9p1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-9p1.jpg"
+      ]
+    },
+    {
+      "id": "set-16-9p2",
+      "name": "set 16 9p2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/set-16-9p2.jpg"
+      ]
+    },
+    {
+      "id": "lie-1",
+      "name": "lie 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/lie-1.jpg"
+      ]
+    },
+    {
+      "id": "lie-2-1",
+      "name": "lie 2 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/lie-2-1.jpg"
+      ]
+    },
+    {
+      "id": "lie-2",
+      "name": "lie 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/lie-2.jpg"
+      ]
+    },
+    {
+      "id": "lie-3",
+      "name": "lie 3",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/lie-3.jpg"
+      ]
+    },
+    {
+      "id": "lie-4",
+      "name": "lie 4",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/lie-4.jpg"
+      ]
+    },
+    {
+      "id": "lie-back-1",
+      "name": "lie back 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/lie-back-1.jpg"
+      ]
+    },
+    {
+      "id": "lie-front-1",
+      "name": "lie front 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/lie-front-1.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-1",
+      "name": "sheet 9f8e 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-1.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-2",
+      "name": "sheet 9f8e 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-2.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-3",
+      "name": "sheet 9f8e 3",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-3.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-4",
+      "name": "sheet 9f8e 4",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-4.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-5",
+      "name": "sheet 9f8e 5",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-5.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-6",
+      "name": "sheet 9f8e 6",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-6.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-7",
+      "name": "sheet 9f8e 7",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-7.jpg"
+      ]
+    },
+    {
+      "id": "sheet-9f8e-8",
+      "name": "sheet 9f8e 8",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-9f8e-8.jpg"
+      ]
+    },
+    {
+      "id": "sheet-aab0-1",
+      "name": "sheet aab0 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-aab0-1.jpg"
+      ]
+    },
+    {
+      "id": "sheet-aab0-2",
+      "name": "sheet aab0 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-aab0-2.jpg"
+      ]
+    },
+    {
+      "id": "sheet-aab0-3",
+      "name": "sheet aab0 3",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-aab0-3.jpg"
+      ]
+    },
+    {
+      "id": "sheet-aab0-4",
+      "name": "sheet aab0 4",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-aab0-4.jpg"
+      ]
+    },
+    {
+      "id": "sheet-aab0-5",
+      "name": "sheet aab0 5",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-aab0-5.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1947-1",
+      "name": "sheet 1947 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1947-1.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1947-2",
+      "name": "sheet 1947 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1947-2.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1947-2b",
+      "name": "sheet 1947 2b",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1947-2b.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1947-3",
+      "name": "sheet 1947 3",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1947-3.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1947-4",
+      "name": "sheet 1947 4",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1947-4.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1947-5",
+      "name": "sheet 1947 5",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1947-5.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-1",
+      "name": "sheet 1db5 1",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-1.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-10",
+      "name": "sheet 1db5 10",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-10.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-11",
+      "name": "sheet 1db5 11",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-11.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-12",
+      "name": "sheet 1db5 12",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-12.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-2",
+      "name": "sheet 1db5 2",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-2.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-3",
+      "name": "sheet 1db5 3",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-3.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-4",
+      "name": "sheet 1db5 4",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-4.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-5",
+      "name": "sheet 1db5 5",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-5.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-6",
+      "name": "sheet 1db5 6",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-6.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-7",
+      "name": "sheet 1db5 7",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-7.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-8",
+      "name": "sheet 1db5 8",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-8.jpg"
+      ]
+    },
+    {
+      "id": "sheet-1db5-9",
+      "name": "sheet 1db5 9",
+      "kind": "action",
+      "length": "short",
+      "fps": 4,
+      "mode": "hold",
+      "frames": [
+        "hires/sheet-1db5-9.jpg"
+      ]
+    }
+  ]
+}

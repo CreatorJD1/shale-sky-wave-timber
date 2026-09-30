@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clean room</title>
+<style>
+  :root {
+    --bg: #efeae2;
+    --paper: #f7f4ee;
+    --ink: #1c1915;
+    --muted: #6d655c;
+    --line: #ddd4c8;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  header { padding: 16px 18px 8px; position: sticky; top: 0; background: var(--bg); z-index: 2; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 28px; margin: 0; letter-spacing: -0.03em; }
+  .sub { margin: 4px 0 8px; color: var(--muted); font-size: 13px; }
+  .row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; }
+  button {
+    font: inherit;
+    color: inherit;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    min-height: 44px;
+    padding: 0 14px;
+    flex: 0 0 auto;
+  }
+  button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  section[hidden] { display: none; }
+  h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; font-size: 20px; margin: 22px 12px 0; }
+  figure { margin: 0; padding: 10px 0 18px; }
+  figcaption { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; padding: 0 12px; }
+  .scroller { overflow: hidden; }
+  img, canvas.loop {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+  }
+  canvas.loop { background: #00f; }
+  #modes { margin-top: 8px; }
+  #stage-wrap { padding-bottom: 12px; }
+  #stage-wrap[hidden] { display: none; }
+  #stage {
+    display: block;
+    width: 100%;
+    height: auto;
+    background-color: #d8d2c8;
+    background-image:
+      linear-gradient(45deg, #cfc8bc 25%, transparent 25%),
+      linear-gradient(-45deg, #cfc8bc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #cfc8bc 75%),
+      linear-gradient(-45deg, transparent 75%, #cfc8bc 75%);
+    background-size: 28px 28px;
+    background-position: 0 0, 0 14px, 14px -14px, -14px 0;
+  }
+  .transport { display: flex; gap: 8px; align-items: center; padding: 8px 12px 0; }
+  #clipmeta { color: var(--muted); font-size: 13px; }
+  #clips { padding: 8px 12px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Clean room</h1>
+  <div class="row" id="modes">
+    <button type="button" id="mode-play" class="on">Animate</button>
+    <button type="button" id="mode-stills">Stills</button>
+  </div>
+  <p class="sub" id="count"></p>
+  <div class="row" id="tabs" role="tablist"></div>
+</header>
+<div id="stage-wrap">
+    <canvas id="stage" width="720" height="1040"></canvas>
+    <div class="transport">
+      <button type="button" id="playbtn">Pause</button>
+      <button type="button" id="replaybtn">Replay</button>
+      <span id="clipmeta"></span>
+    </div>
+    <div class="row" id="clips"></div>
+</div>
+<main id="gallery"></main>
+<script>
+const GROUPS = [
+  ["Base", [
+    ["apose", "A-pose", "/clean-room/apose.png?v=3"],
+    ["tpose", "T-pose", "/clean-room/tpose.png?v=3"],
+    ["left", "Left", "/clean-room/left.png?v=3"],
+    ["right", "Right", "/clean-room/right.png?v=3"],
+    ["back", "Back", "/clean-room/back.png?v=3"],
+  ]],
+  ["Hair", [
+    ["hair-000", "Hair 0°", "/clean-room/layers/hair/hair-000.png?v=3"],
+    ["hair-045", "Hair 45°", "/clean-room/layers/hair/hair-045.png?v=3"],
+    ["hair-090", "Hair 90°", "/clean-room/layers/hair/hair-090.png?v=3"],
+    ["hair-135", "Hair 135°", "/clean-room/layers/hair/hair-135.png?v=3"],
+    ["hair-180", "Hair 180°", "/clean-room/layers/hair/hair-180.png?v=3"],
+    ["hair-225", "Hair 225°", "/clean-room/layers/hair/hair-225.png?v=3"],
+    ["hair-270", "Hair 270°", "/clean-room/layers/hair/hair-270.png?v=3"],
+    ["hair-315", "Hair 315°", "/clean-room/layers/hair/hair-315.png?v=3"],
+  ]],
+  ["Loops", [
+    ["loop-look-1", "Loop 1", "/clean-room/hires/loop-look-1.jpg?v=4"],
+    ["loop-look-2", "Loop 2", "/clean-room/hires/loop-look-2.jpg?v=4"],
+    ["loop-look-3", "Loop 3", "/clean-room/hires/loop-look-3.jpg?v=4"],
+    ["loop-look-4", "Loop 4", "/clean-room/hires/loop-look-4.jpg?v=4"],
+    ["loop-blink-1", "Loop 5", "/clean-room/hires/loop-blink-1.jpg?v=4"],
+    ["loop-blink-2", "Loop 6", "/clean-room/hires/loop-blink-2.jpg?v=4"],
+    ["loop-blink-3", "Loop 7", "/clean-room/hires/loop-blink-3.jpg?v=4"],
+    ["loop-blink-4", "Loop 8", "/clean-room/hires/loop-blink-4.jpg?v=4"],
+    ["loop-talk-1", "Loop 9", "/clean-room/hires/loop-talk-1.jpg?v=4"],
+    ["loop-talk-2", "Loop 10", "/clean-room/hires/loop-talk-2.jpg?v=4"],
+    ["loop-talk-3", "Loop 11", "/clean-room/hires/loop-talk-3.jpg?v=4"],
+    ["loop-talk-4", "Loop 12", "/clean-room/hires/loop-talk-4.jpg?v=4"],
+    ["loop-nod-1", "Loop 13", "/clean-room/hires/loop-nod-1.jpg?v=4"],
+    ["loop-nod-2", "Loop 14", "/clean-room/hires/loop-nod-2.jpg?v=4"],
+    ["loop-nod-3", "Loop 15", "/clean-room/hires/loop-nod-3.jpg?v=4"],
+    ["loop-nod-4", "Loop 16", "/clean-room/hires/loop-nod-4.jpg?v=4"],
+    ["walk-play-1", "Loop 17", "/clean-room/hires/walk-play-1.jpg?v=4"],
+    ["walk-play-2", "Loop 18", "/clean-room/hires/walk-play-2.jpg?v=4"],
+    ["walk-play-3", "Loop 19", "/clean-room/hires/walk-play-3.jpg?v=4"],
+    ["walk-play-4", "Loop 20", "/clean-room/hires/walk-play-4.jpg?v=4"],
+    ["idle-sway-1", "Loop 20", "/clean-room/hires/idle-sway-1.jpg?v=4"],
+    ["idle-sway-2", "Loop 21", "/clean-room/hires/idle-sway-2.jpg?v=4"],
+    ["idle-sway-3", "Loop 22", "/clean-room/hires/idle-sway-3.jpg?v=4"],
+    ["idle-sway-4", "Loop 23", "/clean-room/hires/idle-sway-4.jpg?v=4"],
+  ]],
+  ["Extreme", [
+    ["xfall", "Fall", "/clean-room/sheets/extreme-fall.jpg?v=4"],
+    ["xdrive", "Drive", "/clean-room/sheets/extreme-drive.jpg?v=4"],
+    ["xsprint", "Hard sprint", "/clean-room/sheets/extreme-sprint.jpg?v=4"],
+    ["xdodge", "Dodge", "/clean-room/sheets/extreme-dodge.jpg?v=4"],
+    ["xspin", "Spin", "/clean-room/sheets/extreme-spin.jpg?v=4"],
+    ["xlunge", "Low lunge", "/clean-room/sheets/extreme-lunge.jpg?v=4"],
+    ["xhop", "Startled hop", "/clean-room/sheets/extreme-hop.jpg?v=4"],
+    ["xknee", "Dropped knee", "/clean-room/sheets/extreme-knee.jpg?v=4"],
+    ["xbrun", "Back sprint", "/clean-room/sheets/extreme-back-run.jpg?v=4"],
+    ["xbfall", "Back fall", "/clean-room/sheets/extreme-back-fall.jpg?v=4"],
+    ["xtwist", "Back twist", "/clean-room/sheets/extreme-twist.jpg?v=4"],
+    ["xslide", "Side slide", "/clean-room/sheets/extreme-slide.jpg?v=4"],
+    ["xbup", "Back, arms up", "/clean-room/sheets/extreme-back-up.jpg?v=4"],
+    ["xsprint2", "Sprint, other stride", "/clean-room/sheets/extreme-sprint-2.jpg?v=4"],
+    ["xbrace", "Brace", "/clean-room/sheets/extreme-brace.jpg?v=4"],
+    ["xstumble", "Stumble", "/clean-room/sheets/extreme-stumble.jpg?v=4"],
+    ["xturn", "Turn while running", "/clean-room/sheets/extreme-turn.jpg?v=4"],
+    ["xsquat", "Landing squat", "/clean-room/sheets/extreme-squat.jpg?v=4"],
+    ["xfrun", "Front run", "/clean-room/sheets/extreme-front-run.jpg?v=4"],
+    ["xlsprint", "Left sprint", "/clean-room/sheets/extreme-left-sprint.jpg?v=4"],
+    ["xrkick", "Right kick", "/clean-room/sheets/extreme-right-kick.jpg?v=4"],
+    ["xrstumble", "Right stumble", "/clean-room/sheets/extreme-right-stumble.jpg?v=4"],
+    ["xbsquat", "Back squat", "/clean-room/sheets/extreme-back-squat.jpg?v=4"],
+    ["xsfall", "Side fall", "/clean-room/sheets/extreme-side-fall.jpg?v=4"],
+    ["xbdodge", "Back dodge", "/clean-room/sheets/extreme-back-dodge.jpg?v=4"],
+    ["xbkick2", "Back kick", "/clean-room/sheets/extreme-back-kick-2.jpg?v=4"],
+    ["xfkick2", "Front kick", "/clean-room/sheets/extreme-front-kick-2.jpg?v=4"],
+  ]],
+  ["Playful", [
+    ["ptongue", "Tongue out", "/clean-room/sheets/play-tongue.jpg?v=5"],
+    ["psmirk", "Smirk", "/clean-room/sheets/play-smirk.jpg?v=5"],
+    ["ppoint", "Point and laugh", "/clean-room/sheets/play-point.jpg?v=5"],
+    ["pwave", "Get out of here", "/clean-room/sheets/play-wave.jpg?v=5"],
+  ]],
+  ["Move", [
+    ["run1", "Run 1", "/clean-room/sheets/run-1.jpg?v=5"],
+    ["run2", "Run 2", "/clean-room/sheets/run-2.jpg?v=5"],
+    ["run3", "Run 3", "/clean-room/sheets/run-3.jpg?v=5"],
+    ["run4", "Run 4", "/clean-room/sheets/run-4.jpg?v=5"],
+    ["j1", "Jump 1", "/clean-room/sheets/jump-1.jpg?v=5"],
+    ["j2", "Jump 2", "/clean-room/sheets/jump-2.jpg?v=5"],
+    ["j3", "Jump 3", "/clean-room/sheets/jump-3.jpg?v=5"],
+    ["j4", "Jump 4", "/clean-room/sheets/jump-4.jpg?v=5"],
+    ["j5", "Jump 5", "/clean-room/sheets/jump-5.jpg?v=5"],
+    ["j6", "Jump 6", "/clean-room/sheets/jump-6.jpg?v=5"],
+    ["set-17-1", "Action 1", "/clean-room/hires/set-17-1.jpg?v=4"],
+    ["set-17-2", "Action 2", "/clean-room/hires/set-17-2.jpg?v=4"],
+    ["set-17-3", "Action 3", "/clean-room/hires/set-17-3.jpg?v=4"],
+    ["set-17-4", "Action 4", "/clean-room/hires/set-17-4.jpg?v=4"],
+    ["set-17-5", "Action 5", "/clean-room/hires/set-17-5.jpg?v=4"],
+    ["set-17-6", "Action 6", "/clean-room/hires/set-17-6.jpg?v=4"],
+    ["set-17-7", "Action 7", "/clean-room/hires/set-17-7.jpg?v=4"],
+    ["set-17-8", "Action 8", "/clean-room/hires/set-17-8.jpg?v=4"],
+    ["set-17-9", "Action 9", "/clean-room/hires/set-17-9.jpg?v=4"],
+    ["set-18-1p1", "Move 1", "/clean-room/hires/set-18-1p1.jpg?v=4"],
+    ["set-18-1p2", "Move 2", "/clean-room/hires/set-18-1p2.jpg?v=4"],
+    ["set-18-2p1", "Move 3", "/clean-room/hires/set-18-2p1.jpg?v=4"],
+    ["set-18-2p2", "Move 4", "/clean-room/hires/set-18-2p2.jpg?v=4"],
+    ["set-18-3p1", "Move 5", "/clean-room/hires/set-18-3p1.jpg?v=4"],
+    ["set-18-3p2", "Move 6", "/clean-room/hires/set-18-3p2.jpg?v=4"],
+    ["set-18-4p1", "Move 7", "/clean-room/hires/set-18-4p1.jpg?v=4"],
+    ["set-18-4p2", "Move 8", "/clean-room/hires/set-18-4p2.jpg?v=4"],
+    ["getup-rise-1", "Get up 1", "/clean-room/hires/getup-rise-1.jpg?v=4"],
+    ["getup-rise-2", "Get up 2", "/clean-room/hires/getup-rise-2.jpg?v=4"],
+    ["getup-rise-3", "Get up 3", "/clean-room/hires/getup-rise-3.jpg?v=4"],
+    ["getup-rise-4", "Get up 4", "/clean-room/hires/getup-rise-4.jpg?v=4"],
+  ]],
+  ["Ground", [
+    ["set-16-1", "Ground 1", "/clean-room/hires/set-16-1.jpg?v=4"],
+    ["set-16-10p1", "Ground 2", "/clean-room/hires/set-16-10p1.jpg?v=4"],
+    ["set-16-10p2", "Ground 3", "/clean-room/hires/set-16-10p2.jpg?v=4"],
+    ["set-16-11p1", "Ground 4", "/clean-room/hires/set-16-11p1.jpg?v=4"],
+    ["set-16-11p2", "Ground 5", "/clean-room/hires/set-16-11p2.jpg?v=4"],
+    ["set-16-12", "Ground 6", "/clean-room/hires/set-16-12.jpg?v=4"],
+    ["set-16-2", "Ground 7", "/clean-room/hires/set-16-2.jpg?v=4"],
+    ["set-16-3", "Ground 8", "/clean-room/hires/set-16-3.jpg?v=4"],
+    ["set-16-4", "Ground 9", "/clean-room/hires/set-16-4.jpg?v=4"],
+    ["set-16-5", "Ground 10", "/clean-room/hires/set-16-5.jpg?v=4"],
+    ["set-16-6", "Ground 11", "/clean-room/hires/set-16-6.jpg?v=4"],
+    ["set-16-7", "Ground 12", "/clean-room/hires/set-16-7.jpg?v=4"],
+    ["set-16-8", "Ground 13", "/clean-room/hires/set-16-8.jpg?v=4"],
+    ["set-16-9p1", "Ground 14", "/clean-room/hires/set-16-9p1.jpg?v=4"],
+    ["set-16-9p2", "Ground 15", "/clean-room/hires/set-16-9p2.jpg?v=4"],
+    ["lie-1", "Ground 16", "/clean-room/hires/lie-1.jpg?v=4"],
+    ["lie-2-1", "Ground 17", "/clean-room/hires/lie-2-1.jpg?v=4"],
+    ["lie-2", "Ground 18", "/clean-room/hires/lie-2.jpg?v=4"],
+    ["lie-3", "Ground 19", "/clean-room/hires/lie-3.jpg?v=4"],
+    ["lie-4", "Ground 19", "/clean-room/hires/lie-4.jpg?v=4"],
+    ["lie-back-1", "Ground 20", "/clean-room/hires/lie-back-1.jpg?v=4"],
+    ["lie-front-1", "Ground 21", "/clean-room/hires/lie-front-1.jpg?v=4"],
+    ["sit-more-1", "Ground 22", "/clean-room/hires/sit-more-1.jpg?v=4"],
+    ["sit-more-2", "Ground 23", "/clean-room/hires/sit-more-2.jpg?v=4"],
+    ["sit-more-3", "Ground 24", "/clean-room/hires/sit-more-3.jpg?v=4"],
+  ]],
+  ["Face", [
+    ["faces-locked-1", "Face 1", "/clean-room/hires/faces-locked-1.jpg?v=4"],
+    ["faces-locked-2", "Face 2", "/clean-room/hires/faces-locked-2.jpg?v=4"],
+    ["faces-locked-3", "Face 3", "/clean-room/hires/faces-locked-3.jpg?v=4"],
+    ["faces-locked-4", "Face 4", "/clean-room/hires/faces-locked-4.jpg?v=4"],
+    ["faces-locked-5", "Face 5", "/clean-room/hires/faces-locked-5.jpg?v=4"],
+    ["faces-locked-6", "Face 6", "/clean-room/hires/faces-locked-6.jpg?v=4"],
+    ["faces-locked-7", "Face 7", "/clean-room/hires/faces-locked-7.jpg?v=4"],
+    ["faces-locked-8", "Face 8", "/clean-room/hires/faces-locked-8.jpg?v=4"],
+    ["life-1", "Face 9", "/clean-room/hires/life-1.jpg?v=4"],
+    ["life-2", "Face 10", "/clean-room/hires/life-2.jpg?v=4"],
+    ["life-3", "Face 11", "/clean-room/hires/life-3.jpg?v=4"],
+    ["motion-1", "Face 12", "/clean-room/hires/motion-1.jpg?v=4"],
+    ["motion-2", "Face 13", "/clean-room/hires/motion-2.jpg?v=4"],
+    ["motion-3", "Face 14", "/clean-room/hires/motion-3.jpg?v=4"],
+    ["motion-4", "Face 15", "/clean-room/hires/motion-4.jpg?v=4"],
+    ["emotions-1", "Face 16", "/clean-room/hires/emotions-1.jpg?v=4"],
+    ["emotions-2", "Face 17", "/clean-room/hires/emotions-2.jpg?v=4"],
+    ["emotions-3", "Face 18", "/clean-room/hires/emotions-3.jpg?v=4"],
+    ["emotions-4", "Face 19", "/clean-room/hires/emotions-4.jpg?v=4"],
+    ["emotions-5", "Face 20", "/clean-room/hires/emotions-5.jpg?v=4"],
+    ["emotions-6", "Face 21", "/clean-room/hires/emotions-6.jpg?v=4"],
+    ["emotions-7", "Face 22", "/clean-room/hires/emotions-7.jpg?v=4"],
+    ["emotions-8", "Face 23", "/clean-room/hires/emotions-8.jpg?v=4"],
+    ["emo-2-1", "Face 24", "/clean-room/hires/emo-2-1.jpg?v=4"],
+    ["emo-2-2", "Face 25", "/clean-room/hires/emo-2-2.jpg?v=4"],
+    ["emo-2-3", "Face 26", "/clean-room/hires/emo-2-3.jpg?v=4"],
+    ["reactions-1", "Face 27", "/clean-room/hires/reactions-1.jpg?v=4"],
+    ["reactions-2-1", "Face 28", "/clean-room/hires/reactions-2-1.jpg?v=4"],
+    ["reactions-2-2", "Face 29", "/clean-room/hires/reactions-2-2.jpg?v=4"],
+    ["reactions-2-3", "Face 30", "/clean-room/hires/reactions-2-3.jpg?v=4"],
+    ["reactions-2", "Face 31", "/clean-room/hires/reactions-2.jpg?v=4"],
+    ["reactions-3", "Face 32", "/clean-room/hires/reactions-3.jpg?v=4"],
+    ["reactions-4", "Face 33", "/clean-room/hires/reactions-4.jpg?v=4"],
+  ]],
+  ["Idle", [
+    ["idle-front-1", "Idle 1", "/clean-room/hires/idle-front-1.jpg?v=4"],
+    ["idle-front-2", "Idle 2", "/clean-room/hires/idle-front-2.jpg?v=4"],
+    ["idle-front-3", "Idle 3", "/clean-room/hires/idle-front-3.jpg?v=4"],
+    ["idle-front-4", "Idle 4", "/clean-room/hires/idle-front-4.jpg?v=4"],
+    ["idle-front-5", "Idle 5", "/clean-room/hires/idle-front-5.jpg?v=4"],
+    ["idle-front-6", "Idle 6", "/clean-room/hires/idle-front-6.jpg?v=4"],
+    ["idle-front-7", "Idle 7", "/clean-room/hires/idle-front-7.jpg?v=4"],
+    ["idle-front-8", "Idle 8", "/clean-room/hires/idle-front-8.jpg?v=4"],
+    ["idle-side-1", "Idle 9", "/clean-room/hires/idle-side-1.jpg?v=4"],
+    ["idle-side-2", "Idle 10", "/clean-room/hires/idle-side-2.jpg?v=4"],
+    ["idle-side-3", "Idle 11", "/clean-room/hires/idle-side-3.jpg?v=4"],
+    ["idle-side-4", "Idle 12", "/clean-room/hires/idle-side-4.jpg?v=4"],
+    ["idle-back-1", "Idle 13", "/clean-room/hires/idle-back-1.jpg?v=4"],
+    ["idle-back-2", "Idle 14", "/clean-room/hires/idle-back-2.jpg?v=4"],
+    ["idle-back-3", "Idle 15", "/clean-room/hires/idle-back-3.jpg?v=4"],
+    ["idle-back-4", "Idle 16", "/clean-room/hires/idle-back-4.jpg?v=4"],
+    ["idle-34-1", "Idle 17", "/clean-room/hires/idle-34-1.jpg?v=4"],
+    ["idle-34-2", "Idle 18", "/clean-room/hires/idle-34-2.jpg?v=4"],
+    ["idle-34-3", "Idle 19", "/clean-room/hires/idle-34-3.jpg?v=4"],
+    ["interact-1", "Idle 20", "/clean-room/hires/interact-1.jpg?v=4"],
+    ["interact-2", "Idle 21", "/clean-room/hires/interact-2.jpg?v=4"],
+    ["interact-3", "Idle 22", "/clean-room/hires/interact-3.jpg?v=4"],
+    ["acts-2-1", "Idle 23", "/clean-room/hires/acts-2-1.jpg?v=4"],
+    ["acts-2-2", "Idle 24", "/clean-room/hires/acts-2-2.jpg?v=4"],
+    ["acts-2-3", "Idle 25", "/clean-room/hires/acts-2-3.jpg?v=4"],
+    ["acts-2-4", "Idle 26", "/clean-room/hires/acts-2-4.jpg?v=4"],
+    ["inspect-1", "Idle 27", "/clean-room/hires/inspect-1.jpg?v=4"],
+    ["inspect-2", "Idle 28", "/clean-room/hires/inspect-2.jpg?v=4"],
+    ["inspect-3", "Idle 29", "/clean-room/hires/inspect-3.jpg?v=4"],
+    ["hygiene-1", "Idle 30", "/clean-room/hires/hygiene-1.jpg?v=4"],
+    ["hygiene-2", "Idle 31", "/clean-room/hires/hygiene-2.jpg?v=4"],
+    ["hygiene-3", "Idle 32", "/clean-room/hires/hygiene-3.jpg?v=4"],
+    ["adjust-1", "Idle 33", "/clean-room/hires/adjust-1.jpg?v=4"],
+    ["adjust-2", "Idle 34", "/clean-room/hires/adjust-2.jpg?v=4"],
+    ["adjust-3", "Idle 35", "/clean-room/hires/adjust-3.jpg?v=4"],
+    ["adjust-4", "Idle 36", "/clean-room/hires/adjust-4.jpg?v=4"],
+    ["adjust-back-1", "Idle 37", "/clean-room/hires/adjust-back-1.jpg?v=4"],
+    ["adjust-back-2", "Idle 38", "/clean-room/hires/adjust-back-2.jpg?v=4"],
+    ["angles-1", "Idle 37", "/clean-room/hires/angles-1.jpg?v=4"],
+    ["angles-2", "Idle 38", "/clean-room/hires/angles-2.jpg?v=4"],
+    ["angles-3", "Idle 39", "/clean-room/hires/angles-3.jpg?v=4"],
+    ["angles-4", "Idle 40", "/clean-room/hires/angles-4.jpg?v=4"],
+    ["turnaround-1", "Idle 41", "/clean-room/hires/turnaround-1.jpg?v=4"],
+    ["turnaround-2", "Idle 42", "/clean-room/hires/turnaround-2.jpg?v=4"],
+    ["turnaround-3", "Idle 43", "/clean-room/hires/turnaround-3.jpg?v=4"],
+    ["turnaround-4", "Idle 44", "/clean-room/hires/turnaround-4.jpg?v=4"],
+  ]],
+  ["Older", [
+    ["sheet-9f8e-1", "Older 1", "/clean-room/hires/sheet-9f8e-1.jpg?v=4"],
+    ["sheet-9f8e-2", "Older 2", "/clean-room/hires/sheet-9f8e-2.jpg?v=4"],
+    ["sheet-9f8e-3", "Older 3", "/clean-room/hires/sheet-9f8e-3.jpg?v=4"],
+    ["sheet-9f8e-4", "Older 4", "/clean-room/hires/sheet-9f8e-4.jpg?v=4"],
+    ["sheet-9f8e-5", "Older 5", "/clean-room/hires/sheet-9f8e-5.jpg?v=4"],
+    ["sheet-9f8e-6", "Older 6", "/clean-room/hires/sheet-9f8e-6.jpg?v=4"],
+    ["sheet-9f8e-7", "Older 7", "/clean-room/hires/sheet-9f8e-7.jpg?v=4"],
+    ["sheet-9f8e-8", "Older 8", "/clean-room/hires/sheet-9f8e-8.jpg?v=4"],
+    ["sheet-aab0-1", "Older 9", "/clean-room/hires/sheet-aab0-1.jpg?v=4"],
+    ["sheet-aab0-2", "Older 10", "/clean-room/hires/sheet-aab0-2.jpg?v=4"],
+    ["sheet-aab0-3", "Older 11", "/clean-room/hires/sheet-aab0-3.jpg?v=4"],
+    ["sheet-aab0-4", "Older 12", "/clean-room/hires/sheet-aab0-4.jpg?v=4"],
+    ["sheet-aab0-5", "Older 13", "/clean-room/hires/sheet-aab0-5.jpg?v=4"],
+    ["sheet-1947-1", "Older 14", "/clean-room/hires/sheet-1947-1.jpg?v=4"],
+    ["sheet-1947-2", "Older 15", "/clean-room/hires/sheet-1947-2.jpg?v=4"],
+    ["sheet-1947-2b", "Older 16", "/clean-room/hires/sheet-1947-2b.jpg?v=4"],
+    ["sheet-1947-3", "Older 15", "/clean-room/hires/sheet-1947-3.jpg?v=4"],
+    ["sheet-1947-4", "Older 16", "/clean-room/hires/sheet-1947-4.jpg?v=4"],
+    ["sheet-1947-5", "Older 17", "/clean-room/hires/sheet-1947-5.jpg?v=4"],
+    ["sheet-1db5-1", "Older 18", "/clean-room/hires/sheet-1db5-1.jpg?v=4"],
+    ["sheet-1db5-10", "Older 19", "/clean-room/hires/sheet-1db5-10.jpg?v=4"],
+    ["sheet-1db5-11", "Older 20", "/clean-room/hires/sheet-1db5-11.jpg?v=4"],
+    ["sheet-1db5-12", "Older 21", "/clean-room/hires/sheet-1db5-12.jpg?v=4"],
+    ["sheet-1db5-2", "Older 22", "/clean-room/hires/sheet-1db5-2.jpg?v=4"],
+    ["sheet-1db5-3", "Older 23", "/clean-room/hires/sheet-1db5-3.jpg?v=4"],
+    ["sheet-1db5-4", "Older 24", "/clean-room/hires/sheet-1db5-4.jpg?v=4"],
+    ["sheet-1db5-5", "Older 25", "/clean-room/hires/sheet-1db5-5.jpg?v=4"],
+    ["sheet-1db5-6", "Older 26", "/clean-room/hires/sheet-1db5-6.jpg?v=4"],
+    ["sheet-1db5-7", "Older 27", "/clean-room/hires/sheet-1db5-7.jpg?v=4"],
+    ["sheet-1db5-8", "Older 28", "/clean-room/hires/sheet-1db5-8.jpg?v=4"],
+    ["sheet-1db5-9", "Older 29", "/clean-room/hires/sheet-1db5-9.jpg?v=4"],
+  ]],
+];
+
+const tabs = document.getElementById("tabs");
+const gallery = document.getElementById("gallery");
+const count = document.getElementById("count");
+const sections = new Map();
+const stillBtns = [];
+
+for (const [group, items] of GROUPS) {
+  const section = document.createElement("section");
+  section.dataset.tab = group;
+  section.hidden = true;
+  const h = document.createElement("h2");
+  h.textContent = group;
+  section.append(h);
+  for (const item of items) {
+    const [id, label, src, frames, fps] = item;
+    const fig = document.createElement("figure");
+    fig.id = id;
+    const cap = document.createElement("figcaption");
+    cap.textContent = label;
+    fig.append(cap);
+    const scroller = document.createElement("div");
+    scroller.className = "scroller";
+    if (frames) {
+      const canvas = document.createElement("canvas");
+      canvas.className = "loop";
+      canvas.dataset.src = src;
+      canvas.dataset.frames = frames;
+      canvas.dataset.fps = fps || 6;
+      scroller.append(canvas);
+    } else {
+      const img = document.createElement("img");
+      img.alt = label;
+      img.dataset.src = src;
+      scroller.append(img);
+    }
+    fig.append(scroller);
+    section.append(fig);
+  }
+  gallery.append(section);
+  sections.set(group, section);
+
+  const b = document.createElement("button");
+  b.type = "button";
+  b.dataset.tab = group;
+  b.textContent = group;
+  b.addEventListener("click", () => show(group));
+  stillBtns.push(b);
+}
+
+function load(section) {
+  section.querySelectorAll("img[data-src]").forEach((img) => {
+    img.src = img.dataset.src;
+    img.removeAttribute("data-src");
+  });
+  section.querySelectorAll("canvas[data-src]").forEach((canvas) => {
+    const frames = Number(canvas.dataset.frames);
+    const fps = Number(canvas.dataset.fps);
+    const img = new Image();
+    img.onload = () => {
+      const cw = Math.floor(img.width / frames);
+      const ch = img.height;
+      canvas.width = cw;
+      canvas.height = ch;
+      const ctx = canvas.getContext("2d");
+      let i = 0;
+      const draw = () => {
+        ctx.drawImage(img, i * cw, 0, cw, ch, 0, 0, cw, ch);
+        i = (i + 1) % frames;
+      };
+      draw();
+      setInterval(draw, 1000 / fps);
+    };
+    img.src = canvas.dataset.src;
+    canvas.removeAttribute("data-src");
+  });
+}
+
+function show(name) {
+  if (!sections.has(name)) name = GROUPS[0][0];
+  for (const [group, section] of sections) {
+    const on = group === name;
+    section.hidden = !on;
+    if (on) load(section);
+  }
+  for (const b of stillBtns) b.classList.toggle("on", b.dataset.tab === name);
+  const n = sections.get(name).querySelectorAll("figure").length;
+  count.textContent = n + (n === 1 ? " pose" : " poses");
+}
+
+const VIDEOS = [
+  { id: "idle", name: "Idle", kind: "loop", length: "short", src: "/clean-room/videos/idle.mp4" },
+  { id: "sway", name: "Sway", kind: "loop", length: "short", src: "/clean-room/videos/sway.mp4" },
+  { id: "nod", name: "Nod", kind: "loop", length: "short", src: "/clean-room/videos/nod.mp4" },
+  { id: "look", name: "Look", kind: "loop", length: "short", src: "/clean-room/videos/look.mp4?v=2" },
+  { id: "side", name: "Side idle", kind: "loop", length: "short", src: "/clean-room/videos/side.mp4" },
+  { id: "back", name: "Back idle", kind: "loop", length: "short", src: "/clean-room/videos/back.mp4" },
+  { id: "sit", name: "Sit", kind: "loop", length: "short", src: "/clean-room/videos/sit.mp4?v=1" },
+  { id: "squat", name: "Squat", kind: "loop", length: "short", src: "/clean-room/videos/squat.mp4?v=2" },
+  { id: "smirk", name: "Smirk", kind: "loop", length: "short", src: "/clean-room/videos/smirk.mp4?v=1" },
+  { id: "ready", name: "Ready", kind: "loop", length: "short", src: "/clean-room/videos/ready.mp4?v=1" },
+  { id: "glare", name: "Glare", kind: "loop", length: "short", src: "/clean-room/videos/glare.mp4?v=1" },
+  { id: "clasp", name: "Clasp", kind: "loop", length: "short", src: "/clean-room/videos/clasp.mp4?v=1" },
+  { id: "hip", name: "Hip", kind: "loop", length: "short", src: "/clean-room/videos/hip.mp4?v=1" },
+  { id: "angry", name: "Angry", kind: "loop", length: "short", src: "/clean-room/videos/angry.mp4?v=1" },
+  { id: "run", name: "Run", kind: "loop", length: "short", src: "/clean-room/videos/run.mp4" },
+  { id: "idle-long", name: "Idle long", kind: "loop", length: "long", src: "/clean-room/videos/idle-long.mp4" },
+  { id: "walk", name: "Walk", kind: "loop", length: "long", src: "/clean-room/videos/walk.mp4" },
+  { id: "talk", name: "Talk", kind: "talk", length: "short", src: "/clean-room/videos/talk.mp4" },
+  { id: "wave", name: "Wave", kind: "action", length: "short", src: "/clean-room/videos/wave.mp4" },
+  { id: "point", name: "Point", kind: "action", length: "short", src: "/clean-room/videos/point.mp4?v=1" },
+  { id: "kick", name: "Kick", kind: "action", length: "short", src: "/clean-room/videos/kick.mp4?v=2" },
+  { id: "dodge", name: "Dodge", kind: "action", length: "short", src: "/clean-room/videos/dodge.mp4?v=1" },
+  { id: "inspect", name: "Inspect", kind: "action", length: "short", src: "/clean-room/videos/inspect.mp4?v=1" },
+  { id: "startle", name: "Startle", kind: "action", length: "short", src: "/clean-room/videos/startle.mp4?v=2" },
+  { id: "brace", name: "Brace", kind: "action", length: "short", src: "/clean-room/videos/brace.mp4?v=1" },
+  { id: "stumble", name: "Stumble", kind: "action", length: "short", src: "/clean-room/videos/stumble.mp4?v=1" },
+  { id: "worry", name: "Worry", kind: "action", length: "short", src: "/clean-room/videos/worry.mp4?v=1" },
+  { id: "stop", name: "Stop", kind: "action", length: "short", src: "/clean-room/videos/stop.mp4?v=1" },
+  { id: "kneel", name: "Kneel", kind: "action", length: "short", src: "/clean-room/videos/kneel.mp4?v=1" },
+  { id: "yawn", name: "Yawn", kind: "action", length: "short", src: "/clean-room/videos/yawn.mp4?v=1" },
+  { id: "gasp", name: "Gasp", kind: "action", length: "short", src: "/clean-room/videos/gasp.mp4?v=2" },
+  { id: "strap", name: "Strap", kind: "action", length: "short", src: "/clean-room/videos/strap.mp4?v=1" },
+  { id: "shrug", name: "Shrug", kind: "action", length: "short", src: "/clean-room/videos/shrug.mp4?v=1" },
+  { id: "cheeks", name: "Cheeks", kind: "action", length: "short", src: "/clean-room/videos/cheeks.mp4?v=1" },
+  { id: "hem", name: "Hem", kind: "action", length: "short", src: "/clean-room/videos/hem.mp4?v=1" },
+  { id: "sad", name: "Sad", kind: "action", length: "short", src: "/clean-room/videos/sad.mp4?v=1" },
+  { id: "tongue", name: "Tongue", kind: "action", length: "short", src: "/clean-room/videos/tongue.mp4?v=1" },
+  { id: "jump", name: "Jump", kind: "action", length: "short", src: "/clean-room/videos/jump.mp4?v=2" },
+  { id: "getup", name: "Get up", kind: "action", length: "short", src: "/clean-room/videos/getup.mp4" },
+];
+
+const stage = document.getElementById("stage");
+const ctx = stage.getContext("2d", { willReadFrequently: true });
+const video = document.createElement("video");
+video.muted = true;
+video.defaultMuted = true;
+video.playsInline = true;
+video.setAttribute("playsinline", "");
+video.preload = "auto";
+const clipRow = document.getElementById("clips");
+const meta = document.getElementById("clipmeta");
+const playbtn = document.getElementById("playbtn");
+const replaybtn = document.getElementById("replaybtn");
+let kind = "loop";
+let current = VIDEOS[0];
+let playing = true;
+
+function keyFrame() {
+  if (video.readyState < 2 || !video.videoWidth) return;
+  if (stage.width !== video.videoWidth || stage.height !== video.videoHeight) {
+    stage.width = video.videoWidth;
+    stage.height = video.videoHeight;
+  }
+  ctx.drawImage(video, 0, 0, stage.width, stage.height);
+  const frame = ctx.getImageData(0, 0, stage.width, stage.height);
+  const p = frame.data;
+  for (let i = 0; i < p.length; i += 4) {
+    const r = p[i], g = p[i + 1], b = p[i + 2];
+    const d = b - Math.max(r, g);
+    if (b > 130 && d > 18) p[i + 3] = d > 60 ? 0 : Math.max(0, 255 - d * 5);
+  }
+  ctx.putImageData(frame, 0, 0);
+}
+
+function tick() {
+  if (!document.getElementById("stage-wrap").hidden) keyFrame();
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+function playClip(clip) {
+  current = clip;
+  video.loop = clip.kind !== "action";
+  video.src = clip.src;
+  video.currentTime = 0;
+  playing = true;
+  playbtn.textContent = "Pause";
+  const go = video.play();
+  if (go) go.catch(() => { playing = false; playbtn.textContent = "Play"; });
+  meta.textContent = clip.name + " · " + clip.kind + " · " + clip.length + " · silent";
+  for (const b of clipRow.children) b.classList.toggle("on", b.dataset.id === clip.id);
+  count.textContent = VIDEOS.filter((v) => v.kind === kind).length + " videos";
+}
+
+function showKind(next) {
+  kind = next;
+  for (const b of tabs.children) b.classList.toggle("on", b.dataset.kind === next);
+  clipRow.replaceChildren();
+  const list = VIDEOS.filter((v) => v.kind === next);
+  for (const clip of list) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.dataset.id = clip.id;
+    b.textContent = clip.name;
+    b.addEventListener("click", () => playClip(clip));
+    clipRow.append(b);
+  }
+  playClip(list[0]);
+}
+
+function setMode(next) {
+  const animate = next === "play";
+  document.getElementById("mode-play").classList.toggle("on", animate);
+  document.getElementById("mode-stills").classList.toggle("on", !animate);
+  document.getElementById("stage-wrap").hidden = !animate;
+  gallery.hidden = animate;
+  clipRow.hidden = !animate;
+  document.querySelector(".transport").hidden = !animate;
+  tabs.replaceChildren();
+  if (animate) {
+    for (const k of ["loop", "action", "talk"]) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.dataset.kind = k;
+      b.textContent = k === "loop" ? "Loops" : k === "action" ? "Actions" : "Talk";
+      b.addEventListener("click", () => showKind(k));
+      tabs.append(b);
+    }
+    showKind(kind);
+  } else {
+    video.pause();
+    for (const b of stillBtns) tabs.append(b);
+    show(stillBtns.find((b) => b.classList.contains("on"))?.dataset.tab || GROUPS[0][0]);
+  }
+}
+
+playbtn.addEventListener("click", () => {
+  if (video.paused) {
+    video.play();
+    playing = true;
+    playbtn.textContent = "Pause";
+  } else {
+    video.pause();
+    playing = false;
+    playbtn.textContent = "Play";
+  }
+});
+replaybtn.addEventListener("click", () => {
+  video.currentTime = 0;
+  video.play();
+  playbtn.textContent = "Pause";
+});
+video.addEventListener("ended", () => {
+  if (!video.loop) playbtn.textContent = "Play";
+});
+document.getElementById("mode-play").addEventListener("click", () => setMode("play"));
+document.getElementById("mode-stills").addEventListener("click", () => setMode("stills"));
+setMode("play");
+</script>
+</body>
+</html>
