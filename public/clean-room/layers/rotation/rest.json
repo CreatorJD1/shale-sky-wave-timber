@@ -1,0 +1,14 @@
+{
+  "canvas": [1365, 1739],
+  "headY": 40,
+  "footY": 1681,
+  "upscale": false,
+  "mirror": false,
+  "front": "turn-000.png is the original A-pose file, copied, not scaled.",
+  "others": "Drawn taller than the A-pose figure, then scaled down so the head sits at y=40 and the feet at y=1681.",
+  "eyes": "Open. Gaze goes with the head, not at the camera. Amber is her right eye. Green is her left eye. 90 and 270 are separate drawings, not mirrors.",
+  "mouth": "Closed, neutral.",
+  "hair": "High bun, short strands, no wind, no long hair.",
+  "hands": "A-pose rest. Slight spread, same soft curl, thumb in the same place.",
+  "seam": "90 and 270 are one drawing each. The front three-quarter and back views add the calves under the knees, so a faint join can still show there."
+}

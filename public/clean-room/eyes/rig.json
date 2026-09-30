@@ -1,37 +1,27 @@
 {
   "source": "still/apose eyes, original pixels",
+  "doNotMirror": "Her right eye is amber. Her left eye is green. The mark sits under one eye. A flipped angle would swap both, so every angle is its own still.",
+  "gaze": "Fully open at rest. Look straight ahead with the head, not at the camera.",
   "eyes": [
     {
       "id": "left",
-      "box": [
-        6,
-        6,
-        45,
-        27
-      ],
+      "characterSide": "her right",
+      "screenSideWhenFacingCamera": "viewer's left",
+      "box": [6, 6, 45, 27],
       "w": 39,
       "h": 21,
       "iris": "amber",
-      "maxGaze": [
-        3,
-        2
-      ]
+      "maxGaze": [3, 2]
     },
     {
       "id": "right",
-      "box": [
-        80,
-        8,
-        120,
-        32
-      ],
+      "characterSide": "her left",
+      "screenSideWhenFacingCamera": "viewer's right",
+      "box": [80, 8, 120, 32],
       "w": 40,
       "h": 24,
       "iris": "green",
-      "maxGaze": [
-        3,
-        2
-      ]
+      "maxGaze": [3, 2]
     }
   ]
 }
