@@ -623,6 +623,7 @@ function applyLayerVisibility() {
   if (typeof drawRig === "function") drawRig();
 }
 
+const MISSING_TALK_ASSETS=new Set(["talk-speak","talk-ask","talk-laugh"]);
 function paintLayers() {
   const headPos = (scrub.value / 1000) * 100;
   layersEl.replaceChildren();
@@ -632,7 +633,8 @@ function paintLayers() {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.textContent = group.name;
-    const has = group.kind !== "none";
+    const unavailable=MISSING_TALK_ASSETS.has(current.id)&&["part","still"].includes(group.kind);
+    const has = group.kind !== "none"&&!unavailable;
     const shown = layerOn[group.id] !== false;
     btn.classList.toggle("on", has && shown);
     btn.disabled = !has;
@@ -649,7 +651,7 @@ function paintLayers() {
     if (!shown) track.classList.add("off");
     if (!has) {
       track.classList.add("empty");
-      track.textContent = "No separate layer";
+      track.textContent = unavailable?"Layer preview unavailable in this source. The Talk video remains playable.":"No separate layer";
     } else if (group.kind === "part") {
       const thumbs = document.createElement("div");
       thumbs.className = "thumbs";
